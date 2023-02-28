@@ -1,0 +1,15 @@
+
+# When new commits are made to the repository, the following kind of files
+# won't be pushed
+
+
+secret.txt
+
+node_modules
+# NodeJS modules
+venv
+# Python virtual environment
+__pycache__
+# caching files in python
+storage.db
+# Ignoring the temporary SQLite3 database file
