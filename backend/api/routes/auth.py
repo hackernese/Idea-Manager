@@ -1,8 +1,9 @@
-from app import app
-from flask import request, jsonify
+from app import app, mail
+from flask import request, jsonify, render_template
 from db import db, User, Sessions, RecoverAccountDB # Importing and initializing the database
 from . import login_required, bad_request, unauthorized_req
-
+from flask_mail import Message
+from datetime import datetime
 
 
 @app.route("/api/auth/login", methods=["POST"])
@@ -48,3 +49,122 @@ def logout():
     return {
         'status' : "OK"
     }
+
+@app.route("/api/auth/reset", methods=["POST"])
+def reset_password():
+
+    data = request.get_json()
+
+    if "email" not in data:
+        return bad_request('Missing email address.')
+
+    user = db.session.query(User).filter(User.email==data['email'].strip()).first()
+
+    if not user:
+        return bad_request("Invalid email address")
+
+    # Creating new recovery record
+    rec = RecoverAccountDB(user.id)
+    db.session.add(rec)
+    db.session.commit()
+
+    # Grabbing the url and also the code
+    recovery_code = rec.recover_code
+    recovery_url = rec.craft_url()
+
+
+    # Creating a message which send to the user email later
+    msg = Message('Forgot your password ?',
+        sender=app.config.get("MAIL_USERNAME"),
+        recipients=[user.email])
+    msg.html = render_template("forgot_password.html",
+        code = " ".join(list(str(recovery_code))),
+        url = recovery_url,
+        username = user.username
+    )
+    mail.send(msg)
+
+    return jsonify({
+        'status' : "OK",
+        'data' : {
+            'uuid' : rec.unique_identifier
+        }
+    })
+
+@app.route('/api/auth/reset/confirm', methods=["POST"])
+def confirm_reset_passwd():
+
+    data = request.get_json()
+
+    is_code_present = 'code' in data
+    is_urltoken_present = 'url_token' in data
+    is_uuid_present = 'uuid' in data
+
+    if not is_code_present and not is_urltoken_present:
+        return bad_request('Missing parameter.')
+
+    if ( is_code_present and not is_urltoken_present ) and not is_uuid_present:
+
+        # Note to myself in the future : this means basically mean
+        # "If ONLY the code exists but not the urltoken... and also if the uuid is gone, throw error"
+
+        return bad_request('Missing code identifier.')
+
+
+    query = db.session.query(RecoverAccountDB)
+    rec = None
+
+    if is_urltoken_present:
+        rec = query.filter(RecoverAccountDB.url_token==data['url_token'].strip()).first()
+    elif is_code_present:
+        rec = query.filter(RecoverAccountDB.recover_code==data['code']).filter(RecoverAccountDB.unique_identifier==data['uuid'].strip()).first()
+
+    if not rec:
+        return bad_request("Invalid recovery credentials")
+
+    if rec.expiry_time < datetime.now():
+        db.session.delete(rec)
+        db.session.commit()
+        return unauthorized_req('Recovery token has expired')
+
+    return jsonify({
+        'status' : "OK",
+        'data' : {
+            'token' : rec.url_token
+        }
+    })
+
+@app.route("/api/auth/reset/new", methods=["POST"])
+def reset_new_password():
+
+    data = request.get_json()
+
+    if 'passwd' not in data:
+        return bad_request("Missing password field")
+    if "token" not in data:
+        return bad_request("Missing authentication token")
+
+    rec = db.session.query(RecoverAccountDB).filter(RecoverAccountDB.url_token==data['token'].strip()).first()
+
+    if not rec:
+        return bad_request("Invalid recovery credential")
+    if rec.expiry_time < datetime.now():
+        db.session.delete(rec)
+        db.session.commit()
+        return unauthorized_req('Recovery process has expired, please renew')
+
+    try:
+        rec.user.set_new_password(data['passwd'])
+
+        db.session.delete(rec)
+        # This recovery record is done, time to delete it
+
+        db.session.commit()
+    except AttributeError:
+        db.session.rollback()
+        return bad_request("Invalid password format")
+
+
+    return jsonify({
+        'status' : "OK"
+    })
