@@ -4,7 +4,6 @@ from db import Category, db
 from flask import request, jsonify
 from . import login_required
 from sqlalchemy.exc import IntegrityError
-from sqlalchemy import func
 
 
 @app.route('/api/category/add', methods=['POST'])
@@ -17,7 +16,7 @@ def add_category():
     else:
         return jsonify({
             'status':'FAIL',
-            'msg':'Missing Name'
+            'err':'Missing Name'
         })
     # Add to database 
     try:
@@ -31,8 +30,8 @@ def add_category():
     except IntegrityError:
         db.session.rollback()
         return jsonify({
-            'status':'FAILED',
-            'msg':'Failed to add specified category'
+            'status':'FAIL',
+            'err':'Failed to add specified category'
         })
 
 @app.route('/api/category/delete/<category_id>', methods=['DELETE'])
@@ -52,13 +51,13 @@ def delete_category(category_id):
         except:
             db.session.rollback()
             return jsonify({
-                'status':'FAILED',
-                'msg':'Could Not Delete Category'
+                'status':'FAIL',
+                'err':'Could Not Delete Category'
             })
     else:
         return jsonify({
-            'status':'FAILED',
-            'msg':'Category not found'
+            'status':'FAIL',
+            'err':'Category not found'
         })
 
 
@@ -93,8 +92,8 @@ def get_category_info(category_id):
         })
     else:
         return jsonify({
-            'status':"FAILED",
-            'msg':'No Category Found'
+            'status':"FAIL",
+            'err':'No Category Found'
         })
 
 
@@ -110,8 +109,8 @@ def update_category_info(category_id):
             new_name = data['name'].strip()
         else:
             return jsonify({
-                'status':'FAILED',
-                'msg':'No Data for Updating'
+                'status':'FAIL',
+                'err':'No Data for Updating'
             })
         
         #Update Category
@@ -125,11 +124,11 @@ def update_category_info(category_id):
         except IntegrityError:
             db.session.rollback()
             return jsonify({
-                'status':'FAILED',
-                'msg':'Failed to Update Category Name'
+                'status':'FAIL',
+                'err':'Failed to Update Category Name'
             })
         
     else: return jsonify({
-        'status':'FAILED',
-        'msg':'No Category Found'
+        'status':'FAIL',
+        'err':'No Category Found'
     })
