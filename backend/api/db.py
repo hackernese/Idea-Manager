@@ -153,7 +153,7 @@ class Idea(AbstractBase):
     title = db.Column(db.Text, nullable=False)
     brief = db.Column(db.Text, nullable=False)
     content = db.Column(db.Text, nullable=False)
-    doc_file = db.Column(db.String(64), unique=True, nullable=False)
+    doc_file = db.Column(db.String(64), unique=True, nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
     sub_id = db.Column(db.Integer, db.ForeignKey("submission.id"), nullable=False)
 
@@ -163,6 +163,11 @@ class Idea(AbstractBase):
 class Reaction(AbstractBase):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     idea_id = db.Column(db.Integer, db.ForeignKey("idea.id"), nullable=False)
+
+class Comments(AbstractBase):
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    idea_id = db.Column(db.Integer, db.ForeignKey("idea.id"), nullable=False)
+    comment = db.Column(db.Text, nullable=False)
 
 class Role(AbstractBase):
     name = db.Column(db.String(100), unique=True, nullable=False)
