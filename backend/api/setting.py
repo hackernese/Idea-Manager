@@ -55,8 +55,8 @@ MAIL_CONFIG = {
     # pain to setup noreply email, but at least it's secured tho LOL
     # TODO : For the sake of safety, move this "MAIL_PASSWORD" as an environment variable later
     # TODO : this is so unprofessional :(
+    # ! This is a test email so i will publicly give my password in case i forget it : SuperRandomPassword123
 }
-
 
 
 
