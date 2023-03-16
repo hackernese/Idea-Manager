@@ -2,7 +2,7 @@ import os
 from app import app
 from . import login_required
 from db import Submission, db, Idea, User, Reaction, Comments
-from flask import jsonify, request, send_from_directory, send_file
+from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
@@ -287,9 +287,10 @@ def comment_on_idea(idea_id):
         user_id = request.session.user.id
         #get data from user
         data = request.json
-        if data:
+        if 'comment' in data and 'is_anonymous' in data:
             comment = data['comment'].strip()
-            new_comment = Comments(user_id = user_id, idea_id = idea_id, comment = comment)
+            is_anonymous = data['is_anonymous'] #True|False
+            new_comment = Comments(user_id = user_id, idea_id = idea_id, comment = comment, is_anonymous = is_anonymous)
             #add comment to db
             try:
                 db.session.add(new_comment)
@@ -315,6 +316,79 @@ def comment_on_idea(idea_id):
             'status':'FAIL',
             'err':'No Idea Found'
         })
+        
+@app.route('/api/idea/<idea_id>/comment/list', methods = ['GET', 'POST'])
+@login_required()
+def list_all_comment(idea_id):
+    idea = Idea.query.get(idea_id)
+    if idea:
+        #get comments from idea
+        comments = idea.comment_ref
+        if comments:
+            result = []
+            #append each comment to dictionary
+            for comment in comments:
+                comment_dict = {
+                    'id': comment.id,
+                    'idea_id': idea.id,
+                    'comment': comment.comment,
+                    'is_anonymous': comment.is_anonymous
+                }
+                if comment.is_anonymous ==  False:
+                    user = User.query.get(comment.user_id)
+                    if user is not None:
+                        comment_dict['user_id'] = user.id
+                        comment_dict['user_name'] = user.username
+                else:
+                    comment_dict['user_id'] = None
+                    comment_dict['user_name'] = 'Anonymous'
+
+                result.append(comment_dict)
+
+            return jsonify({
+                'status': 'OK',
+                'msg':result
+            })
+        else:
+            return jsonify({
+                'status':'FAIL',
+                'err':'No Comment Found in Idea'
+            })
+            
+@app.route('/api/comment/<comment_id>/delete', methods = ['DELETE'])
+@login_required()
+def delete_comment(comment_id):
+    comment = Comments.query.get(comment_id)
+    if comment:
+        #get current user id
+        user_id = request.session.user.id
+        #check authorization of user
+        if user_id == comment.user_id:
+            try:
+                #delete database
+                db.session.delete(comment)
+                db.session.commit()
+                return jsonify({
+                    'status':'OK',
+                    'msg':'Comment Deleted'
+                })
+            except: 
+                db.session.rollback()
+                return jsonify({
+                    'status':'FAIL',
+                    'err':'Could Not Delete Comment'
+                })
+        else:
+            return jsonify({
+                'status':'FAIL',
+                'err':'Unauthorized For Deleting Comment'
+            })
+    else:
+        return jsonify({
+            'status':'FAIL',
+            'err':'No Comment Found'
+        })
+        
 
 @app.route('/api/idea/doc/<idea_id>', methods=['GET', 'POST'])
 @login_required()
