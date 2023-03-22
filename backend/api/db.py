@@ -159,6 +159,7 @@ class Idea(AbstractBase):
 
     # Reference to the user table
     react_ref = db.relationship('Reaction', backref='idea', lazy=True, cascade='all, delete')
+    comment_ref = db.relationship('Comments', backref='idea', lazy=True, cascade='all, delete')
 
 class Reaction(AbstractBase):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -167,6 +168,7 @@ class Reaction(AbstractBase):
 class Comments(AbstractBase):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     idea_id = db.Column(db.Integer, db.ForeignKey("idea.id"), nullable=False)
+    is_anonymous = db.Column(db.Boolean, default=False, nullable=False)
     comment = db.Column(db.Text, nullable=False)
 
 class Role(AbstractBase):
