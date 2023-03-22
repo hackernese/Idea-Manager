@@ -1,9 +1,11 @@
+import zipfile, os
 from app import app
-from db import Submission, db
+from db import Submission, db, Idea
 from datetime import datetime
 from . import login_required
-from flask import jsonify, request
+from flask import jsonify, request, send_file
 from sqlalchemy.exc import IntegrityError
+from setting import basedir
 
 
 @app.route('/api/submission/add', methods=['POST'])
@@ -156,5 +158,46 @@ def update_submission_info(submission_id):
             'err':'No Submission Found'
         })
 
+@app.route('/api/submission/download_zip/<submission_id>', methods=['POST','GET'])
+@login_required(role_allow=['manager'])
+def download_zip(submission_id):
+    submission = Submission.query.get(submission_id)
+    file_paths = []
+    if submission:
+        #get all Ideas from sub
+        ideas = submission.reference
+        if ideas:
+            for idea in ideas:
+                file_name = idea.doc_file
+                if file_name:
+                    file_paths.append(f"{basedir}/uploads/{file_name}")
+            
+            #check is any files in Ideas belong to this Submission
+            if file_paths == []:
+                return jsonify({
+                    'status':'FAIL',
+                    'err':'No File Found from Submission'
+                })
+            else:
+                # Create a name for the ZIP file
+                zip_file_name = f"Submission{submission.id}.zip"
+                
+                # Create a new ZIP file and write the files to it
+                with zipfile.ZipFile(zip_file_name, 'w') as zip:
+                    for file_path in file_paths:
+                        zip.write(file_path, os.path.basename(file_path))
+                
+                # Send the ZIP file as a response to the client
+                return send_file(zip_file_name, as_attachment=True)
+        else:
+            return jsonify({
+                'status':'FAIL',
+                'err':'No Idea Found from Submission'
+            })
+    else:        
+        return jsonify({
+            'status':'FAIL',
+            'err':'No Submission Found'
+        })
     
 
