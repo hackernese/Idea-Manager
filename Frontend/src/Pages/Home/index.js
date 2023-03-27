@@ -5,7 +5,6 @@ function Home() {
     if (localStorage.length === 0) {
         return <Navigate to="/login"></Navigate>;
     }
-
     return (
         <>
             <h1>Home page</h1>
