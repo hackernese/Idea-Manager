@@ -9,6 +9,7 @@ const cx = classNames.bind(styles);
 function Header() {
 
     const [toggleState, setToggleState] = useState(true)
+    cosnt [isMobile, setIsMobile] = useState()
 
     return (
         <div className={cx("wrapper",'d-flex','f-wrap')}>
@@ -22,26 +23,28 @@ function Header() {
                     onClick={()=>setToggleState(!toggleState)}
                 ><FontAwesomeIcon icon={faListUl}/></button>
             </div>
-                    <div className={cx('col-9')}>
-                        <div className={cx("tab")}>
-                            <ul className={cx('d-flex','j-center')}>
-                                <li>Submitsion</li>
-                                <li>Category    </li>
-                                <li>Department</li>
-                                <li>Role</li>
-                                <li>User</li>
-                                <li>Staff Submission</li>
-                            </ul>
+                    {toggleState && <div className={cx('Toggle-responsive', 'col-10', 'd-flex', 'f-wrap')}>
+                        <div className={cx('col-9')}>
+                            <div className={cx("tab")}>
+                                <ul className={cx('d-flex','j-center')}>
+                                    <li>Submitsion</li>
+                                    <li>Category    </li>
+                                    <li>Department</li>
+                                    <li>Role</li>
+                                    <li>User</li>
+                                    <li>Staff Submission</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                    <div className={cx('col-1')}>
-                        <div className={cx("user-logo", "d-flex", "j-right","")}>
-                            <img src={logo}></img>
-                            <span>
-                                <FontAwesomeIcon icon={faCaretDown}/>
-                            </span>
+                        <div className={cx('col-1')}>
+                            <div className={cx("user-logo", "d-flex", "j-right","")}>
+                                <img src={logo}></img>
+                                <span>
+                                    <FontAwesomeIcon icon={faCaretDown}/>
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    </div >}
         </div>
     );
 }
