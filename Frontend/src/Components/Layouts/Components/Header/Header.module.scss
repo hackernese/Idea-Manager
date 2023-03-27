@@ -98,7 +98,8 @@
 .wrapper{
     height: 100%;
     width: 100%;
-    padding: 0 20px
+    padding: 0 20px;
+    box-shadow :  0px 3px 5px #00000033;
 }
 
 .logo{
@@ -203,6 +204,11 @@
                 display:block;
             }
          }
+
+         .wrapper{
+            padding-bottom: 2em;
+         }
+
          .wrapper .col-9, .wrapper .col-1{
             width: 100%;
          }
