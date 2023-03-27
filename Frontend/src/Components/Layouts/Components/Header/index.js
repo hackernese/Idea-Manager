@@ -22,10 +22,9 @@ function Header() {
                     onClick={()=>setToggleState(!toggleState)}
                 ><FontAwesomeIcon icon={faListUl}/></button>
             </div>
-               {toggleState && <div className = {cx('toggle-scetion')}>
                     <div className={cx('col-9')}>
                         <div className={cx("tab")}>
-                            <ul className='d-flex j-center'>
+                            <ul className={cx('d-flex','j-center')}>
                                 <li>Submitsion</li>
                                 <li>Category    </li>
                                 <li>Department</li>
@@ -43,7 +42,6 @@ function Header() {
                             </span>
                         </div>
                     </div>
-               </div >}
         </div>
     );
 }
