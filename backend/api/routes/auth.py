@@ -5,6 +5,24 @@ from . import login_required, bad_request, unauthorized_req
 from flask_mail import Message
 from datetime import datetime
 
+@app.route("/api/auth/whoami", methods=["POST"])
+@login_required()
+def whoami():
+
+    user = request.session.user
+
+    return jsonify({
+        'id' : user.id,
+        'name' : user.username,
+        'email' : user.email,
+        'role' : user.userrole_ref.first().role.name,
+        'phone' : user.phone,
+        'birthday' : str(user.birthday),
+        'gender' : user.gender,
+        'address' : user.address,
+        'lang' : user.language,
+        'department' : user.department.name
+    })
 
 @app.route("/api/auth/login", methods=["POST"])
 def login():
