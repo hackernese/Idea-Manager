@@ -37,11 +37,13 @@ function Header() {
                 <div className={cx('responsive-btn')}>
                     <button
                         onClick={() => {
-                            if (toggleUserState == true) {
+                            if (toggleUserState === true) {
                                 setToggleState(!toggleState);
                                 setToggleUserState(false);
                             }
-                            setToggleState(!toggleState);
+                            else{
+                                setToggleState(!toggleState);
+                            }
                         }}
                     >
                         <FontAwesomeIcon icon={faListUl} />
@@ -64,7 +66,7 @@ function Header() {
                         <div className={cx('col-3')}>
                             <div className={cx('user-logo', 'd-flex', 'j-right', '')}>
                                 <img
-                                    onClick={() => setToggleUserState(() => setToggleUserState(!toggleUserState))}
+                                    onClick={() => setToggleUserState(!toggleUserState)}
                                     src={user_setting}
                                 ></img>
                                 <span>
@@ -75,8 +77,8 @@ function Header() {
                         {toggleUserState && (
                             <div className={cx('dropdown-menu', 'd-flex')}>
                                 <ul>
-                                    <li>Profile<Navigate to="/profile"/></li>
-                                    <li>Logout<Navigate to="/login" /></li>
+                                    <li>Profile</li>
+                                    <li>Logout</li>
                                 </ul>
                             </div>
                         )}
