@@ -107,7 +107,7 @@
 	margin-top: 2rem;
 }
 
-.tab ul li{
+.tab ul a{
 
     padding: 15px 50px 12px 36px;
     display: block;
@@ -145,14 +145,14 @@
 	.title{
 		font-weight: bold;
 	}
-	
+
 	.tab .ul{
 		margin-top: 2rem;
 		display: flex;
 	}
-	
+
 	.tab ul li{
-	
+
 		padding: 15px 50px 12px 36px;
 		// display: block;
 		background-color: #00000089;
@@ -166,8 +166,8 @@
 			background-color:  crimson;
 		}
 	}
-	
+
 	.content{
-	
+
 	}
 }

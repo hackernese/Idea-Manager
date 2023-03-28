@@ -1,24 +1,19 @@
-import HomePage from '../Pages/Home'
-import LoginPage from '../Pages/Login'
-import CategoryPage from '../Pages/Category'
-import ProfilePage from '../Pages/Profile'
-import SubmissionPage from '../Pages/Submission'
-import StatisticPage from '../Pages/Statistic'
-
-
+import HomePage from '../Pages/Home';
+import LoginPage from '../Pages/Login';
+import CategoryPage from '../Pages/Category';
+import ProfilePage from '../Pages/Profile';
+import SubmissionPage from '../Pages/Submission';
+import StatisticPage from '../Pages/Statistic';
 
 const publicRoutes = [
     { path: '/', page: HomePage },
-    { path: '/category', page: CategoryPage},
+    { path: '/category', page: CategoryPage },
     { path: '/submission', page: SubmissionPage },
-    { path: '/login', page: LoginPage, layout: null},
-    { path: '/profile', page: ProfilePage, layout: 'headerOnly' },
+    { path: '/login', page: LoginPage, layout: null },
+    { path: 'setting', page: ProfilePage, layout: 'headerOnly' },
     { path: '/statistic', page: StatisticPage, layout: 'headerOnly' },
-]
+];
 
+const privateRoutes = [{}];
 
-const privateRoutes = [{
-}]
-
-
-export {publicRoutes, privateRoutes}
+export { publicRoutes, privateRoutes };
