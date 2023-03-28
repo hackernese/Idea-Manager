@@ -1,11 +1,12 @@
 import os
-from app import app
+from app import app, mail
 from . import login_required
 from db import Submission, db, Idea, User, Reaction, Comments
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
+from flask_mail import Message
 
 @app.route("/api/idea/<idea_id>/set/doc", methods=["POST"])
 @login_required()
@@ -283,18 +284,26 @@ def dislike_idea(idea_id):
 def comment_on_idea(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
-        #get current user id
-        user_id = request.session.user.id
+        #get current user 
+        current_user = request.session.user
         #get data from user
         data = request.json
         if 'comment' in data and 'is_anonymous' in data:
             comment = data['comment'].strip()
             is_anonymous = data['is_anonymous'] #True|False
-            new_comment = Comments(user_id = user_id, idea_id = idea_id, comment = comment, is_anonymous = is_anonymous)
+            new_comment = Comments(user_id = current_user.id, idea_id = idea_id, comment = comment, is_anonymous = is_anonymous)
             #add comment to db
             try:
                 db.session.add(new_comment)
                 db.session.commit()
+
+                # send email to idea's owner
+                msg = Message('Your Idea Had New Comment!',
+                sender=app.config.get("MAIL_USERNAME"),
+                recipients=[idea.user.first().email]) #get idea's owner email
+                msg.body = f"Your \"{idea.title}\" Idea Has Been Commented by {current_user.username} "
+                mail.send(msg)
+
                 return jsonify({
                     'status':'OK',
                     'msg':'Add comment successfully'

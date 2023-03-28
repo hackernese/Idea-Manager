@@ -1,6 +1,6 @@
 import zipfile, os
 from app import app
-from db import Submission, db, Idea
+from db import Submission, db
 from datetime import datetime
 from . import login_required
 from flask import jsonify, request, send_file
