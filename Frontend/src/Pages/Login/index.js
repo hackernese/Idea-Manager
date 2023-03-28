@@ -21,7 +21,7 @@ function Login() {
                         })
                         .then((resp) => {
                             console.log(resp.data);
-                            // localStorage.setItem('auth', resp.data.token);
+                            localStorage.setItem('auth', resp.data.token);
                         })
                         .catch((err) => {
                             console.log(err.request.responseText);

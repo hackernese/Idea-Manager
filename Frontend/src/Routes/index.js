@@ -3,6 +3,7 @@ import LoginPage from '../Pages/Login'
 import CategoryPage from '../Pages/Category'
 import ProfilePage from '../Pages/Profile'
 import SubmissionPage from '../Pages/Submission'
+import StatisticPage from '../Pages/Statistic'
 
 
 
@@ -12,10 +13,11 @@ const publicRoutes = [
     { path: '/submission', page: SubmissionPage },
     { path: '/login', page: LoginPage, layout: null},
     { path: '/profile', page: ProfilePage, layout: 'headerOnly' },
+    { path: '/statistic', page: StatisticPage, layout: 'headerOnly' },
 ]
 
-const privateRoutes = [{
 
+const privateRoutes = [{
 }]
 
 
