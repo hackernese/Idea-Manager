@@ -12,16 +12,19 @@ def whoami():
     user = request.session.user
 
     return jsonify({
-        'id' : user.id,
-        'name' : user.username,
-        'email' : user.email,
-        'role' : user.userrole_ref.first().role.name,
-        'phone' : user.phone,
-        'birthday' : str(user.birthday),
-        'gender' : user.gender,
-        'address' : user.address,
-        'lang' : user.language,
-        'department' : user.department.name
+        'status' : "OK",
+        'data' :  {
+            'id' : user.id,
+            'name' : user.username,
+            'email' : user.email,
+            'role' : user.userrole_ref.first().role.name,
+            'phone' : user.phone,
+            'birthday' : str(user.birthday),
+            'gender' : user.gender,
+            'address' : user.address,
+            'lang' : user.language,
+            'department' : user.department.name
+        }
     })
 
 @app.route("/api/auth/login", methods=["POST"])

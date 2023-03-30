@@ -1,10 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import axios from 'axios';
+import { useContext } from 'react';
+import { loginContext } from '../../App';
+import { Navigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Login() {
+    const context = useContext(loginContext);
+
+    if (context.userinfo) {
+        // context.userinfo != null
+        // {..}
+        return <Navigate to="/"></Navigate>;
+    }
+
     return (
         <div className={cx('content')}>
             <h1 className={cx('login-title')}>Login</h1>
@@ -15,13 +26,15 @@ function Login() {
                 className={cx('login-btn')}
                 onClick={() => {
                     axios
-                        .post('http://127.0.0.1:5000/api/auth/login', {
+                        .post('auth/login', {
                             name: 'staff',
                             passwd: 'staff',
                         })
                         .then((resp) => {
-                            console.log(resp.data);
                             localStorage.setItem('auth', resp.data.token);
+                            // Save back on user storage
+
+                            context.set_login_status(true);
                         })
                         .catch((err) => {
                             console.log(err.request.responseText);
