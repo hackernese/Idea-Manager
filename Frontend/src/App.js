@@ -6,6 +6,8 @@ import LoginPage from './Pages/Login';
 import CategoryPage from './Pages/Category';
 import ProfilePage from './Pages/Profile';
 import SubmissionPage from './Pages/Submission';
+
+// Importing statistic page
 import StatisticPage from './Pages/Statistic';
 
 // Importing Setting sub-components here
@@ -17,12 +19,12 @@ import Theme from './Pages/Profile/Component/Theme';
 
 // importing recoveryu components go here
 import Recovery from './Pages/Recovery';
-import RToken from './Pages/Recovery/r'
-import Code from './Pages/Recovery/code'
-import Reset from './Pages/Recovery/reset'
+import RToken from './Pages/Recovery/r';
+import Code from './Pages/Recovery/code';
+import Reset from './Pages/Recovery/reset';
 
 // importing Term and condition component here
-import TermAndCondition from './Pages/TermAndCondition'
+import TermAndCondition from './Pages/TermAndCondition';
 
 // importing error pages here
 import NotFound from './Pages/Error/404';
@@ -87,28 +89,32 @@ function App() {
                             </ProtectedRoute>
                         }
                     ></Route>
-                    <Route path="/category"
+                    <Route
+                        path="/category"
                         element={
                             <DefaultLayout>
                                 <CategoryPage />
                             </DefaultLayout>
                         }
                     ></Route>
-                    <Route path="/submission"
+                    <Route
+                        path="/submission"
                         element={
                             <DefaultLayout>
                                 <SubmissionPage />
                             </DefaultLayout>
                         }
                     ></Route>
-                    <Route path="/login"
+                    <Route
+                        path="/login"
                         element={
                             <Fragment>
                                 <LoginPage />
                             </Fragment>
                         }
                     ></Route>
-                    <Route path="/setting"
+                    <Route
+                        path="/setting"
                         element={
                             <HeaderOnly>
                                 <ProfilePage />
@@ -121,21 +127,20 @@ function App() {
                         <Route path="profile" element={<ChangeProfile></ChangeProfile>}></Route>
                         <Route path="password" element={<Password></Password>}></Route>
                     </Route>
-                    <Route path="/statistic"
+                    <Route
+                        path="/manager/statistics"
                         element={
                             <HeaderOnly>
                                 <StatisticPage />
                             </HeaderOnly>
                         }
                     ></Route>
-                    <Route path='/recovery' element={<Recovery></Recovery>}>
-                        <Route path='reset' element={<Reset></Reset>} />
-                        <Route path='code' element={<Code></Code>} />
-                        <Route path='r/:token' element={<RToken></RToken>} />
+                    <Route path="/recovery" element={<Recovery></Recovery>}>
+                        <Route path="reset" element={<Reset></Reset>} />
+                        <Route path="code" element={<Code></Code>} />
+                        <Route path="r/:token" element={<RToken></RToken>} />
                     </Route>
-                    <Route path='/term-and-condition' element={
-                        <TermAndCondition></TermAndCondition>
-                    }></Route>
+                    <Route path="/term-and-condition" element={<TermAndCondition></TermAndCondition>}></Route>
                     <Route path="*" element={<NotFound></NotFound>}></Route>
                 </Routes>
             </Router>

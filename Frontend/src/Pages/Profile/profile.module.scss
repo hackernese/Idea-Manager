@@ -108,19 +108,23 @@
 }
 
 .tab ul a{
+	padding: 15px 50px 12px 36px;
+	display: block;
+	background-color: #00000089;
+	border-radius: 8px;
+	margin: 1rem 0;
+	font-size: 1.5rem;
+	color: #fff;
 
-    padding: 15px 50px 12px 36px;
-    display: block;
-    background-color: #00000089;
-    border-radius: 8px;
-    /* font-size: 16px; */
-    margin: 1rem 0;
-    font-size: 1.5rem;
-    color: #fff;
-	&:hover {
+	&:hover{
 		cursor: pointer;
 		background-color:  crimson;
 	}
+	transition: all 0.2s ease-out;
+	-webkit-transition: all 0.2s ease-out;
+	-moz-transition: all 0.2s ease-out;
+	-ms-transition: all 0.2s ease-out;
+	-o-transition: all 0.2s ease-out;
 }
 
 .content{
@@ -134,7 +138,6 @@
     margin-top: 4rem;
 	margin-bottom: 2rem;
 }
-
 @media screen and (max-width: 1100px) {
 
 
@@ -167,7 +170,4 @@
 		}
 	}
 
-	.content{
-
-	}
 }
