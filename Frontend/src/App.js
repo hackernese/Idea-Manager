@@ -8,9 +8,24 @@ import ProfilePage from './Pages/Profile';
 import SubmissionPage from './Pages/Submission';
 import StatisticPage from './Pages/Statistic';
 
+// Importing Setting sub-components here
 import ChangeProfile from './Pages/Profile/Component/ChangeProfile';
 import Email from './Pages/Profile/Component/Email';
 import Password from './Pages/Profile/Component/Password';
+import Security from './Pages/Profile/Component/Security';
+import Theme from './Pages/Profile/Component/Theme';
+
+// importing recoveryu components go here
+import Recovery from './Pages/Recovery';
+import RToken from './Pages/Recovery/r'
+import Code from './Pages/Recovery/code'
+import Reset from './Pages/Recovery/reset'
+
+// importing Term and condition component here
+import TermAndCondition from './Pages/TermAndCondition'
+
+// importing error pages here
+import NotFound from './Pages/Error/404';
 
 import { createContext } from 'react';
 import { useEffect } from 'react';
@@ -53,7 +68,7 @@ function App() {
             <Router>
                 <Routes>
                     <Route
-                        path="/"
+                        path={'/'}
                         element={
                             <ProtectedRoute>
                                 <DefaultLayout>
@@ -63,31 +78,37 @@ function App() {
                         }
                     ></Route>
                     <Route
-                        path="/category"
+                        path={'/home'}
+                        element={
+                            <ProtectedRoute>
+                                <DefaultLayout>
+                                    <HomePage />
+                                </DefaultLayout>
+                            </ProtectedRoute>
+                        }
+                    ></Route>
+                    <Route path="/category"
                         element={
                             <DefaultLayout>
                                 <CategoryPage />
                             </DefaultLayout>
                         }
                     ></Route>
-                    <Route
-                        path="/submission"
+                    <Route path="/submission"
                         element={
                             <DefaultLayout>
                                 <SubmissionPage />
                             </DefaultLayout>
                         }
                     ></Route>
-                    <Route
-                        path="/login"
+                    <Route path="/login"
                         element={
                             <Fragment>
                                 <LoginPage />
                             </Fragment>
                         }
                     ></Route>
-                    <Route
-                        path="/setting"
+                    <Route path="/setting"
                         element={
                             <HeaderOnly>
                                 <ProfilePage />
@@ -95,17 +116,27 @@ function App() {
                         }
                     >
                         <Route path="email" element={<Email></Email>}></Route>
+                        <Route path="security" element={<Security></Security>}></Route>
+                        <Route path="theme" element={<Theme></Theme>}></Route>
                         <Route path="profile" element={<ChangeProfile></ChangeProfile>}></Route>
                         <Route path="password" element={<Password></Password>}></Route>
                     </Route>
-                    <Route
-                        path="/statistic"
+                    <Route path="/statistic"
                         element={
                             <HeaderOnly>
                                 <StatisticPage />
                             </HeaderOnly>
                         }
                     ></Route>
+                    <Route path='/recovery' element={<Recovery></Recovery>}>
+                        <Route path='reset' element={<Reset></Reset>} />
+                        <Route path='code' element={<Code></Code>} />
+                        <Route path='r/:token' element={<RToken></RToken>} />
+                    </Route>
+                    <Route path='/term-and-condition' element={
+                        <TermAndCondition></TermAndCondition>
+                    }></Route>
+                    <Route path="*" element={<NotFound></NotFound>}></Route>
                 </Routes>
             </Router>
         </loginContext.Provider>

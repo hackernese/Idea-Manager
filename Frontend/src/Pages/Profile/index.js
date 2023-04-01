@@ -46,7 +46,6 @@ function Profile() {
                                     className={({ isActive, isPending }) =>
                                         isPending ? 'pending' : isActive ? 'selected' : ''
                                     }
-                                    component="li"
                                 >
                                     Profile
                                 </NavLink>
@@ -55,7 +54,6 @@ function Profile() {
                                     className={({ isActive, isPending }) =>
                                         isPending ? 'pending' : isActive ? 'selected' : ''
                                     }
-                                    component="li"
                                 >
                                     Email
                                 </NavLink>
@@ -64,20 +62,25 @@ function Profile() {
                                     className={({ isActive, isPending }) =>
                                         isPending ? 'pending' : isActive ? 'selected' : ''
                                     }
-                                    component="li"
                                 >
                                     Password
                                 </NavLink>
-                                {/*
-                                <li className={currently_selected_tab === 1 ? 'selected' : ''}>
-                                    <Link to="/setting/profile">Profile</Link>
-                                </li>
-                                <li className={currently_selected_tab === 2 ? 'selected' : ''}>
-                                    <Link to="/setting/email">Email</Link>
-                                </li>
-                                <li className={currently_selected_tab === 3 ? 'selected' : ''}>
-                                    <Link to="/setting/password">Password</Link>
-                                </li> */}
+                                <NavLink
+                                    to="/setting/security"
+                                    className={({ isActive, isPending }) =>
+                                        isPending ? 'pending' : isActive ? 'selected' : ''
+                                    }
+                                >
+                                    Security
+                                </NavLink>
+                                <NavLink
+                                    to="/setting/theme"
+                                    className={({ isActive, isPending }) =>
+                                        isPending ? 'pending' : isActive ? 'selected' : ''
+                                    }
+                                >
+                                    Theme
+                                </NavLink>
                             </ul>
                         </div>
                     </div>
