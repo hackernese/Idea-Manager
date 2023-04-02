@@ -234,16 +234,28 @@ div.Toggle-responsive > div:nth-child(1) > div > ul{
     position: fixed;
     right: 39px;
     top: 64px;
-    ul li{
+    background-color: white;
+    ul a{
+        color : var(--textcolor);
         width: 100%;
         padding: 8px;
         padding-right: 100px;
         border-radius: 8px;
+        transition: all 0.3s ease-in;
+        -webkit-transition: all 0.3s ease-in;
+        -moz-transition: all 0.3s ease-in;
+        -ms-transition: all 0.3s ease-in;
+        -o-transition: all 0.3s ease-in;
+        cursor : pointer
     }
 
-    ul li:hover{
+    ul{
+        display: flex;
+        flex-direction: column;
+    }
+    ul a:hover{
+        color : white;
         background-color: rgba(249, 58, 96, 0.986);
-        transition: all 0.5s ease-in;
     }
 
 
@@ -354,11 +366,11 @@ div.Toggle-responsive > div:nth-child(1) > div > ul{
                 padding-right: 100px;
                 border-radius: 8px;
             }
-        
+
             ul li:hover{
                 background-color: rgba(249, 58, 96, 0.986);
                 transition: all 0.5s ease-in;
-            }  
+            }
         }
   }
 

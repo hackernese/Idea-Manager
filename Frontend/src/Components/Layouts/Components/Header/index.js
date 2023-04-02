@@ -7,7 +7,7 @@ import { faCaretDown, faListUl } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 function Header() {
@@ -25,7 +25,6 @@ function Header() {
         }
     }, [IsMobile]);
 
-
     return (
         <div className={cx('container')}>
             <div className={cx('wrapper', 'd-flex', 'f-wrap', 'col-12')}>
@@ -40,8 +39,7 @@ function Header() {
                             if (toggleUserState === true) {
                                 setToggleState(!toggleState);
                                 setToggleUserState(false);
-                            }
-                            else{
+                            } else {
                                 setToggleState(!toggleState);
                             }
                         }}
@@ -65,10 +63,7 @@ function Header() {
                         </div>
                         <div className={cx('col-3')}>
                             <div className={cx('user-logo', 'd-flex', 'j-right', '')}>
-                                <img
-                                    onClick={() => setToggleUserState(!toggleUserState)}
-                                    src={user_setting}
-                                ></img>
+                                <img onClick={() => setToggleUserState(!toggleUserState)} src={user_setting}></img>
                                 <span>
                                     <FontAwesomeIcon icon={faCaretDown} />
                                 </span>
@@ -77,8 +72,8 @@ function Header() {
                         {toggleUserState && (
                             <div className={cx('dropdown-menu', 'd-flex')}>
                                 <ul>
-                                    <li>Profile</li>
-                                    <li>Logout</li>
+                                    <Link to="/setting">Setting</Link>
+                                    <a href="#">Logout</a>
                                 </ul>
                             </div>
                         )}

@@ -27,8 +27,8 @@ function Login() {
                 onClick={() => {
                     axios
                         .post('auth/login', {
-                            name: 'staff',
-                            passwd: 'staff',
+                            name: 'admin',
+                            passwd: 'admin',
                         })
                         .then((resp) => {
                             localStorage.setItem('auth', resp.data.token);

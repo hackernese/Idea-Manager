@@ -3,9 +3,14 @@ import { HeaderOnly, DefaultLayout } from './Components/Layouts';
 import { Fragment, useState } from 'react';
 import HomePage from './Pages/Home';
 import LoginPage from './Pages/Login';
-import CategoryPage from './Pages/Category';
 import ProfilePage from './Pages/Profile';
+
+// Importing submission page here
 import SubmissionPage from './Pages/Submission';
+import SubmissionID from './Pages/Submission/SubmissionID';
+import SubmissionDetails from './Pages/Submission/details';
+import AddNewIdea from './Pages/Submission/ideas/add';
+import IdeaDetails from './Pages/Submission/ideas/details';
 
 // Importing statistic page
 import StatisticPage from './Pages/Statistic';
@@ -29,6 +34,31 @@ import TermAndCondition from './Pages/TermAndCondition';
 // importing error pages here
 import NotFound from './Pages/Error/404';
 
+// Administrator pages go here
+import Admin from './Pages/Admin';
+import AddNewCategory from './Pages/Admin/Category/Add';
+import CategoryDetails from './Pages/Admin/Category/Details';
+import EditCategory from './Pages/Admin/Category/Edit';
+// Department sub-components for admin
+import AddNewDepartment from './Pages/Admin/Department/Add';
+import DepartmentDetails from './Pages/Admin/Department/Details';
+import EditDepartment from './Pages/Admin/Department/Edit';
+// User sub-components for admin
+import AddNewUser from './Pages/Admin/User/Add';
+import UserSetting from './Pages/Admin/User/setting';
+// Role sub-components for admin
+import EditRole from './Pages/Admin/Role/Edit';
+import AddRole from './Pages/Admin/Role/Add';
+// Submission sub-components for admin
+import AddNewSubmission from './Pages/Admin/Submission/Add';
+import EditSubmission from './Pages/Admin/Submission/Edit';
+
+import User from './Pages/Admin/User';
+import AdminSubmission from './Pages/Admin/Submission';
+import Role from './Pages/Admin/Role';
+import Department from './Pages/Admin/Department';
+import Category from './Pages/Admin/Category';
+
 import { createContext } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
@@ -40,10 +70,12 @@ axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
 
 function App() {
     const [auth, setislogin] = useState(false);
-    const [userinfo, setuserinfo] = useState(null);
+    const [userinfo, setuserinfo] = useState(false);
 
     // false : not login
     // true : login r
+
+    console.log(userinfo);
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth');
@@ -52,10 +84,19 @@ function App() {
             .then((resp) => {
                 if (resp.data.status === 'OK') {
                     setuserinfo(resp.data.data);
+                } else {
+                    setuserinfo(null);
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err) => {
+                console.log(err);
+                setuserinfo(null);
+            });
     }, [auth]);
+
+    if (userinfo === false) {
+        return <h1>Loadng...</h1>;
+    }
 
     return (
         <loginContext.Provider
@@ -89,22 +130,59 @@ function App() {
                             </ProtectedRoute>
                         }
                     ></Route>
+
                     <Route
-                        path="/category"
+                        path="/admin"
                         element={
-                            <DefaultLayout>
-                                <CategoryPage />
-                            </DefaultLayout>
+                            <ProtectedRoute>
+                                <DefaultLayout>
+                                    <Admin />
+                                </DefaultLayout>
+                            </ProtectedRoute>
                         }
-                    ></Route>
+                    >
+                        <Route path="category" element={<Category></Category>}>
+                            <Route path=":id/edit" element={<EditCategory></EditCategory>}></Route>
+                            <Route path=":id/details" element={<CategoryDetails></CategoryDetails>}></Route>
+                            <Route path="add" element={<AddNewCategory></AddNewCategory>}></Route>
+                        </Route>
+
+                        <Route path="department" element={<Department></Department>}>
+                            <Route path="add" element={<AddNewDepartment></AddNewDepartment>}></Route>
+                            <Route path=":id/edit" element={<EditDepartment></EditDepartment>}></Route>
+                            <Route path=":id/details" element={<DepartmentDetails></DepartmentDetails>}></Route>
+                        </Route>
+
+                        <Route path="user" element={<User></User>}>
+                            <Route path="add" element={<AddNewUser></AddNewUser>} />
+                            <Route path=":id/setting" element={<UserSetting></UserSetting>} />
+                        </Route>
+                        <Route path="role" element={<Role></Role>}>
+                            <Route path="add" element={<AddRole></AddRole>}></Route>
+                            <Route path="edit" element={<EditRole></EditRole>}></Route>
+                        </Route>
+                        <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
+                            <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
+                            <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
+                        </Route>
+                    </Route>
+
                     <Route
                         path="/submission"
                         element={
-                            <DefaultLayout>
-                                <SubmissionPage />
-                            </DefaultLayout>
+                            <ProtectedRoute>
+                                <DefaultLayout>
+                                    <SubmissionPage />
+                                </DefaultLayout>
+                            </ProtectedRoute>
                         }
-                    ></Route>
+                    >
+                        <Route path=":id" element={<SubmissionID></SubmissionID>}>
+                            <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
+                            <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
+                            <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
+                        </Route>
+                    </Route>
                     <Route
                         path="/login"
                         element={
@@ -116,23 +194,27 @@ function App() {
                     <Route
                         path="/setting"
                         element={
-                            <HeaderOnly>
-                                <ProfilePage />
-                            </HeaderOnly>
+                            <ProtectedRoute>
+                                <HeaderOnly>
+                                    <ProfilePage />
+                                </HeaderOnly>
+                            </ProtectedRoute>
                         }
                     >
                         <Route path="email" element={<Email></Email>}></Route>
                         <Route path="security" element={<Security></Security>}></Route>
                         <Route path="theme" element={<Theme></Theme>}></Route>
-                        <Route path="profile" element={<ChangeProfile></ChangeProfile>}></Route>
-                        <Route path="password" element={<Password></Password>}></Route>
+                        <Route path="general" element={<ChangeProfile></ChangeProfile>}></Route>
+                        <Route path="account" element={<Password></Password>}></Route>
                     </Route>
                     <Route
                         path="/manager/statistics"
                         element={
-                            <HeaderOnly>
-                                <StatisticPage />
-                            </HeaderOnly>
+                            <ProtectedRoute>
+                                <HeaderOnly>
+                                    <StatisticPage />
+                                </HeaderOnly>
+                            </ProtectedRoute>
                         }
                     ></Route>
                     <Route path="/recovery" element={<Recovery></Recovery>}>

@@ -1,16 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './email.module.scss';
-import { useContext } from 'react';
-
-import { sidebarcontext } from '../..';
 
 const cx = classNames.bind(styles);
 
 function Email() {
-    const f = useContext(sidebarcontext);
-
-    f(2);
-
     return (
         <>
             <div className={cx('container', 'd-flex', 'f-wrap')}>

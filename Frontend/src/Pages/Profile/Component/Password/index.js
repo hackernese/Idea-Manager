@@ -1,16 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './password.module.scss';
-import { useContext } from 'react';
-
-import { sidebarcontext } from '../..';
 
 const cx = classNames.bind(styles);
 
 function Password() {
-    const f = useContext(sidebarcontext);
-
-    f(3);
-
     return (
         <>
             <div className={cx('container', 'd-flex', 'f-wrap')}>
