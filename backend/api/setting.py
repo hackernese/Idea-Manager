@@ -64,6 +64,13 @@ MAIL_CONFIG = {
 # Default user list, leave it empty if you want to manually add the user yourself
 DEFAULT_USER_LIST = [
     {
+        'email' : 'manager',
+        'name' : 'manager',
+        'pass' : 'manager',
+        'department' : 'Security',
+        'role' : 'manager'
+    },
+    {
         'email' : "admin@gmail.com",
         'name' : "admin",
         'pass' : "admin",

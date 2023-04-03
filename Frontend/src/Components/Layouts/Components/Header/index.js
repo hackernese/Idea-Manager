@@ -4,15 +4,23 @@ import logo from '../../../../Images/logo.png';
 import user_setting from '../../../../Images/user.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faListUl } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useContext, useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { loginContext } from '../../../../App';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 function Header() {
     const [toggleState, setToggleState] = useState(true);
     const [toggleUserState, setToggleUserState] = useState(false);
+
+    const context = useContext(loginContext);
+
+    // const isStaff = context.userinfo.role === 'staff';
+    // const isCoordinator = context.userinfo.role === 'coordinator';
+    const isManager = context.userinfo.role === 'manager';
+    const isAdmin = context.userinfo.role === 'administrator';
 
     const IsMobile = useMediaQuery({ maxWidth: 1100 }); // false
     // const role = useState('')
@@ -52,12 +60,63 @@ function Header() {
                         <div className={cx('col-9')}>
                             <div className={cx('tab')}>
                                 <ul className={cx('d-flex', 'j-center')}>
-                                    {false && <li>Submission</li>}
-                                    <li>Category </li>
-                                    <li>Department</li>
-                                    <li>Role</li>
-                                    <li>User</li>
-                                    <li>Staff Submission</li>
+                                    {/* Checking to see if the current user has access to which tab */}
+
+                                    {(isAdmin || isManager) && (
+                                        <>
+                                            <li>
+                                                <NavLink
+                                                    to="/admin/submission"
+                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                >
+                                                    Submission
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink
+                                                    to="/admin/category"
+                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                >
+                                                    Category
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink
+                                                    to="/admin/department"
+                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                >
+                                                    Department
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink
+                                                    to="/admin/role"
+                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                >
+                                                    Role
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink
+                                                    to="/admin/user"
+                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                >
+                                                    User
+                                                </NavLink>
+                                            </li>
+                                        </>
+                                    )}
+
+                                    {isManager && (
+                                        <li>
+                                            <NavLink
+                                                to="/manager/statistics"
+                                                className={(isActive) => (isActive ? 'selected' : '')}
+                                            >
+                                                Statistics
+                                            </NavLink>
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                         </div>
@@ -73,7 +132,20 @@ function Header() {
                             <div className={cx('dropdown-menu', 'd-flex')}>
                                 <ul>
                                     <Link to="/setting">Setting</Link>
-                                    <a href="#">Logout</a>
+                                    {/* eslint-disable-next-line */}
+                                    <a
+                                        href="#"
+                                        onClick={() => {
+                                            axios.post('auth/logout').then((resp) => {
+                                                if (resp.data.status === 'OK') {
+                                                    localStorage.clear(); // Optional
+                                                    window.location.reload();
+                                                }
+                                            });
+                                        }}
+                                    >
+                                        Logout
+                                    </a>
                                 </ul>
                             </div>
                         )}

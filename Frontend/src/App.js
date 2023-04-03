@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HeaderOnly, DefaultLayout } from './Components/Layouts';
 import { Fragment, useState } from 'react';
-import HomePage from './Pages/Home';
 import LoginPage from './Pages/Login';
 import ProfilePage from './Pages/Profile';
 
@@ -95,7 +94,7 @@ function App() {
     }, [auth]);
 
     if (userinfo === false) {
-        return <h1>Loadng...</h1>;
+        return <label>Loading...</label>;
     }
 
     return (
@@ -110,27 +109,6 @@ function App() {
         >
             <Router>
                 <Routes>
-                    <Route
-                        path={'/'}
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <HomePage />
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    ></Route>
-                    <Route
-                        path={'/home'}
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <HomePage />
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    ></Route>
-
                     <Route
                         path="/admin"
                         element={
@@ -168,7 +146,7 @@ function App() {
                     </Route>
 
                     <Route
-                        path="/submission"
+                        path="/"
                         element={
                             <ProtectedRoute>
                                 <DefaultLayout>
@@ -177,7 +155,7 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
-                        <Route path=":id" element={<SubmissionID></SubmissionID>}>
+                        <Route path="submission/:id" element={<SubmissionID></SubmissionID>}>
                             <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
                             <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
                             <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
