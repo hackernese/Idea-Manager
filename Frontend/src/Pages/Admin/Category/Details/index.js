@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function CategoryDetails() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>Checking and showing the details about a specific category in this page</h1>
         </div>
     );
 }

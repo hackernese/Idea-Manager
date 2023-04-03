@@ -7,6 +7,7 @@
     width: 100%;
     height: 100%;
     --imgcolor : white;
+    --backgroundcolor : white;
     --textcolor : black;
 }
 
@@ -31,8 +32,8 @@ button,
     outline: none;
     border: none;
 }
-a[href] {
-    color: val(--Textcolor);
+a{
+    color: val(--textcolor);
     text-decoration: none;
 }
 

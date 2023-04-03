@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function DepartmentDetails() {
     return (
         <div>
-            <h1>Show department details here</h1>
+            <h1>Show department details in this page</h1>
         </div>
     );
 }

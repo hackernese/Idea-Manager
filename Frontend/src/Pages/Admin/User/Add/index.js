@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function AddNewUser() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page is used to create a new user</h1>
         </div>
     );
 }

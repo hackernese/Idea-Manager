@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function AddNewSubmission() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page will be used to add new submission</h1>
         </div>
     );
 }

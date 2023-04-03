@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function EditDepartment() {
     return (
         <div>
-            <h1>Edit existing department here</h1>
+            <h1>Edit existing department in this page</h1>
         </div>
     );
 }

@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function AddNewDepartment() {
     return (
         <div>
-            <h1>Add new department here</h1>
+            <h1>Add a new department in this page</h1>
         </div>
     );
 }

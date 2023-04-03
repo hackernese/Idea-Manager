@@ -27,7 +27,7 @@ function Profile() {
                     <div className={cx('tab')}>
                         <ul>
                             <NavLink
-                                to="/setting/profile"
+                                to="/setting/general"
                                 className={({ isActive, isPending }) =>
                                     isPending ? 'pending' : isActive ? 'selected' : ''
                                 }
@@ -35,20 +35,12 @@ function Profile() {
                                 Profile
                             </NavLink>
                             <NavLink
-                                to="/setting/email"
+                                to="/setting/account"
                                 className={({ isActive, isPending }) =>
                                     isPending ? 'pending' : isActive ? 'selected' : ''
                                 }
                             >
-                                Email
-                            </NavLink>
-                            <NavLink
-                                to="/setting/password"
-                                className={({ isActive, isPending }) =>
-                                    isPending ? 'pending' : isActive ? 'selected' : ''
-                                }
-                            >
-                                Password
+                                Account
                             </NavLink>
                             <NavLink
                                 to="/setting/security"

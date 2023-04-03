@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function AddRole() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page is used to add a new role to the system</h1>
         </div>
     );
 }

@@ -13,7 +13,7 @@ function Category() {
 
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page will list out all existing category</h1>
         </div>
     );
 }

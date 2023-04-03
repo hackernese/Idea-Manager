@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function AddNewCategory() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>Add new category in this page</h1>
         </div>
     );
 }

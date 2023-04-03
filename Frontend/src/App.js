@@ -33,6 +33,9 @@ import TermAndCondition from './Pages/TermAndCondition';
 // importing error pages here
 import NotFound from './Pages/Error/404';
 
+// Importing Home
+import Home from './Pages/Home';
+
 // Administrator pages go here
 import Admin from './Pages/Admin';
 import AddNewCategory from './Pages/Admin/Category/Add';
@@ -110,6 +113,27 @@ function App() {
             <Router>
                 <Routes>
                     <Route
+                        path="/"
+                        element={
+                            <ProtectedRoute>
+                                <DefaultLayout>
+                                    <Home></Home>
+                                </DefaultLayout>
+                            </ProtectedRoute>
+                        }
+                    ></Route>
+                    <Route
+                        path="/home"
+                        element={
+                            <ProtectedRoute>
+                                <DefaultLayout>
+                                    <Home></Home>
+                                </DefaultLayout>
+                            </ProtectedRoute>
+                        }
+                    ></Route>
+
+                    <Route
                         path="/admin"
                         element={
                             <ProtectedRoute>
@@ -146,7 +170,7 @@ function App() {
                     </Route>
 
                     <Route
-                        path="/"
+                        path="/submission"
                         element={
                             <ProtectedRoute>
                                 <DefaultLayout>
@@ -155,12 +179,13 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
-                        <Route path="submission/:id" element={<SubmissionID></SubmissionID>}>
+                        <Route path=":id" element={<SubmissionID></SubmissionID>}>
                             <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
                             <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
                             <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
                         </Route>
                     </Route>
+
                     <Route
                         path="/login"
                         element={
@@ -179,7 +204,6 @@ function App() {
                             </ProtectedRoute>
                         }
                     >
-                        <Route path="email" element={<Email></Email>}></Route>
                         <Route path="security" element={<Security></Security>}></Route>
                         <Route path="theme" element={<Theme></Theme>}></Route>
                         <Route path="general" element={<ChangeProfile></ChangeProfile>}></Route>

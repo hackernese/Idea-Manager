@@ -35,7 +35,7 @@ function Header() {
 
     return (
         <div className={cx('container')}>
-            <div className={cx('wrapper', 'd-flex', 'f-wrap', 'col-12')}>
+            <div className={cx('wrapper', 'd-flex', 'f-wrap')}>
                 <div className={cx('col-2')}>
                     <div className={cx('logo', 't-right')}>
                         <img src={logo}></img>
@@ -67,7 +67,7 @@ function Header() {
                                             <li>
                                                 <NavLink
                                                     to="/admin/submission"
-                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                    className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
                                                     Submission
                                                 </NavLink>
@@ -75,7 +75,7 @@ function Header() {
                                             <li>
                                                 <NavLink
                                                     to="/admin/category"
-                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                    className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
                                                     Category
                                                 </NavLink>
@@ -83,7 +83,7 @@ function Header() {
                                             <li>
                                                 <NavLink
                                                     to="/admin/department"
-                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                    className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
                                                     Department
                                                 </NavLink>
@@ -91,7 +91,7 @@ function Header() {
                                             <li>
                                                 <NavLink
                                                     to="/admin/role"
-                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                    className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
                                                     Role
                                                 </NavLink>
@@ -99,7 +99,7 @@ function Header() {
                                             <li>
                                                 <NavLink
                                                     to="/admin/user"
-                                                    className={(isActive) => (isActive ? 'selected' : '')}
+                                                    className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
                                                     User
                                                 </NavLink>
@@ -111,12 +111,21 @@ function Header() {
                                         <li>
                                             <NavLink
                                                 to="/manager/statistics"
-                                                className={(isActive) => (isActive ? 'selected' : '')}
+                                                className={({ isActive }) => (isActive ? cx('selected') : '')}
                                             >
                                                 Statistics
                                             </NavLink>
                                         </li>
                                     )}
+
+                                    <li>
+                                        <NavLink
+                                            to="/submission"
+                                            className={({ isActive }) => (isActive ? cx('selected') : '')}
+                                        >
+                                            Staff Submission
+                                        </NavLink>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

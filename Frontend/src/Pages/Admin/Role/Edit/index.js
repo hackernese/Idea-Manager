@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function EditRole() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page is used to edit a specific existing role</h1>
         </div>
     );
 }

@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function EditCategory() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>Edit an existing category in this page</h1>
         </div>
     );
 }

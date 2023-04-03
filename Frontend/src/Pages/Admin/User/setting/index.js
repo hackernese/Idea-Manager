@@ -6,7 +6,7 @@ const cx = classNames.bind(styles);
 function UserSetting() {
     return (
         <div>
-            <h1>Some text</h1>
+            <h1>This page will show a setting of a specific user</h1>
         </div>
     );
 }
