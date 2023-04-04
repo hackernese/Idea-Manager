@@ -12,8 +12,6 @@ function Admin() {
     }
     // Checking if this is the administrator or not
 
-    console.log(context);
-
     if (context.userinfo.role !== 'administrator') return <Navigate to="/"></Navigate>;
 
     return outlet;

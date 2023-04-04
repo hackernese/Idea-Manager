@@ -16,7 +16,6 @@ import StatisticPage from './Pages/Statistic';
 
 // Importing Setting sub-components here
 import ChangeProfile from './Pages/Profile/Component/ChangeProfile';
-import Email from './Pages/Profile/Component/Email';
 import Password from './Pages/Profile/Component/Password';
 import Security from './Pages/Profile/Component/Security';
 import Theme from './Pages/Profile/Component/Theme';
@@ -65,6 +64,7 @@ import { createContext } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
 import ProtectedRoute from './Components/ProtectedRoute';
+import UnProtectedRoute from './Components/UnProtectedRoute';
 
 export const loginContext = createContext();
 
@@ -81,6 +81,7 @@ function App() {
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth');
+
         axios
             .post('auth/whoami')
             .then((resp) => {
@@ -219,7 +220,14 @@ function App() {
                             </ProtectedRoute>
                         }
                     ></Route>
-                    <Route path="/recovery" element={<Recovery></Recovery>}>
+                    <Route
+                        path="/recovery"
+                        element={
+                            <UnProtectedRoute>
+                                <Recovery></Recovery>
+                            </UnProtectedRoute>
+                        }
+                    >
                         <Route path="reset" element={<Reset></Reset>} />
                         <Route path="code" element={<Code></Code>} />
                         <Route path="r/:token" element={<RToken></RToken>} />

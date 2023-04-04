@@ -3,7 +3,7 @@ import styles from './Login.module.scss';
 import axios from 'axios';
 import { createRef, useContext, useState } from 'react';
 import { loginContext } from '../../App';
-import { Navigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -56,6 +56,9 @@ function Login() {
             >
                 Login
             </button>
+            <div>
+                <Link to="/recovery">Forgot password</Link>
+            </div>
         </div>
     );
 }

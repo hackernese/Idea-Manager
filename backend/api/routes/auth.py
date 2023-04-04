@@ -82,7 +82,9 @@ def reset_password():
     user = db.session.query(User).filter(User.email==data['email'].strip()).first()
 
     if not user:
-        return bad_request("Invalid email address")
+        return jsonify({
+            'status' : 'FAIL',
+            'err' : "Email address doesn't exist."})
 
     # Creating new recovery record
     rec = RecoverAccountDB(user.id)
