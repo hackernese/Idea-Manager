@@ -1,0 +1,41 @@
+
+@import '../globalMixins.scss';
+
+
+.ticked{
+
+    &::after{
+        opacity: 1 !important;
+    }
+
+    border : 1.5px solid var(--primarycolor) !important;
+    opacity: 1 !important;
+}
+
+.checkbox{
+    @include transition_01s;
+    @include RoundBorder;
+    height : 1em;
+    width: 1em;
+    display: flex;
+    justify-content: center;
+    border : 1.5px solid var(--textcolor);
+    position:relative;
+    opacity: 0.3;
+
+    &:hover{
+        opacity: 1;
+    }
+
+    &::after{
+        @include transition_01s;
+        @include RoundBorder;
+        content: "";
+        display: block;
+        margin: auto;
+        height : 0.6em;
+        width : 0.6em;
+        background-color: var(--primarycolor);
+        opacity: 0;
+    }
+}

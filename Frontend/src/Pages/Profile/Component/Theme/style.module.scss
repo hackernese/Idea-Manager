@@ -1,0 +1,79 @@
+@import '../../../../Components/globalMixins.scss';
+
+
+
+.theme{
+
+    display : flex;
+    gap : 1em;
+
+    > div{
+        box-sizing: border-box;
+        @include transition;
+        @include SquareRoundBorder;
+        height : 8em;
+        width: 11em;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.719);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+
+        &:hover{
+            transform: scale(1.03);
+            -webkit-transform: scale(1.03);
+            -moz-transform: scale(1.03);
+            -ms-transform: scale(1.03);
+            -o-transform: scale(1.03);
+        }
+
+        &:active{
+            transform: scale(0.9);
+            -webkit-transform: scale(0.99);
+            -moz-transform: scale(0.99);
+            -ms-transform: scale(0.99);
+            -o-transform: scale(0.99);
+        }
+
+        > div:nth-child(1){
+            flex : 3;
+            box-sizing: border-box;
+            box-shadow: inset 0 0 2px rgb(0 0 0 / 72%);
+            display: flex;
+            svg{
+                margin : auto;
+                height: 1.5em;
+                width: 1.5em;
+            }
+        }
+
+        > div:nth-child(2){
+            @include boldfont;
+            font-size: 0.8em;
+            flex : 1;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            padding-right: 1em;
+            padding-left: 1em;
+            *{
+                margin : auto;
+            }
+            div{
+                margin-left: 0;
+            }
+            label{
+                margin-right: 0;
+            }
+        }
+
+    }
+
+}
+
+
+
+.dark{
+    background-color: #c3c3c3;
+    filter: invert(1);
+    -webkit-filter: invert(1);
+}

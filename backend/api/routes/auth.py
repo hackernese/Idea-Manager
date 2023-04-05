@@ -131,6 +131,14 @@ def resend_code():
             'err':"Invalid recovery credentials"
         })
 
+    if rec.expiry_time < datetime.now():
+        db.session.delete(rec)
+        db.session.commit()
+        return jsonify({
+            'status' : "FAIL",
+            'err' : 'Expired.'
+        })
+
     # Update the random 6-digits code
     rec.re_random_code()
     db.session.commit()
@@ -188,10 +196,6 @@ def confirm_reset_passwd():
             'err':"Invalid recovery credentials"
         })
 
-    print(rec.expiry_time, datetime.now())
-    # breakpoint()
-
-
     if rec.expiry_time < datetime.now():
         db.session.delete(rec)
         db.session.commit()
@@ -221,8 +225,6 @@ def reset_new_password():
     rec = db.session.query(RecoverAccountDB).filter(RecoverAccountDB.url_token==data['token'].strip()).first()
 
     if not rec:
-        print("Hello world")
-
         return bad_request("Invalid recovery credential")
     if rec.expiry_time < datetime.now():
         db.session.delete(rec)

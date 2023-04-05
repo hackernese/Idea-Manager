@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
-import { createRef, useEffect, useReducer, useState } from 'react';
+import { createRef, useEffect, useReducer, useRef, useState } from 'react';
 import icon from '../../../Images/icon.png';
 import axios from 'axios';
 
@@ -19,7 +19,9 @@ function Code() {
     const inputref = createRef();
     const [active, setactive] = useState(0);
     const [err, seterr] = useState('');
-    const [isexpire, setexpire] = useState(0);
+    const [isexpire, setexpire] = useState(false);
+    const [expiresec, setexpiresec] = useState(5);
+    const expireref = useRef(5);
     // This is used to see which <input> has been filled with which value
     const [code, setcode] = useReducer((state, action) => {
         // This reducer function is called in order to grab the 6 digits
@@ -45,7 +47,7 @@ function Code() {
                     navigate(`/recovery/reset?token=${resp.data.data.token}`);
                 } else {
                     // Checking if this is expired
-                    if (resp.data.err === 'Recovery token has expired') setexpire(5);
+                    if (resp.data.err === 'Recovery token has expired') setexpire(true);
 
                     seterr(resp.data.err);
                     setactive(0);
@@ -57,6 +59,12 @@ function Code() {
         return true;
     }, false);
     // full will be true once all of the code has been filled out
+    const [issent, setissent] = useState(false);
+    const [resending, setresending] = useState(false);
+    // The user is currently in the process of re-sending code
+    const nodeRef = createRef(null);
+    // this is true when the user press "Resend" and has successfully resent
+    // the code
 
     const handle_input = (e) => {
         // WHen the user type something, this method will be triggered
@@ -123,19 +131,30 @@ function Code() {
     // state
 
     useEffect(() => {
-        if (isexpire !== 0) {
-            let countdown = setInterval(() => {
-                if (isexpire === 0) {
-                    clearInterval(countdown);
-                    navigate('/recovery');
-                    return;
-                }
+        if (!isexpire) return;
 
-                setexpire(isexpire - 1);
-            }, 1000);
-        }
+        const countdown = setInterval(() => {
+            if (expireref.current === 0) {
+                clearInterval(countdown);
+                navigate('/recovery');
+                return;
+            }
+
+            expireref.current--;
+            setexpiresec(expireref.current);
+        }, 1000);
     }, [isexpire]);
     // Starting a count down and redirect the user when the token has expired
+
+    useEffect(() => {
+        if (issent) {
+            setTimeout(() => {
+                setissent(false);
+                setresending(false);
+            }, 3000);
+        }
+    }, [issent]);
+    // If the code has successfully been sent
 
     if (!uuid) return <Navigate to="/recovery"></Navigate>;
 
@@ -203,25 +222,44 @@ function Code() {
                         <div className={cx('err')}>
                             <label>
                                 {err}
-                                {isexpire !== 0 && `. Redirecting in ${isexpire}s`}
+                                {isexpire && `. Redirecting in ${expiresec}s`}
                             </label>
                         </div>
                         <div>
-                            <label
-                                onClick={() => {
-                                    axios
-                                        .post('auth/resend', {
-                                            uuid: uuid,
-                                        })
-                                        .then((resp) => {
-                                            if (resp.data.status === 'OK') {
-                                                console.log('OK');
-                                            }
-                                        });
-                                }}
-                            >
-                                Resend
-                            </label>
+                            {issent && (
+                                <label ref={nodeRef} className={cx('sent')}>
+                                    {issent}
+                                </label>
+                            )}
+
+                            {resending && !issent && <div></div>}
+
+                            {!resending && (
+                                <label
+                                    onClick={() => {
+                                        setresending(true);
+
+                                        axios
+                                            .post('auth/resend', {
+                                                uuid: uuid,
+                                            })
+                                            .then((resp) => {
+                                                if (resp.data.status === 'OK') {
+                                                    setissent('Sent !');
+                                                } else {
+                                                    seterr('Recovery session has expired');
+                                                    setexpire(true);
+                                                    setresending(false);
+                                                }
+                                            })
+                                            .catch(() => {
+                                                setresending(false);
+                                            });
+                                    }}
+                                >
+                                    Resend
+                                </label>
+                            )}
                         </div>
                     </>
                 )}

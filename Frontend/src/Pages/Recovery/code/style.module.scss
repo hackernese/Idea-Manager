@@ -2,6 +2,9 @@
 
 
 
+
+
+
 .code{
 
     @include gradientBackground();
@@ -131,16 +134,35 @@
         }
 
         > div:nth-child(4){
-
+            display: flex;
+            justify-content: center;
             text-align: center;
             padding-bottom: 1em;
             margin-bottom: 1em;
 
+
+            div{
+                @include loading_circle;
+                margin: auto;
+            }
+
+            label.sent{
+                @include dropdown_animation;
+
+                opacity: 1;
+                font-size: 1em;
+                color : #007bff;
+                font-weight: bold;
+                &::after{
+                    display: none;
+                }
+            }
+
             label{
                 @include transition;
+                @include dropup_animation;
 
                 cursor: pointer;
-                margin: auto;
                 font-size: 0.9em;
                 color: black;
                 opacity: 0.5;
