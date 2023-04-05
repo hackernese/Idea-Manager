@@ -97,22 +97,24 @@ function Recovery() {
                                                 // <one character or more> === \S+
                                                 // \. === "."
 
-                                                // setisload(true);
+                                                setisload(true);
 
-                                                // axios
-                                                //     .post('auth/reset', {
-                                                //         email: mail,
-                                                //     })
-                                                //     .then((resp) => {
-                                                //         if (resp.data.status === 'FAIL') {
-                                                //             console.log(resp.data.err);
-                                                //             seterrmsg(resp.data.err);
-                                                //             return;
-                                                //         }
-                                                //     })
-                                                //     .catch(window.unexpectedError);
-
-                                                navigate(`/recovery/code?uuid=adawdHDawdhuiwadh1u3223q8awdy726y3ad`);
+                                                axios
+                                                    .post('auth/reset', {
+                                                        email: mail,
+                                                    })
+                                                    .then((resp) => {
+                                                        if (resp.data.status === 'FAIL') {
+                                                            seterrmsg(resp.data.err);
+                                                            setisload(false);
+                                                            return;
+                                                        } else {
+                                                            seterrmsg('');
+                                                            setisload(false);
+                                                            navigate(`/recovery/code?uuid=${resp.data.data.uuid}`);
+                                                        }
+                                                    })
+                                                    .catch(window.unexpectedError);
                                             }}
                                         >
                                             Reset

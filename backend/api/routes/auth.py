@@ -114,6 +114,46 @@ def reset_password():
         }
     })
 
+@app.route('/api/auth/resend', methods=["POST"])
+def resend_code():
+
+
+    data = request.get_json()
+
+    if "uuid" not in data:
+        return bad_request('Missing parameter.')
+
+    rec = db.session.query(RecoverAccountDB).filter(RecoverAccountDB.unique_identifier==data['uuid'].strip()).first()
+
+    if not rec:
+        return jsonify({
+            'status':"FAIL",
+            'err':"Invalid recovery credentials"
+        })
+
+    # Update the random 6-digits code
+    rec.re_random_code()
+    db.session.commit()
+    # Grabbing data
+    recovery_code = rec.recover_code
+    recovery_url = rec.craft_url()
+    user = rec.user
+
+    # Creating a message which send to the user email later
+    msg = Message('Forgot your password ?',
+        sender=app.config.get("MAIL_USERNAME"),
+        recipients=[user.email])
+    msg.html = render_template("forgot_password.html",
+        code = " ".join(list(str(recovery_code))),
+        url = recovery_url,
+        username = user.username
+    )
+    mail.send(msg)
+
+    return jsonify({
+        'status' : "OK"
+    })
+
 @app.route('/api/auth/reset/confirm', methods=["POST"])
 def confirm_reset_passwd():
 
@@ -143,12 +183,22 @@ def confirm_reset_passwd():
         rec = query.filter(RecoverAccountDB.recover_code==data['code']).filter(RecoverAccountDB.unique_identifier==data['uuid'].strip()).first()
 
     if not rec:
-        return bad_request("Invalid recovery credentials")
+        return jsonify({
+            'status':"FAIL",
+            'err':"Invalid recovery credentials"
+        })
+
+    print(rec.expiry_time, datetime.now())
+    # breakpoint()
+
 
     if rec.expiry_time < datetime.now():
         db.session.delete(rec)
         db.session.commit()
-        return unauthorized_req('Recovery token has expired')
+        return jsonify({
+            'status':"FAIL",
+            'err':"Recovery token has expired"
+        })
 
     return jsonify({
         'status' : "OK",
@@ -162,6 +212,7 @@ def reset_new_password():
 
     data = request.get_json()
 
+
     if 'passwd' not in data:
         return bad_request("Missing password field")
     if "token" not in data:
@@ -170,11 +221,13 @@ def reset_new_password():
     rec = db.session.query(RecoverAccountDB).filter(RecoverAccountDB.url_token==data['token'].strip()).first()
 
     if not rec:
+        print("Hello world")
+
         return bad_request("Invalid recovery credential")
     if rec.expiry_time < datetime.now():
         db.session.delete(rec)
         db.session.commit()
-        return unauthorized_req('Recovery process has expired, please renew')
+        return jsonify({'status': "FAIL", 'err' : 'Recovery process has expired, please renew'})
 
     try:
         rec.user.set_new_password(data['passwd'])

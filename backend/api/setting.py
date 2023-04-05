@@ -23,7 +23,7 @@ SSL = False
 # Do not use encryption ( False )
 # Use encryption = True
 
-FRONTEND_PORT = 5000
+FRONTEND_PORT = 3000
 # ! NOTE : Remember to change it to 80 once deployed
 
 RECOVERY_URL_BASE = "localhost";

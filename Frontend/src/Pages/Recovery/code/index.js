@@ -3,30 +3,74 @@
 
 import style from './style.module.scss';
 import classNames from 'classnames/bind';
-import { Navigate, useSearchParams } from 'react-router-dom';
+import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus } from '@fortawesome/free-solid-svg-icons';
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useReducer, useState } from 'react';
 import icon from '../../../Images/icon.png';
+import axios from 'axios';
 
 const cx = classNames.bind(style);
 
 function Code() {
     const [params] = useSearchParams();
+    const navigate = useNavigate();
     const uuid = params.get('uuid');
     const inputref = createRef();
     const [active, setactive] = useState(0);
+    const [err, seterr] = useState('');
+    const [isexpire, setexpire] = useState(0);
     // This is used to see which <input> has been filled with which value
+    const [code, setcode] = useReducer((state, action) => {
+        // This reducer function is called in order to grab the 6 digits
+        // code from the form and return it
+
+        let ret = [];
+
+        if (action === null) return false;
+
+        action.ref.current.querySelectorAll('input').forEach((element) => {
+            ret.push(element.value);
+        });
+
+        const final_v = parseInt(ret.join(''));
+
+        axios
+            .post('auth/reset/confirm', {
+                code: final_v,
+                uuid: params.get('uuid'),
+            })
+            .then((resp) => {
+                if (resp.data.status === 'OK') {
+                    navigate(`/recovery/reset?token=${resp.data.data.token}`);
+                } else {
+                    // Checking if this is expired
+                    if (resp.data.err === 'Recovery token has expired') setexpire(5);
+
+                    seterr(resp.data.err);
+                    setactive(0);
+                    setcode(null);
+                }
+            })
+            .catch(window.unexpectedError);
+
+        return true;
+    }, false);
+    // full will be true once all of the code has been filled out
 
     const handle_input = (e) => {
+        // WHen the user type something, this method will be triggered
+
         const input = e.target;
-        const strcode = input.value.toString();
+        const strcode = input.value.toString().split(' ').join('');
 
         if (!input.value) return;
 
         input.value = input.value.toString()[0];
-        if (active < 10) setactive(active + 2);
+        // Only allow one character per <input>
 
+        if (active < 10) setactive(active + 2);
+        else setcode({ value: true, ref: inputref }); // ALl of the numbers have been filled
         // Checking if the user copy + paste the code
 
         const redunt = strcode.slice(1);
@@ -34,25 +78,30 @@ function Code() {
             let index = Array.from(inputref.current.children).indexOf(input);
 
             for (let i in redunt) {
-                if (index >= 10) break;
+                if (index === 10) break;
 
                 index = index + 2;
                 const inputbox = inputref.current.children[index];
                 inputbox.value = redunt[i];
             }
 
+            if (index === 10) setcode({ value: true, ref: inputref }); // ALl of the numbers have been filled
+
             setactive(index + (index >= 10 ? 0 : 2));
         }
     };
-
     const Checkdelete = (e) => {
+        // Check to see if the user pressed the "Backspace" btn
+
         if (e.keyCode === 8) {
             if (active <= 0) return;
             setactive(active - 2);
         }
     };
-
     const setclass = (index) => {
+        // Dynamic class setting, which will determine to see if the input
+        // can have "clickable" and "active" or not.
+
         const c = [];
 
         if (active === index) {
@@ -67,7 +116,26 @@ function Code() {
         return c.join(' ');
     };
 
-    useEffect(() => inputref.current.children[active].focus(), [active]);
+    useEffect(() => {
+        if (inputref.current) inputref.current.children[active].focus();
+    }, [active]);
+    // Focus on the currently active <input> by using useEffect on "active"
+    // state
+
+    useEffect(() => {
+        if (isexpire !== 0) {
+            let countdown = setInterval(() => {
+                if (isexpire === 0) {
+                    clearInterval(countdown);
+                    navigate('/recovery');
+                    return;
+                }
+
+                setexpire(isexpire - 1);
+            }, 1000);
+        }
+    }, [isexpire]);
+    // Starting a count down and redirect the user when the token has expired
 
     if (!uuid) return <Navigate to="/recovery"></Navigate>;
 
@@ -79,22 +147,84 @@ function Code() {
                     <h1>Check your email</h1>
                     <p>A 6-digits code has been sent to your email. Please provide it to reset your password.</p>
                 </div>
-                <div ref={inputref}>
-                    <input className={setclass(0)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                    <FontAwesomeIcon icon={faMinus} />
-                    <input className={setclass(2)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                    <FontAwesomeIcon icon={faMinus} />
-                    <input className={setclass(4)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                    <FontAwesomeIcon icon={faMinus} />
-                    <input className={setclass(6)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                    <FontAwesomeIcon icon={faMinus} />
-                    <input className={setclass(8)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                    <FontAwesomeIcon icon={faMinus} />
-                    <input className={setclass(10)} onKeyDown={Checkdelete} type="number" onChange={handle_input} />
-                </div>
-                <div>
-                    <label>Resend</label>
-                </div>
+                {code && (
+                    <>
+                        <div className={cx('load')}>
+                            <div></div>
+                        </div>
+                        <div></div>
+                    </>
+                )}
+                {!code && (
+                    <>
+                        <div ref={inputref}>
+                            <input
+                                className={setclass(0)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                            <FontAwesomeIcon icon={faMinus} />
+                            <input
+                                className={setclass(2)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                            <FontAwesomeIcon icon={faMinus} />
+                            <input
+                                className={setclass(4)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                            <FontAwesomeIcon icon={faMinus} />
+                            <input
+                                className={setclass(6)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                            <FontAwesomeIcon icon={faMinus} />
+                            <input
+                                className={setclass(8)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                            <FontAwesomeIcon icon={faMinus} />
+                            <input
+                                className={setclass(10)}
+                                onKeyDown={Checkdelete}
+                                type="number"
+                                onChange={handle_input}
+                            />
+                        </div>
+                        <div className={cx('err')}>
+                            <label>
+                                {err}
+                                {isexpire !== 0 && `. Redirecting in ${isexpire}s`}
+                            </label>
+                        </div>
+                        <div>
+                            <label
+                                onClick={() => {
+                                    axios
+                                        .post('auth/resend', {
+                                            uuid: uuid,
+                                        })
+                                        .then((resp) => {
+                                            if (resp.data.status === 'OK') {
+                                                console.log('OK');
+                                            }
+                                        });
+                                }}
+                            >
+                                Resend
+                            </label>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

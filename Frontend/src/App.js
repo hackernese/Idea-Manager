@@ -22,7 +22,6 @@ import Theme from './Pages/Profile/Component/Theme';
 
 // importing recoveryu components go here
 import Recovery from './Pages/Recovery';
-import RToken from './Pages/Recovery/r';
 import Code from './Pages/Recovery/code';
 import Reset from './Pages/Recovery/reset';
 
@@ -230,7 +229,6 @@ function App() {
                     >
                         <Route path="reset" element={<Reset></Reset>} />
                         <Route path="code" element={<Code></Code>} />
-                        <Route path="r/:token" element={<RToken></RToken>} />
                     </Route>
                     <Route path="/term-and-condition" element={<TermAndCondition></TermAndCondition>}></Route>
                     <Route path="*" element={<NotFound></NotFound>}></Route>

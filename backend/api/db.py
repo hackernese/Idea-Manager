@@ -211,13 +211,16 @@ class RecoverAccountDB(AbstractBase):
         self.recover_code = randint(100000, 999999)
         self.unique_identifier = token_urlsafe(100)
 
+    def re_random_code(self):
+        self.recover_code = randint(100000, 999999)
+
     def craft_url(self):
 
         # Crafting a URL for recovery purposes
 
         protocol = "http" if not SSL else "https"
 
-        return f"{protocol}://{RECOVERY_URL_BASE}:{FRONTEND_PORT}/recovery/r/{self.url_token}"
+        return f"{protocol}://{RECOVERY_URL_BASE}:{FRONTEND_PORT}/recovery/reset?token={self.url_token}"
 #---------------------------------------------------------------#
 
 
