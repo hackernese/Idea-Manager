@@ -66,6 +66,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import UnProtectedRoute from './Components/UnProtectedRoute';
 
 import { AnimatePresence } from 'framer-motion';
+import { isIE } from 'react-device-detect';
 
 export const loginContext = createContext();
 
@@ -96,6 +97,17 @@ function App() {
                 setuserinfo(null);
             });
     }, [auth]);
+
+    if (isIE) {
+        // Checking if the user is running this on Internet Explorer
+        // INternet Explorer is not supported, return back an error page
+        return (
+            <label>
+                This website isn't supported on Internet Explorer. Please use Chrome, Firefox, Brave, Opera, Edge or any
+                other modern browser
+            </label>
+        );
+    }
 
     if (userinfo === false) {
         return <label>Loading...</label>;

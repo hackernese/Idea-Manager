@@ -38,9 +38,9 @@ function Popup({ title, text, buttons, onexit }) {
                                 {buttons.map((e, i) => (
                                     <button
                                         key={i}
-                                        onClick={(event) => {
+                                        onClick={() => {
                                             setloading(true);
-                                            e.callback(event);
+                                            e.callback(setloading, setshow);
                                         }}
                                         className={cx(e.color)}
                                     >

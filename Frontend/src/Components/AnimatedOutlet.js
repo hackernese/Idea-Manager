@@ -12,7 +12,7 @@ const animations = {
 
 function AnimatedOutlet({ children }) {
     return (
-        <motion.div variants={animations} initial="i" animate="a" exit="e" transition={{ duration: 0.1 }}>
+        <motion.div variants={animations} initial="i" animate="a" exit="e" transition={{ duration: 0.2 }}>
             {children}
         </motion.div>
     );

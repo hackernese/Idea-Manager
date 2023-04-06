@@ -41,7 +41,6 @@ MAX_IDEA_PER_PAGE = 5
 # Maximum amount of ideas per page
 
 
-
 # ------------ Emails services -----------------
 MAIL_CONFIG = {
     "MAIL_SERVER": 'smtp.gmail.com',

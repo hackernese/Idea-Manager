@@ -1,9 +1,11 @@
 from app import app, mail
 from flask import request, jsonify, render_template
-from db import db, User, Sessions, RecoverAccountDB # Importing and initializing the database
+from db import db, User, Sessions, RecoverAccountDB, Logins # Importing and initializing the database
 from . import login_required, bad_request, unauthorized_req
 from flask_mail import Message
 from datetime import datetime
+import requests, json
+
 
 @app.route("/api/auth/whoami", methods=["POST"])
 @login_required()
@@ -53,6 +55,22 @@ def login():
 
     new_session = Sessions(user.id)
     db.session.add(new_session)
+
+    # Checking for login operation
+
+    activity = {"ip" : request.remote_addr, "userid" : user.id}
+
+    if 'browser' in data:
+        activity['browser'] = data['browser']
+    if 'os' in data:
+        activity['os'] = data['os']
+
+    lookupinfo = json.loads(requests.get(f"http://ipwho.is/{request.remote_addr}").text)
+    if lookupinfo['success']:
+        activity['location'] = lookupinfo['city']
+
+    new_login = Logins(**activity)
+    db.session.add(new_login)
     db.session.commit()
 
     return jsonify({
@@ -60,11 +78,50 @@ def login():
         'token' : new_session.token
     })
 
+@app.route("/api/auth/login/get", methods=["POST"])
+@login_required()
+def get_login():
+
+    print("DWAD")
+    data = request.get_json()
+
+    if 'p' not in data:
+        return bad_request("Missing field.")
+    try:
+        p = int(data['p'])
+    except ValueError:
+        return bad_request("Malformed data")
+
+    ret = db.session.query(Logins).filter(Logins.userid==request.session.user.id).order_by(Logins.created_on.desc()).offset(p*10).limit(10).all()
+
+    return jsonify({
+        'status' : "OK",
+        'data' : [
+            {
+                'id' : rec.id,
+                'os' : rec.os,
+                'l' : rec.location,
+                'browser' : rec.browser,
+                'ip' : rec.ip,
+                'date' : rec.created_on
+            } for rec in ret
+        ]
+    })
+
+    breakpoint()
+
 @app.route('/api/auth/logout', methods=["POST"])
 @login_required()
 def logout():
+    if request.form.get("all"):
+        # Checking if the user is requesting a logout-all operation
+        # Deleting all sessions relating to this user
 
-    db.session.delete(request.session)
+        for session in request.session.user.session_ref:
+            db.session.delete(session)
+    else:
+        db.session.delete(request.session)
+
     db.session.commit()
 
     return {

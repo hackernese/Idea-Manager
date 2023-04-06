@@ -16,7 +16,6 @@ from sqlalchemy import text
 from sqlalchemy.schema import CheckConstraint
 
 
-
 # ----- Setting configuration and the database ----------------_#
 app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
 db = SQLAlchemy(app)
@@ -81,7 +80,7 @@ class User(AbstractBase):
     session_ref  = db.relationship('Sessions', backref='user', lazy=True, cascade='all, delete')
     recover_ref = db.relationship('RecoverAccountDB', backref='user', lazy=True, cascade='all, delete')
     reaction_ref = db.relationship('Reaction', backref='user', lazy=True, cascade='all, delete')
-
+    logins_ref = db.relationship('Logins', backref='use', lazy=True, cascade='all, delete')
 
     def __init__(self, username, password, email, department) -> None:
         self.username = username.strip()
@@ -114,6 +113,25 @@ class User(AbstractBase):
     def is_coordinator(self):
         return bool(self.userrole_ref.filter(UserRoles.id==COORDINATOR_ID).first())
 
+class Logins(AbstractBase):
+
+    userid = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    location = db.Column(db.String(50), nullable=False, default="Unknown")
+    ip = db.Column(db.String(30), nullable=False, default="Unknown")
+    browser = db.Column(db.String(30), nullable=False, default='Unknown')
+    os = db.Column(db.String(30), nullable=False, default="Unknown")
+
+
+    @property
+    def getinfo(self):
+        return {
+            'id' : self.id,
+            'location' : self.location,
+            'browser' : self.browser,
+            'os' : self.os,
+            'date' : self.created_on
+        }
+
 class Sessions(AbstractBase):
 
     token = db.Column(db.String(100), unique=True, nullable=False)
@@ -124,8 +142,12 @@ class Sessions(AbstractBase):
         self.user_id = user_id
         self.token = token_urlsafe(100)
 
-    def check_expiry(self) -> None:
-        pass
+    def check_expiry(self) -> None | bool:
+
+        if datetime.now() >= self.expiry_time:
+            return True
+
+        return False
 
 class Category(AbstractBase):
     name = db.Column(db.String(100), unique=True, nullable=False)
@@ -259,6 +281,12 @@ def insert_default_record(*args, **kwargs):
         ))
 
         db.session.commit()
+
+@event.listens_for(Logins.__table__,  "after_create")
+def insert_default_record(*args, **kwargs):
+    db.session.add_all([Logins(os="iOS", ip="127.0.0.1", location="Ha Noi", userid=3, browser='Chrome') for i in range(25)])
+    db.session.commit()
+
 
 with app.app_context():
     db.create_all()
