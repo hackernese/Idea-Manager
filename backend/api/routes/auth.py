@@ -25,7 +25,8 @@ def whoami():
             'gender' : user.gender,
             'address' : user.address,
             'lang' : user.language,
-            'department' : user.department.name
+            'department' : user.department.name,
+            'theme' : user.theme
         }
     })
 
@@ -82,7 +83,6 @@ def login():
 @login_required()
 def get_login():
 
-    print("DWAD")
     data = request.get_json()
 
     if 'p' not in data:

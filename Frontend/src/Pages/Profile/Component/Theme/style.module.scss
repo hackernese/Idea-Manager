@@ -6,6 +6,11 @@
     gap: 1em;
 
     > div {
+        &:hover {
+            outline: 2px solid var(--primarycolor);
+            box-shadow: none;
+        }
+
         box-sizing: border-box;
         @include transition;
         @include SquareRoundBorder;
@@ -33,6 +38,11 @@
         }
 
         > div:nth-child(1) {
+            border-radius: 5px 5px 0px 0px;
+            -webkit-border-radius: 5px 5px 0px 0px;
+            -moz-border-radius: 5px 5px 0px 0px;
+            -ms-border-radius: 5px 5px 0px 0px;
+            -o-border-radius: 5px 5px 0px 0px;
             flex: 3;
             box-sizing: border-box;
             box-shadow: inset 0 0 2px rgb(0 0 0 / 72%);
@@ -66,7 +76,18 @@
     }
 }
 
+.light {
+    background-color: white;
+    > div:nth-child(2) {
+        div {
+            border: 1.5px solid black;
+        }
+    }
+}
+
 .dark {
+    box-shadow: none !important;
+
     background-color: #c3c3c3;
     filter: invert(1);
     -webkit-filter: invert(1);

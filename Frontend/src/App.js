@@ -68,6 +68,8 @@ import UnProtectedRoute from './Components/UnProtectedRoute';
 import { AnimatePresence } from 'framer-motion';
 import { isIE } from 'react-device-detect';
 
+import { setdarktheme, setlighttheme } from './lib/theme';
+
 export const loginContext = createContext();
 
 axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
@@ -97,6 +99,21 @@ function App() {
                 setuserinfo(null);
             });
     }, [auth]);
+
+    useEffect(() => {
+        if (userinfo) {
+            switch (userinfo.theme) {
+                case 'dark':
+                    setdarktheme();
+                    break;
+                case 'light':
+                    setlighttheme();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }, [userinfo]);
 
     if (isIE) {
         // Checking if the user is running this on Internet Explorer
