@@ -1,8 +1,12 @@
+import AnimatedOutlet from '../../Components/AnimatedOutlet';
+
 function Home() {
     return (
-        <div>
-            <label>Home</label>
-        </div>
+        <AnimatedOutlet>
+            <div>
+                <label>Home</label>
+            </div>
+        </AnimatedOutlet>
     );
 }
 

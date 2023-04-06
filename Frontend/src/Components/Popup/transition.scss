@@ -1,0 +1,35 @@
+@import "../globalMixins.scss";
+
+.popup-enter {
+    opacity: 0;
+}
+
+.popup-enter-active {
+    @include transition;
+    opacity: 1;
+}
+
+.popup-exit {
+    > div {
+        transform: translateY(0);
+        -webkit-transform: translateY(0);
+        -moz-transform: translateY(0);
+        -ms-transform: translateY(0);
+        -o-transform: translateY(0);
+    }
+
+    opacity: 1;
+}
+
+.popup-exit-active {
+    opacity: 0;
+    @include transition;
+
+    > div {
+        transform: translateY(3em);
+        -webkit-transform: translateY(3em);
+        -moz-transform: translateY(3em);
+        -ms-transform: translateY(3em);
+        -o-transform: translateY(3em);
+    }
+}

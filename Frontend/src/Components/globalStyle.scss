@@ -1,43 +1,39 @@
-@import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+@import "normalize.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
 
 @font-face {
     font-family: MontserratMeidum;
     src: url("../fonts/Montserrat-Medium.ttf");
 }
 
-
 @font-face {
     font-family: MontserratLight;
     src: url("../fonts/Montserrat-Light.ttf");
 }
 
-
-
-
-:root{
-    --Roboto: 'Roboto', sans-serif;
+:root {
+    --Roboto: "Roboto", sans-serif;
     width: 100%;
     height: 100%;
-    --imgcolor : white;
-    --backgroundcolor : white;
-    --textcolor : black;
-    --primarycolor : #007bff;
+    --imgcolor: white;
+    --backgroundcolor: white;
+    --textcolor: black;
+    --primarycolor: #007bff;
+    --btncolor: #c3c3c3;
+    --inverted: invert(1);
 }
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-ul
-{
+ul {
     list-style: none;
 }
 
-li
-{
+li {
     text-decoration: none;
 }
 
@@ -46,18 +42,19 @@ button,
     outline: none;
     border: none;
 }
-a{
+a {
     color: val(--textcolor);
     text-decoration: none;
 }
 
-html{
+html {
     font-size: 65%;
     width: 100%;
     height: 100%;
 }
 
-body{
+body {
+    overflow-x: hidden;
     font-family: var(--Roboto);
     font-size: 1.6rem;
     line-height: 1.5;

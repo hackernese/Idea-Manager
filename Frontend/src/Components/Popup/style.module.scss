@@ -1,0 +1,105 @@
+@import "../globalMixins.scss";
+
+@mixin undo_effect {
+    color: white;
+    filter: invert(0) !important;
+    -webkit-filter: invert(0) !important;
+}
+
+.primary {
+    @include undo_effect;
+    background-color: #007bff !important;
+}
+
+.error {
+    @include undo_effect;
+    background-color: tomato !important;
+}
+
+.success {
+    @include undo_effect;
+    background-color: #28a745 !important;
+}
+
+.warning {
+    @include undo_effect;
+    background-color: #ffc107 !important;
+}
+
+.popup {
+    position: fixed;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.787);
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+
+    button {
+        @include btn;
+    }
+
+    .loader {
+        padding: 0.5em;
+        display: flex;
+        div {
+            margin: auto;
+            @include loading_circle;
+        }
+    }
+
+    > div {
+        @include dropup_animation;
+        @include SquareRoundBorder;
+        @include transition;
+        margin: auto;
+        min-width: 10em;
+        min-height: 5em;
+        max-width: 45%;
+        background-color: var(--backgroundcolor);
+        color: var(--textcolor);
+
+        > div:nth-child(1) {
+            @include boldfont;
+            font-size: 1em;
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7em;
+            font-size: 1.5em;
+            box-shadow: 0 0 5px black;
+            * {
+                margin: auto;
+                margin-left: 0;
+                margin-right: 0;
+            }
+            svg {
+                @include RoundBorder;
+                @include transition;
+                cursor: pointer;
+                width: 1em;
+                height: 1em;
+                padding: 0.2em;
+            }
+            svg:hover {
+                background-color: tomato;
+                color: white;
+            }
+        }
+
+        > div:nth-child(2) {
+            padding: 1em;
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+            div {
+                display: flex;
+                gap: 0.5em;
+                justify-content: flex-end;
+                button {
+                    font-size: 1em;
+                }
+            }
+        }
+    }
+}

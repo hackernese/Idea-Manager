@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { HeaderOnly, DefaultLayout } from './Components/Layouts';
 import { Fragment, useState } from 'react';
 import LoginPage from './Pages/Login';
@@ -65,6 +65,8 @@ import axios from 'axios';
 import ProtectedRoute from './Components/ProtectedRoute';
 import UnProtectedRoute from './Components/UnProtectedRoute';
 
+import { AnimatePresence } from 'framer-motion';
+
 export const loginContext = createContext();
 
 axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
@@ -72,11 +74,10 @@ axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
 function App() {
     const [auth, setislogin] = useState(false);
     const [userinfo, setuserinfo] = useState(false);
+    const location = useLocation();
 
     // false : not login
     // true : login r
-
-    console.log(userinfo);
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth');
@@ -110,8 +111,8 @@ function App() {
                 },
             }}
         >
-            <Router>
-                <Routes>
+            <AnimatePresence mode="wait">
+                <Routes key={location.pathname} location={location}>
                     <Route
                         path="/"
                         element={
@@ -132,7 +133,6 @@ function App() {
                             </ProtectedRoute>
                         }
                     ></Route>
-
                     <Route
                         path="/admin"
                         element={
@@ -168,7 +168,6 @@ function App() {
                             <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
                         </Route>
                     </Route>
-
                     <Route
                         path="/submission"
                         element={
@@ -185,7 +184,6 @@ function App() {
                             <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
                         </Route>
                     </Route>
-
                     <Route
                         path="/login"
                         element={
@@ -233,7 +231,7 @@ function App() {
                     <Route path="/term-and-condition" element={<TermAndCondition></TermAndCondition>}></Route>
                     <Route path="*" element={<NotFound></NotFound>}></Route>
                 </Routes>
-            </Router>
+            </AnimatePresence>
         </loginContext.Provider>
     );
 }

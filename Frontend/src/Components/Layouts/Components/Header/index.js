@@ -62,6 +62,15 @@ function Header() {
                                 <ul className={cx('d-flex', 'j-center')}>
                                     {/* Checking to see if the current user has access to which tab */}
 
+                                    <li>
+                                        <NavLink
+                                            to="/home"
+                                            className={({ isActive }) => (isActive ? cx('selected') : '')}
+                                        >
+                                            home
+                                        </NavLink>
+                                    </li>
+
                                     {(isAdmin || isManager) && (
                                         <>
                                             <li>

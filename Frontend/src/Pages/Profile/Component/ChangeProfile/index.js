@@ -1,9 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './changeProfile.module.scss';
+import { useContext, useLayoutEffect } from 'react';
+import { settingContext } from '../..';
 
 const cx = classNames.bind(styles);
 
 function ChangeProfile() {
+    const context = useContext(settingContext);
+    useLayoutEffect(() => context.settext('Profile'), []);
+
     return (
         <>
             <div className={cx('container', 'd-flex', 'f-wrap')}>

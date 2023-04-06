@@ -1,23 +1,27 @@
 @mixin gradientBackground {
-    background: #83a4d4;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #83a4d4; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to right,
+        #b6fbff,
+        #83a4d4
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-@mixin RoundBorder{
+@mixin RoundBorder {
     border-radius: 50%;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
-@mixin SlightRoundBorder{
+@mixin SlightRoundBorder {
     border-radius: 15px;
     -webkit-border-radius: 15px;
     -moz-border-radius: 15px;
     -ms-border-radius: 15px;
     -o-border-radius: 15px;
 }
-@mixin SquareRoundBorder{
+@mixin SquareRoundBorder {
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -44,18 +48,19 @@
     font-family: MontserratLight;
 }
 @mixin boldfont {
-    font-family: MontserratMeidum
+    font-family: MontserratMeidum;
 }
 @mixin dropdown_animation {
     @keyframes animation_down {
-        from{
+        from {
             transform: translateY(-3em);
             opacity: 0;
             -webkit-transform: translateY(-3em);
             -moz-transform: translateY(-3em);
             -ms-transform: translateY(-3em);
             -o-transform: translateY(-3em);
-        }to{
+        }
+        to {
             transform: translateY(0);
             opacity: 1;
             -webkit-transform: translateY(0);
@@ -69,14 +74,15 @@
 }
 @mixin dropup_animation {
     @keyframes animation_up {
-        from{
+        from {
             transform: translateY(3em);
             opacity: 0;
             -webkit-transform: translateY(3em);
             -moz-transform: translateY(3em);
             -ms-transform: translateY(3em);
             -o-transform: translateY(3em);
-    }to{
+        }
+        to {
             transform: translateY(0);
             opacity: 1;
             -webkit-transform: translateY(0);
@@ -90,14 +96,15 @@
 }
 @mixin slide_left_animation {
     @keyframes animation_left {
-        from{
+        from {
             opacity: 0;
             transform: translateX(3em);
             -webkit-transform: translateX(3em);
             -moz-transform: translateX(3em);
             -ms-transform: translateX(3em);
             -o-transform: translateX(3em);
-        }to{
+        }
+        to {
             opacity: 1;
             transform: translateX(0);
             -webkit-transform: translateX(0);
@@ -111,14 +118,15 @@
 }
 @mixin slide_right_animation {
     @keyframes animation_right {
-        from{
+        from {
             opacity: 0;
             transform: translateX(-3em);
             -webkit-transform: translateX(-3em);
             -moz-transform: translateX(-3em);
             -ms-transform: translateX(-3em);
             -o-transform: translateX(-3em);
-        }to{
+        }
+        to {
             opacity: 1;
             transform: translateX(0);
             -webkit-transform: translateX(0);
@@ -170,4 +178,41 @@
     border-left: 3px solid transparent;
     animation: loading 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
     -webkit-animation: loading 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+}
+
+@mixin btn {
+    @include lightfont();
+    @include SquareRoundBorder();
+    @include transition();
+    height: 3em;
+    width: auto;
+    padding-right: 1em;
+    padding-left: 1em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.493);
+    cursor: pointer;
+    background-color: var(--btncolor);
+    filter: var(--inverted);
+    -webkit-filter: var(--inverted);
+
+    &:hover {
+        @include boldfont;
+        transform: scale(1.01);
+        -webkit-transform: scale(1.01);
+        -moz-transform: scale(1.01);
+        -ms-transform: scale(1.01);
+        -o-transform: scale(1.01);
+        -webkit-transform: scale(1.01);
+        background-color: crimson;
+        filter: none;
+        -webkit-filter: none;
+        color: white;
+    }
+
+    &:active {
+        transform: scale(0.99);
+        -webkit-transform: scale(0.99);
+        -moz-transform: scale(0.99);
+        -ms-transform: scale(0.99);
+        -o-transform: scale(0.99);
+    }
 }

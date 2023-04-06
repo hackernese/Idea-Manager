@@ -1,5 +1,11 @@
+import AnimatedOutlet from '../../Components/AnimatedOutlet';
+
 function Category() {
-    return <h2>Category</h2>;
+    return (
+        <AnimatedOutlet>
+            <h2>Category</h2>
+        </AnimatedOutlet>
+    );
 }
 
 export default Category;
