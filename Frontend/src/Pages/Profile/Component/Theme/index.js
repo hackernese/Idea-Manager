@@ -20,6 +20,7 @@ function Theme() {
     useLayoutEffect(() => context.settext(t('setting.theme.title')), []);
 
     const [selected, setselected] = useState(userinfo.userinfo.theme === 'light' ? 0 : 1);
+
     const [init, setinit] = useState(false);
     const clickme = (e) => {
         e.currentTarget.children[1].children[0].click();
@@ -34,30 +35,22 @@ function Theme() {
             return;
         }
 
-        switch (selected) {
-            case 0:
-                axios
-                    .post(`user/update/${userinfo.userinfo.id}`, {
-                        theme: 'light',
-                    })
-                    .then((resp) => {
-                        if (resp.data.status === 'OK') setlighttheme();
-                    });
+        const [theme, settheme] =
+            selected === 0 ? ['light', setlighttheme] : selected === 1 ? ['dark', setdarktheme] : null;
 
-                break;
-            case 1:
-                axios
-                    .post(`user/update/${userinfo.userinfo.id}`, {
-                        theme: 'dark',
-                    })
-                    .then((resp) => {
-                        if (resp.data.status === 'OK') setdarktheme();
-                    });
+        if (null) return;
 
-                break;
-            default:
-                break;
-        }
+        axios
+            .post(`user/update/${userinfo.userinfo.id}`, {
+                theme: theme,
+            })
+            .then((resp) => {
+                if (resp.data.status === 'OK') {
+                    settheme();
+                    userinfo.userinfo.theme = theme;
+                    userinfo.setuserinfo(userinfo.userinfo);
+                }
+            });
     }, [selected]);
 
     return (

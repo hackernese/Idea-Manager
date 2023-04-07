@@ -4,6 +4,7 @@ import { useContext, useLayoutEffect } from 'react';
 import { settingContext } from '../..';
 import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
+import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 // import { error, success, info } from '../../../../lib/toast';
 
 const cx = classNames.bind(styles);
@@ -20,7 +21,7 @@ function ChangeProfile() {
     // gender = db.Column(db.String(50), nullable=False, default="unknown")
 
     return (
-        <>
+        <AnimatedOutlet>
             <div className={cx('container')}>
                 <div>
                     <h1>{t('setting.profile.phone')}</h1>
@@ -52,7 +53,7 @@ function ChangeProfile() {
 
                 <button>{t('setting.profile.update')}</button>
             </div>
-        </>
+        </AnimatedOutlet>
     );
 }
 

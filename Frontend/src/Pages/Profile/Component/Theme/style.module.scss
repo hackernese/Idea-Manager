@@ -6,6 +6,9 @@
     gap: 1em;
 
     > div {
+        * {
+            cursor: pointer;
+        }
         &:hover {
             outline: 2px solid var(--primarycolor);
             box-shadow: none;
@@ -91,4 +94,8 @@
     background-color: #c3c3c3;
     filter: invert(1);
     -webkit-filter: invert(1);
+
+    > div:nth-child(2) > div {
+        border: 1.5px solid black !important;
+    }
 }

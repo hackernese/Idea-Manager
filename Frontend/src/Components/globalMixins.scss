@@ -28,6 +28,7 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
 }
+
 @mixin transition {
     transition: all 0.2s ease-in;
     -webkit-transition: all 0.2s ease-in;
@@ -186,13 +187,14 @@
     @include transition();
     height: 3em;
     width: auto;
+    color: var(--invertedtextcolor);
     padding-right: 1em;
     padding-left: 1em;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.493);
+    // box-shadow: 0 0 5px rgba(0, 0, 0, 0.493);
     cursor: pointer;
     background-color: var(--btncolor);
-    filter: var(--inverted);
-    -webkit-filter: var(--inverted);
+    // filter: var(--inverted);
+    // -webkit-filter: var(--inverted);
 
     &:hover {
         @include boldfont;
@@ -203,8 +205,6 @@
         -o-transform: scale(1.01);
         -webkit-transform: scale(1.01);
         background-color: crimson;
-        filter: none;
-        -webkit-filter: none;
         color: white;
     }
 

@@ -1,6 +1,7 @@
 import styles from './style.module.scss';
 import classNames from 'classnames/bind';
 import { useOutlet } from 'react-router-dom';
+import Popup from '../../../Components/Popup';
 
 const cx = classNames.bind(styles);
 
@@ -11,11 +12,7 @@ function Role() {
         return outlet;
     }
 
-    return (
-        <div>
-            <h1>This page will list out all existing roles</h1>
-        </div>
-    );
+    return <div className={cx('role')}></div>;
 }
 
 export default Role;

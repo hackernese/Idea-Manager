@@ -12,7 +12,7 @@ function Admin() {
     }
     // Checking if this is the administrator or not
 
-    if (context.userinfo.role !== 'administrator') return <Navigate to="/"></Navigate>;
+    if (!['administrator', 'manager'].includes(context.userinfo.role)) return <Navigate to="/"></Navigate>;
 
     return outlet;
 }

@@ -1,0 +1,8 @@
+@import "../globalMixins.scss";
+
+.btn {
+    @include btn;
+    position: fixed;
+    bottom: 1em;
+    left: 1em;
+}

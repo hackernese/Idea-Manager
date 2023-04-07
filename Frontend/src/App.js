@@ -73,6 +73,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import './lib/locale';
 
+import Test from './Components/Test';
+
 export const loginContext = createContext();
 
 axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
@@ -142,6 +144,7 @@ function App() {
                     set_login_status: (v) => {
                         setislogin(v);
                     },
+                    setuserinfo: setuserinfo,
                 }}
             >
                 <AnimatePresence mode="wait">
@@ -267,6 +270,8 @@ function App() {
                 </AnimatePresence>
             </loginContext.Provider>
             <ToastContainer theme="dark" position="bottom-right" />
+
+            <Test></Test>
         </>
     );
 }

@@ -117,6 +117,11 @@
 @import "../../Components/globalMixins.scss";
 
 .setting {
+	h1,
+	p {
+		color: var(--textcolor);
+	}
+
 	> div:nth-child(2) {
 		> div:nth-child(1) {
 			@include dropdown_animation;

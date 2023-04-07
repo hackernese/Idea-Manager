@@ -5,6 +5,7 @@ import { settingContext } from '../..';
 import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
 import { error, success, info } from '../../../../lib/toast';
+import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 
 const cx = classNames.bind(styles);
 
@@ -22,7 +23,7 @@ function Password() {
     useLayoutEffect(() => context.settext(t('setting.account.title')), []);
 
     return (
-        <>
+        <AnimatedOutlet>
             <div className={cx('container')}>
                 <div>
                     <h1>{t('setting.account.email_t')}</h1>
@@ -76,7 +77,7 @@ function Password() {
                     )}
                 </div>
             </div>
-        </>
+        </AnimatedOutlet>
     );
 }
 

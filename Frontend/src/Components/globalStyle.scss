@@ -18,9 +18,12 @@
     --imgcolor: white;
     --backgroundcolor: white;
     --textcolor: black;
+    --invertedtextcolor: white;
     --primarycolor: #007bff;
-    --btncolor: #c3c3c3;
+    --btncolor: #3c3c3c;
     --inverted: invert(1);
+    --backward-invert: invert(0);
+    --blurborder: rgba(0, 0, 0, 0.219);
 }
 
 * {

@@ -22,6 +22,10 @@
 }
 
 .i {
+    * {
+        color: var(--textcolor);
+    }
+
     position: relative;
 
     svg {
@@ -48,6 +52,7 @@
     }
 
     input {
+        background-color: transparent;
         border-radius: 5px;
         -webkit-border-radius: 5px;
         -moz-border-radius: 5px;
@@ -59,14 +64,17 @@
         -ms-transition: all 0.2s ease-in;
         -o-transition: all 0.2s ease-in;
 
-        border: 2px solid rgba(0, 0, 0, 0.219);
+        // border: 2px solid rgba(0, 0, 0, 0.219);
+
+        border: 2px solid var(--blurborder);
+
         width: 100%;
         font-size: 1em;
         padding: 1em;
         outline: none;
 
         &:focus {
-            border: 2px solid black;
+            border: 2px solid var(--textcolor);
         }
     }
 }
