@@ -8,12 +8,14 @@ import { useMediaQuery } from 'react-responsive';
 import { useEffect, useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { loginContext } from '../../../../App';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
 function Header() {
     const [toggleState, setToggleState] = useState(true);
     const [toggleUserState, setToggleUserState] = useState(false);
+    const { t } = useTranslation();
 
     const context = useContext(loginContext);
 
@@ -78,7 +80,7 @@ function Header() {
                                                     to="/admin/submission"
                                                     className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
-                                                    Submission
+                                                    {t('header.navbar.submission')}
                                                 </NavLink>
                                             </li>
                                             <li>
@@ -86,7 +88,7 @@ function Header() {
                                                     to="/admin/category"
                                                     className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
-                                                    Category
+                                                    {t('header.navbar.cat')}
                                                 </NavLink>
                                             </li>
                                             <li>
@@ -94,7 +96,7 @@ function Header() {
                                                     to="/admin/department"
                                                     className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
-                                                    Department
+                                                    {t('header.navbar.depart')}
                                                 </NavLink>
                                             </li>
                                             <li>
@@ -102,7 +104,7 @@ function Header() {
                                                     to="/admin/role"
                                                     className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
-                                                    Role
+                                                    {t('header.navbar.role')}
                                                 </NavLink>
                                             </li>
                                             <li>
@@ -110,7 +112,7 @@ function Header() {
                                                     to="/admin/user"
                                                     className={({ isActive }) => (isActive ? cx('selected') : '')}
                                                 >
-                                                    User
+                                                    {t('header.navbar.user')}
                                                 </NavLink>
                                             </li>
                                         </>
@@ -122,7 +124,7 @@ function Header() {
                                                 to="/manager/statistics"
                                                 className={({ isActive }) => (isActive ? cx('selected') : '')}
                                             >
-                                                Statistics
+                                                {t('header.navbar.stat')}
                                             </NavLink>
                                         </li>
                                     )}
@@ -132,7 +134,7 @@ function Header() {
                                             to="/submission"
                                             className={({ isActive }) => (isActive ? cx('selected') : '')}
                                         >
-                                            Staff Submission
+                                            {t('header.navbar.staffsub')}
                                         </NavLink>
                                     </li>
                                 </ul>
@@ -149,7 +151,7 @@ function Header() {
                         {toggleUserState && (
                             <div className={cx('dropdown-menu', 'd-flex')}>
                                 <ul>
-                                    <Link to="/setting">Setting</Link>
+                                    <Link to="/setting">{t('header.navbar.setting')}</Link>
                                     {/* eslint-disable-next-line */}
                                     <a
                                         href="#"
@@ -162,7 +164,7 @@ function Header() {
                                             });
                                         }}
                                     >
-                                        Logout
+                                        {t('header.navbar.logout')}
                                     </a>
                                 </ul>
                             </div>

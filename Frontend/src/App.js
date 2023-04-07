@@ -16,7 +16,7 @@ import StatisticPage from './Pages/Statistic';
 
 // Importing Setting sub-components here
 import ChangeProfile from './Pages/Profile/Component/ChangeProfile';
-import Password from './Pages/Profile/Component/Password';
+import Account from './Pages/Profile/Component/Account';
 import Security from './Pages/Profile/Component/Security';
 import Theme from './Pages/Profile/Component/Theme';
 
@@ -69,6 +69,9 @@ import { AnimatePresence } from 'framer-motion';
 import { isIE } from 'react-device-detect';
 
 import { setdarktheme, setlighttheme } from './lib/theme';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+import './lib/locale';
 
 export const loginContext = createContext();
 
@@ -131,137 +134,140 @@ function App() {
     }
 
     return (
-        <loginContext.Provider
-            value={{
-                userinfo: userinfo,
-                is_auth: auth,
-                set_login_status: (v) => {
-                    setislogin(v);
-                },
-            }}
-        >
-            <AnimatePresence mode="wait">
-                <Routes key={location.pathname} location={location}>
-                    <Route
-                        path="/"
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <Home></Home>
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    ></Route>
-                    <Route
-                        path="/home"
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <Home></Home>
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    ></Route>
-                    <Route
-                        path="/admin"
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <Admin />
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    >
-                        <Route path="category" element={<Category></Category>}>
-                            <Route path=":id/edit" element={<EditCategory></EditCategory>}></Route>
-                            <Route path=":id/details" element={<CategoryDetails></CategoryDetails>}></Route>
-                            <Route path="add" element={<AddNewCategory></AddNewCategory>}></Route>
-                        </Route>
+        <>
+            <loginContext.Provider
+                value={{
+                    userinfo: userinfo,
+                    is_auth: auth,
+                    set_login_status: (v) => {
+                        setislogin(v);
+                    },
+                }}
+            >
+                <AnimatePresence mode="wait">
+                    <Routes key={location.pathname} location={location}>
+                        <Route
+                            path="/"
+                            element={
+                                <ProtectedRoute>
+                                    <DefaultLayout>
+                                        <Home></Home>
+                                    </DefaultLayout>
+                                </ProtectedRoute>
+                            }
+                        ></Route>
+                        <Route
+                            path="/home"
+                            element={
+                                <ProtectedRoute>
+                                    <DefaultLayout>
+                                        <Home></Home>
+                                    </DefaultLayout>
+                                </ProtectedRoute>
+                            }
+                        ></Route>
+                        <Route
+                            path="/admin"
+                            element={
+                                <ProtectedRoute>
+                                    <DefaultLayout>
+                                        <Admin />
+                                    </DefaultLayout>
+                                </ProtectedRoute>
+                            }
+                        >
+                            <Route path="category" element={<Category></Category>}>
+                                <Route path=":id/edit" element={<EditCategory></EditCategory>}></Route>
+                                <Route path=":id/details" element={<CategoryDetails></CategoryDetails>}></Route>
+                                <Route path="add" element={<AddNewCategory></AddNewCategory>}></Route>
+                            </Route>
 
-                        <Route path="department" element={<Department></Department>}>
-                            <Route path="add" element={<AddNewDepartment></AddNewDepartment>}></Route>
-                            <Route path=":id/edit" element={<EditDepartment></EditDepartment>}></Route>
-                            <Route path=":id/details" element={<DepartmentDetails></DepartmentDetails>}></Route>
-                        </Route>
+                            <Route path="department" element={<Department></Department>}>
+                                <Route path="add" element={<AddNewDepartment></AddNewDepartment>}></Route>
+                                <Route path=":id/edit" element={<EditDepartment></EditDepartment>}></Route>
+                                <Route path=":id/details" element={<DepartmentDetails></DepartmentDetails>}></Route>
+                            </Route>
 
-                        <Route path="user" element={<User></User>}>
-                            <Route path="add" element={<AddNewUser></AddNewUser>} />
-                            <Route path=":id/setting" element={<UserSetting></UserSetting>} />
+                            <Route path="user" element={<User></User>}>
+                                <Route path="add" element={<AddNewUser></AddNewUser>} />
+                                <Route path=":id/setting" element={<UserSetting></UserSetting>} />
+                            </Route>
+                            <Route path="role" element={<Role></Role>}>
+                                <Route path="add" element={<AddRole></AddRole>}></Route>
+                                <Route path="edit" element={<EditRole></EditRole>}></Route>
+                            </Route>
+                            <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
+                                <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
+                                <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
+                            </Route>
                         </Route>
-                        <Route path="role" element={<Role></Role>}>
-                            <Route path="add" element={<AddRole></AddRole>}></Route>
-                            <Route path="edit" element={<EditRole></EditRole>}></Route>
+                        <Route
+                            path="/submission"
+                            element={
+                                <ProtectedRoute>
+                                    <DefaultLayout>
+                                        <SubmissionPage />
+                                    </DefaultLayout>
+                                </ProtectedRoute>
+                            }
+                        >
+                            <Route path=":id" element={<SubmissionID></SubmissionID>}>
+                                <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
+                                <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
+                                <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
+                            </Route>
                         </Route>
-                        <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
-                            <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
-                            <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
+                        <Route
+                            path="/login"
+                            element={
+                                <Fragment>
+                                    <LoginPage />
+                                </Fragment>
+                            }
+                        ></Route>
+                        <Route
+                            path="/setting"
+                            element={
+                                <ProtectedRoute>
+                                    <HeaderOnly>
+                                        <ProfilePage />
+                                    </HeaderOnly>
+                                </ProtectedRoute>
+                            }
+                        >
+                            <Route path="security" element={<Security></Security>}></Route>
+                            <Route path="theme" element={<Theme></Theme>}></Route>
+                            <Route path="general" element={<ChangeProfile></ChangeProfile>}></Route>
+                            <Route path="account" element={<Account></Account>}></Route>
                         </Route>
-                    </Route>
-                    <Route
-                        path="/submission"
-                        element={
-                            <ProtectedRoute>
-                                <DefaultLayout>
-                                    <SubmissionPage />
-                                </DefaultLayout>
-                            </ProtectedRoute>
-                        }
-                    >
-                        <Route path=":id" element={<SubmissionID></SubmissionID>}>
-                            <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
-                            <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
-                            <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
+                        <Route
+                            path="/manager/statistics"
+                            element={
+                                <ProtectedRoute>
+                                    <HeaderOnly>
+                                        <StatisticPage />
+                                    </HeaderOnly>
+                                </ProtectedRoute>
+                            }
+                        ></Route>
+                        <Route
+                            path="/recovery"
+                            element={
+                                <UnProtectedRoute>
+                                    <Recovery></Recovery>
+                                </UnProtectedRoute>
+                            }
+                        >
+                            <Route path="reset" element={<Reset></Reset>} />
+                            <Route path="code" element={<Code></Code>} />
                         </Route>
-                    </Route>
-                    <Route
-                        path="/login"
-                        element={
-                            <Fragment>
-                                <LoginPage />
-                            </Fragment>
-                        }
-                    ></Route>
-                    <Route
-                        path="/setting"
-                        element={
-                            <ProtectedRoute>
-                                <HeaderOnly>
-                                    <ProfilePage />
-                                </HeaderOnly>
-                            </ProtectedRoute>
-                        }
-                    >
-                        <Route path="security" element={<Security></Security>}></Route>
-                        <Route path="theme" element={<Theme></Theme>}></Route>
-                        <Route path="general" element={<ChangeProfile></ChangeProfile>}></Route>
-                        <Route path="account" element={<Password></Password>}></Route>
-                    </Route>
-                    <Route
-                        path="/manager/statistics"
-                        element={
-                            <ProtectedRoute>
-                                <HeaderOnly>
-                                    <StatisticPage />
-                                </HeaderOnly>
-                            </ProtectedRoute>
-                        }
-                    ></Route>
-                    <Route
-                        path="/recovery"
-                        element={
-                            <UnProtectedRoute>
-                                <Recovery></Recovery>
-                            </UnProtectedRoute>
-                        }
-                    >
-                        <Route path="reset" element={<Reset></Reset>} />
-                        <Route path="code" element={<Code></Code>} />
-                    </Route>
-                    <Route path="/term-and-condition" element={<TermAndCondition></TermAndCondition>}></Route>
-                    <Route path="*" element={<NotFound></NotFound>}></Route>
-                </Routes>
-            </AnimatePresence>
-        </loginContext.Provider>
+                        <Route path="/term-and-condition" element={<TermAndCondition></TermAndCondition>}></Route>
+                        <Route path="*" element={<NotFound></NotFound>}></Route>
+                    </Routes>
+                </AnimatePresence>
+            </loginContext.Provider>
+            <ToastContainer theme="dark" position="bottom-right" />
+        </>
     );
 }
 

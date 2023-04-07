@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './style.module.scss';
-import { useContext, useEffect, useLayoutEffect, useReducer, useState } from 'react';
+import { useContext, useLayoutEffect, useReducer, useState } from 'react';
 import { settingContext } from '../..';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faApple, faWindows, faAndroid, faLinux } from '@fortawesome/free-brands-svg-icons';
@@ -9,12 +9,15 @@ import Popup from '../../../../Components/Popup';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import axios from 'axios';
 import LoadingCircle from '../../../../Components/LoadingCircle';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function Security() {
+    const { t } = useTranslation();
+
     const context = useContext(settingContext);
-    useLayoutEffect(() => context.settext('Security'), []);
+    useLayoutEffect(() => context.settext(t('setting.security.title')), []);
 
     const [popup, setpopup] = useState(false);
 
@@ -37,16 +40,16 @@ function Security() {
     return (
         <AnimatedOutlet>
             <div className={cx('security')}>
-                <h1>All Logins</h1>
-                <p>Your login activities were logged in the following form.</p>
+                <h1>{t('setting.security.login_t')}</h1>
+                <p>{t('setting.security.login_text')}</p>
                 <div>
                     <section>
                         <div>
-                            <label>Operating system</label>
-                            <label>Browser</label>
-                            <label>Location</label>
-                            <label>IP Address</label>
-                            <label>Time</label>
+                            <label>{t('setting.security.os')}</label>
+                            <label>{t('setting.security.browser')}</label>
+                            <label>{t('setting.security.location')}</label>
+                            <label>{t('setting.security.ip')}</label>
+                            <label>{t('setting.security.time')}</label>
                         </div>
                     </section>
                     <section>
@@ -83,17 +86,17 @@ function Security() {
                         ></LoadingCircle>
                     </section>
                 </div>
-                <h1>Logout all</h1>
-                <p>Logout from all devices that you had previously logged in.</p>
-                <button onClick={() => setpopup(true)}>Logout</button>
+                <h1>{t('setting.security.logout_t')}</h1>
+                <p>{t('setting.security.logout_text')}</p>
+                <button onClick={() => setpopup(true)}>{t('setting.security.logout')}</button>
             </div>
             {popup && (
                 <Popup
-                    text="Are you sure that you actually wish to logout from all devices ? Please click 'Logout' to proceed."
-                    title="Confirmation !"
+                    text={t('setting.security.text')}
+                    title={t('setting.security.confirm')}
                     buttons={[
                         {
-                            text: 'Logout',
+                            text: t('setting.security.logout'),
                             callback: (f, close) => {
                                 // f = stop the loading circle from spinning
                                 // close = destroy the form

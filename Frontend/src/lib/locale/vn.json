@@ -1,0 +1,48 @@
+{
+    "header": {
+        "navbar": {
+            "submission": "Nộp đơn",
+            "cat": "Danh mục",
+            "depart": "Phòng ban",
+            "role": "Vai trò",
+            "user": "Người dùng",
+            "stat": "Thống kê",
+            "staffsub": "Tổng Đơn",
+            "logout": "Đăng xuất",
+            "setting": "Cài đặt"
+        }
+    },
+    "setting": {
+        "security": {
+            "browser": "Trình duyệt",
+            "ip": "Địa chỉ IP",
+            "location": "Vị trí",
+            "login_t": "Hoạt động đăng nhập",
+            "login_text": "Nhật ký hoạt động đăng nhập của bạn đã được ghi lại ở dưới.",
+            "logout_t": "Đăng xuất toàn bộ",
+            "logout_text": "Đăng xuất khỏi tất cả các thiết bị mà bạn đã đăng nhập trước đó.",
+            "os": "Hệ điều hành",
+            "time": "Thời gian",
+            "title": "Bảo mật",
+            "logout": "Đăng xuất",
+            "confirm": "Xác nhận !",
+            "text": "Bạn có chắc chắn muốn đăng xuất khỏi tất cả các thiết bị không? Vui lòng nhấp vào nút 'Đăng xuất' để tiếp tục."
+        },
+        "theme": {
+            "title": "Chủ đề",
+            "dark": "Chế độ tối",
+            "light": "Chế độ sáng"
+        },
+        "account": {
+            "title" : "Tài khoản",
+            "email_t": "Email",
+            "email_text": "Biểu mẫu sau được sử dụng để cập nhật email hiện tại của bạn",
+            "update": "Cập nhật",
+            "pass_t": "Mật khẩu",
+            "pass_text": "Biểu mẫu sau được sử dụng để cập nhật mật khẩu hiện tại của bạn.",
+            "newpass": "Mật khẩu mới...",
+            "cpass": "Xác nhận mật khẩu...",
+            "currentpass": "Mật khẩu hiện tại..."
+        }
+    }
+}

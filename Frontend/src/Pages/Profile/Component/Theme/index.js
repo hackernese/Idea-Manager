@@ -9,13 +9,15 @@ import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import { setlighttheme, setdarktheme } from '../../../../lib/theme';
 import { loginContext } from '../../../../App';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function Theme() {
     const context = useContext(settingContext);
     const userinfo = useContext(loginContext);
-    useLayoutEffect(() => context.settext('Theme'), []);
+    const { t } = useTranslation();
+    useLayoutEffect(() => context.settext(t('setting.theme.title')), []);
 
     const [selected, setselected] = useState(userinfo.userinfo.theme === 'light' ? 0 : 1);
     const [init, setinit] = useState(false);
@@ -58,8 +60,6 @@ function Theme() {
         }
     }, [selected]);
 
-    console.log(userinfo);
-
     return (
         <AnimatedOutlet>
             <div className={cx('theme')}>
@@ -69,7 +69,7 @@ function Theme() {
                     </div>
                     <div>
                         <TickBox force_select={selected} value={0} click={chooseTheme}></TickBox>
-                        <label>Light mode</label>
+                        <label>{t('setting.theme.light')}</label>
                     </div>
                 </div>
 
@@ -79,7 +79,7 @@ function Theme() {
                     </div>
                     <div>
                         <TickBox force_select={selected} value={1} click={chooseTheme}></TickBox>
-                        <label>Dark mode</label>
+                        <label>{t('setting.theme.dark')}</label>
                     </div>
                 </div>
             </div>

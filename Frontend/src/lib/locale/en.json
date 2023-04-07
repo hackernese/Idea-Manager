@@ -1,0 +1,60 @@
+{
+    "header": {
+        "navbar": {
+            "submission": "Submission",
+            "cat": "Category",
+            "depart": "Department",
+            "role": "Role",
+            "user": "User",
+            "stat": "Statistics",
+            "staffsub": "Staff Submission",
+            "logout": "Logout",
+            "setting": "Setting"
+        }
+    },
+    "setting": {
+        "security": {
+            "browser": "Browser",
+            "ip": "IP Address",
+            "location": "Location",
+            "login_t": "Login activities",
+            "login_text": "Your login activities were logged in the following form.",
+            "logout_t": "Logout all",
+            "logout_text": "Logout from all devices that you had previously logged in.",
+            "os": "Operating system",
+            "time": "Time",
+            "title": "Security",
+            "logout": "Logout",
+            "confirm": "Confirmation !",
+            "text": "Are you sure that you actually wish to logout from all devices ? Please click 'Logout' to proceed."
+        },
+        "theme": {
+            "title": "Theme",
+            "dark": "Dark mode",
+            "light": "Light mode"
+        },
+        "account": {
+            "title" : "Account",
+            "email_t": "Email",
+            "email_text": "The following form is used to update your current email",
+            "update": "Update",
+            "pass_t": "Password",
+            "pass_text": "The following form is used to update your current password.",
+            "newpass": "New password...",
+            "cpass": "Confirm password...",
+            "currentpass": "Current password.."
+        },
+        "profile" : {
+            "title" : "Profile",
+            "update" : "Update profile",
+            "phone" : "Phone number",
+            "phoneholder" : "Your number here",
+            "phonetext" : "You can change your phone number in the following form.",
+            "address" : "Address",
+            "addressholder" : "Home Address",
+            "addresstext" : "You can change your address in the following form.",
+            "gender" : "Gender",
+            "birthday": "Birthday"
+        }
+    }
+}
