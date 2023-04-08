@@ -1,0 +1,22 @@
+@import '../globalMixins.scss';
+
+
+
+.dropdown{
+    position: relative;
+    
+
+    > section{
+        @include SlightRoundBorder;
+        height : auto;
+        width: 3em;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap : 0.5em;
+        padding : 0.5em;
+        color : var(--textcolor);
+        position: absolute;
+    }
+
+}

@@ -6,6 +6,7 @@ import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 // import { error, success, info } from '../../../../lib/toast';
+import DropDown from '../../../../Components/DropDown';
 
 const cx = classNames.bind(styles);
 
@@ -13,12 +14,6 @@ function ChangeProfile() {
     const { t } = useTranslation();
     const context = useContext(settingContext);
     useLayoutEffect(() => context.settext(t('setting.profile.title')), []);
-
-    // username = db.Column(db.String(80), unique=True, nullable=False)
-
-    // # Optional columns / fields...
-    // birthday = db.Column(db.DateTime, nullable=True)
-    // gender = db.Column(db.String(50), nullable=False, default="unknown")
 
     return (
         <AnimatedOutlet>
@@ -45,6 +40,18 @@ function ChangeProfile() {
 
                 <div>
                     <h1>{t('setting.profile.gender')}</h1>
+                    <DropDown value={
+                        [
+                            {
+                                v : "Male",
+                            },{
+                                v : "Female"
+                            },{
+                                v : "Others",
+                                s : true
+                            }
+                        ]
+                    }></DropDown>
                 </div>
 
                 <div>
