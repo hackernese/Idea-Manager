@@ -138,6 +138,76 @@
 }
 
 @media screen and (max-width: 1100px) {
+	.container {
+		padding: 0;
+		height: 100%;
+		position: relative;
+	}
+
+	.setting {
+		> div:nth-child(1) {
+			@include dropup_animation;
+			position: absolute;
+			width: 100%;
+			height: 3em;
+			bottom: 0;
+			right: 0;
+			padding: 0;
+			background-color: var(--backgroundcolor);
+			box-shadow: 0 0 5px var(--blurborder);
+			z-index: 1;
+
+			.selected,
+			ul a:hover {
+				@include SlightRoundBorder;
+				padding: 0.5em;
+				opacity: 1;
+				color: var(--backgroundcolor);
+			}
+
+			.selected {
+				background-color: var(--secondarycolor);
+			}
+
+			ul a:hover {
+				background-color: var(--blurborder);
+			}
+
+			div,
+			ul {
+				height: 100%;
+			}
+
+			ul {
+				display: flex;
+				justify-content: space-evenly;
+			}
+
+			ul a {
+				@include boldfont;
+				border-radius: 0px;
+				opacity: 0.5;
+				font-size: 0.8em;
+				margin: auto;
+				color: var(--textcolor);
+				display: unset;
+				padding: 0;
+				background-color: transparent;
+				-webkit-border-radius: 0px;
+				-moz-border-radius: 0px;
+				-ms-border-radius: 0px;
+				-o-border-radius: 0px;
+			}
+		}
+		> div:nth-child(2) {
+			overflow: auto;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			height: 100%;
+			height: calc(100% - 3em);
+		}
+	}
 	.title {
 		font-weight: bold;
 	}

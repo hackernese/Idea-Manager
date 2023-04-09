@@ -244,6 +244,14 @@ div.Toggle-responsive > div:nth-child(1) > div > ul {
 }
 
 @media screen and (max-width: 1100px) {
+    .container {
+        background-color: var(--backgroundcolor);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+    }
+
     div.Toggle-responsive > div:nth-child(1) > div > ul {
         margin: 0;
         width: 100%;
