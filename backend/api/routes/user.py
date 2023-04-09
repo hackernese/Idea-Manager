@@ -164,23 +164,11 @@ def get_user_info(user_id):
         }
     })
 
-@app.route('/api/user/update/<user_id>', methods=['POST'])
-@login_required(allow_personal_user=True)
-def update_user_info(user_id):
 
-    data = request.get_json()
-
-    if not user_id.isdigit():
-        return jsonify({
-            'status' : "FAIL",
-            'err' : "Invalid user id."
-        })
-
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+def change_user_info(user, data):
 
     if not user:
         return bad_request("User with this id doesn't exist")
-
     if "name" in data:
         # Updating the username only
         try:
@@ -273,6 +261,38 @@ def update_user_info(user_id):
             return bad_request('Invalid language')
 
     db.session.commit()
+
+@app.route('/api/user/update/<user_id>', methods=['POST'])
+@login_required(allow_personal_user=True)
+def update_user_info(user_id):
+
+    data = request.get_json()
+
+    if not user_id.isdigit():
+        return jsonify({
+            'status' : "FAIL",
+            'err' : "Invalid user id."
+        })
+
+    user = db.session.query(User).filter(User.id==int(user_id)).first()
+
+    ret = change_user_info(user, data)
+    if ret:
+        return ret
+
+    return jsonify({
+        'status' : "OK"
+    })
+
+@app.route('/api/user/update', methods=["POST"])
+@login_required()
+def update_self_info():
+
+    data = request.get_json()
+
+    ret = change_user_info(request.session.user, data)
+    if ret:
+        return ret;
 
     return jsonify({
         'status' : "OK"

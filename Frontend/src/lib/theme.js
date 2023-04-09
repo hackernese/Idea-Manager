@@ -5,6 +5,8 @@ const style = document.documentElement.style;
 export const setlighttheme = () => {
     style.setProperty('--imgcolor', 'white');
     style.setProperty('--backgroundcolor', 'white');
+
+    style.setProperty('--secondarycolor', '#007bff');
     style.setProperty('--textcolor', 'black');
     style.setProperty('--btncolor', '#3c3c3c');
     style.setProperty('--invertedtextcolor', 'white');
@@ -16,6 +18,8 @@ export const setlighttheme = () => {
 export const setdarktheme = () => {
     style.setProperty('--imgcolor', 'black');
     style.setProperty('--backgroundcolor', '#2c2c2c');
+    style.setProperty('--secondarycolor', '#ffc047');
+
     style.setProperty('--textcolor', 'white');
     style.setProperty('--btncolor', '#ffc047');
     style.setProperty('--invertedtextcolor', 'black');

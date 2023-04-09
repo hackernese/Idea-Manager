@@ -20,7 +20,7 @@ function Password() {
     const cfpassref = createRef();
     const currentpasswd = createRef();
 
-    useLayoutEffect(() => context.settext(t('setting.account.title')), []);
+    useLayoutEffect(() => context.settext('setting.account.title'), []);
 
     return (
         <AnimatedOutlet>

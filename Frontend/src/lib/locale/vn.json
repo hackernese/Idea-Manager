@@ -13,6 +13,12 @@
         }
     },
     "setting": {
+        "sidebar": {
+            "profile": "Hồ sơ cá nhân",
+            "account": "Tài khoản",
+            "security": "Bảo mật",
+            "theme": "Giao diện"
+        },
         "security": {
             "browser": "Trình duyệt",
             "ip": "Địa chỉ IP",
@@ -34,7 +40,7 @@
             "light": "Chế độ sáng"
         },
         "account": {
-            "title" : "Tài khoản",
+            "title": "Tài khoản",
             "email_t": "Email",
             "email_text": "Biểu mẫu sau được sử dụng để cập nhật email hiện tại của bạn",
             "update": "Cập nhật",
@@ -43,6 +49,28 @@
             "newpass": "Mật khẩu mới...",
             "cpass": "Xác nhận mật khẩu...",
             "currentpass": "Mật khẩu hiện tại..."
+        },
+        "profile": {
+            "title": "Hồ sơ cá nhân",
+            "update": "Cập nhật",
+            "general": "Thông tin chung",
+            "generaltext": "Cập nhật thông tin chung của bạn như số điện thoại, địa chỉ, v.v... ở đây.",
+            "phoneholder": "Nhập số điện thoại của bạn",
+            "addressholder": "Địa chỉ nhà",
+            "gender": "Giới tính",
+            "gendertext": "Cập nhật giới tính của bạn ở đây.",
+            "birthday": "Ngày sinh",
+            "language": "Ngôn ngữ",
+            "langtext": "Cập nhật ngôn ngữ sử dụng của bạn ở đây.",
+            "genders": {
+                "male": "Nam",
+                "female": "Nữ",
+                "others": "Khác"
+            },
+            "msg": {
+                "success_lang": "Đã chuyển sang ngôn ngữ ",
+                "error_lang": "Đã xảy ra lỗi không mong muốn, không thể chuyển sang ngôn ngữ khác."
+            }
         }
     }
 }

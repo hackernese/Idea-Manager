@@ -17,7 +17,7 @@ function Security() {
     const { t } = useTranslation();
 
     const context = useContext(settingContext);
-    useLayoutEffect(() => context.settext(t('setting.security.title')), []);
+    useLayoutEffect(() => context.settext('setting.security.title'), []);
 
     const [popup, setpopup] = useState(false);
 

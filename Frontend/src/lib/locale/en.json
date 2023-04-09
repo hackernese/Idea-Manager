@@ -13,6 +13,12 @@
         }
     },
     "setting": {
+        "sidebar": {
+            "profile": "Profile",
+            "account": "Account",
+            "security": "Security",
+            "theme": "Theme"
+        },
         "security": {
             "browser": "Browser",
             "ip": "IP Address",
@@ -34,7 +40,7 @@
             "light": "Light mode"
         },
         "account": {
-            "title" : "Account",
+            "title": "Account",
             "email_t": "Email",
             "email_text": "The following form is used to update your current email",
             "update": "Update",
@@ -44,17 +50,27 @@
             "cpass": "Confirm password...",
             "currentpass": "Current password.."
         },
-        "profile" : {
-            "title" : "Profile",
-            "update" : "Update profile",
-            "phone" : "Phone number",
-            "phoneholder" : "Your number here",
-            "phonetext" : "You can change your phone number in the following form.",
-            "address" : "Address",
-            "addressholder" : "Home Address",
-            "addresstext" : "You can change your address in the following form.",
-            "gender" : "Gender",
-            "birthday": "Birthday"
+        "profile": {
+            "title": "Profile",
+            "update": "Update",
+            "general": "General",
+            "generaltext": "Customize your general information such as phone number, address, etc... here.",
+            "phoneholder": "Your number here",
+            "addressholder": "Home Address",
+            "gender": "Gender",
+            "gendertext": "Customize your gender here.",
+            "birthday": "Birthday",
+            "language": "Language",
+            "langtext": "Customize your language of choice here.",
+            "genders": {
+                "male": "Male",
+                "female": "Female",
+                "others": "Others"
+            },
+            "msg": {
+                "success_lang": "Successfully switched to ",
+                "error_lang": "Unexpected error occurred, unable to switch to different language."
+            }
         }
     }
 }

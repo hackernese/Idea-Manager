@@ -205,7 +205,7 @@ class RecoverAccountDB(AbstractBase):
     recover_code = db.Column(db.Integer, nullable=False)
     # 6 digits code
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
-    expiry_time = db.Column(db.DateTime, default=datetime.now() + timedelta(minutes=10))
+    expiry_time = db.Column(db.DateTime, default=datetime.now() + timedelta(minutes=RECOVERY_TOKEN_EXPIRY_MINUTES))
     # After this expired date, the token and the link is no longer usable
 
     unique_identifier = db.Column(db.String(100), unique=True, nullable=False)

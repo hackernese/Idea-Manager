@@ -1,0 +1,37 @@
+@import "../globalMixins.scss";
+
+.date {
+    width: 100%;
+
+    fieldset {
+        border-color: var(--blurborder);
+    }
+
+    > div:hover {
+        fieldset {
+            pointer-events: all;
+            border-color: var(--textcolor) !important;
+        }
+    }
+
+    label,
+    input,
+    svg {
+        color: var(--textcolor);
+    }
+
+    input,
+    svg {
+        z-index: 10;
+        font-size: 1.3em !important;
+    }
+
+    > div > div > button:hover {
+        background-color: var(--blurborder);
+    }
+
+    label {
+        transform-origin: left;
+        font-size: 0.7em !important;
+    }
+}

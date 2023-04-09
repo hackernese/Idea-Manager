@@ -1,0 +1,24 @@
+@import "../globalMixins.scss";
+
+.MuiPickersPopper-root.MuiPopper-root {
+    .MuiPickersLayout-root {
+        background-color: var(--backgroundcolor);
+        color: var(--textcolor);
+        overflow-x: hidden;
+    }
+
+    .MuiYearCalendar-root {
+        overflow-x: hidden;
+    }
+
+    .Mui-selected {
+        background-color: var(--secondarycolor) !important;
+        color: var(--backgroundcolor);
+    }
+
+    button,
+    span {
+        font-size: 0.7em;
+        color: var(--textcolor);
+    }
+}

@@ -5,60 +5,96 @@ import { settingContext } from '../..';
 import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
-// import { error, success, info } from '../../../../lib/toast';
+import { error, success } from '../../../../lib/toast';
 import DropDown from '../../../../Components/DropDown';
+import DatePicker from '../../../../Components/DatePicker';
+import LoadingButton from '../../../../Components/LoadingButton';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function ChangeProfile() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const context = useContext(settingContext);
-    useLayoutEffect(() => context.settext(t('setting.profile.title')), []);
+    useLayoutEffect(() => context.settext('setting.profile.title'), []);
 
     return (
         <AnimatedOutlet>
             <div className={cx('container')}>
                 <div>
-                    <h1>{t('setting.profile.phone')}</h1>
-                    <p>{t('setting.profile.phonetext')}</p>
+                    <h1>{t('setting.profile.general')}</h1>
+                    <p>{t('setting.profile.generaltext')}</p>
                     <CustomInput
                         type="text"
                         animation={false}
                         placeholder={t('setting.profile.phoneholder')}
                     ></CustomInput>
-                </div>
-
-                <div>
-                    <h1>{t('setting.profile.address')}</h1>
-                    <p>{t('setting.profile.addresstext')}</p>
                     <CustomInput
                         type="text"
                         animation={false}
                         placeholder={t('setting.profile.addressholder')}
                     ></CustomInput>
+                    <DatePicker label={t('setting.profile.birthday')}></DatePicker>
+                    <LoadingButton
+                        text={t('setting.profile.update')}
+                        onClick={async () => {
+                            console.log(1);
+                        }}
+                    ></LoadingButton>
                 </div>
 
                 <div>
                     <h1>{t('setting.profile.gender')}</h1>
-                    <DropDown value={
-                        [
+                    <p>{t('setting.profile.gendertext')}</p>
+                    <DropDown
+                        value={[
                             {
-                                v : "Male",
-                            },{
-                                v : "Female"
-                            },{
-                                v : "Others",
-                                s : true
-                            }
-                        ]
-                    }></DropDown>
+                                v: t('setting.profile.genders.male'),
+                            },
+                            {
+                                v: t('setting.profile.genders.female'),
+                            },
+                            {
+                                v: t('setting.profile.genders.others'),
+                                s: true,
+                            },
+                        ]}
+                        onChange={async ({ value }) => {
+                            console.log(value);
+                        }}
+                    ></DropDown>
                 </div>
-
                 <div>
-                    <h1>{t('setting.profile.birthday')}</h1>
-                </div>
+                    <h1>{t('setting.profile.language')}</h1>
+                    <p>{t('setting.profile.langtext')}</p>
+                    <DropDown
+                        value={[
+                            {
+                                v: 'English',
+                                ret: 'en',
+                                s: i18n.language === 'en',
+                            },
+                            {
+                                ret: 'vn',
+                                v: 'Tiếng Việt',
+                                s: i18n.language === 'vn',
+                            },
+                        ]}
+                        onChange={async ({ value, code }) => {
+                            if (['en', 'vn'].includes(code)) {
+                                const ret = await axios.post('user/update', {
+                                    language: code,
+                                });
 
-                <button>{t('setting.profile.update')}</button>
+                                if (ret.data.status === 'OK') {
+                                    i18n.changeLanguage(code).then((t2) =>
+                                        success(`${t2('setting.profile.msg.success_lang')} ${value}`),
+                                    );
+                                } else error(t('setting.profile.msg.error_lang'));
+                            }
+                        }}
+                    ></DropDown>
+                </div>
             </div>
         </AnimatedOutlet>
     );

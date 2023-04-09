@@ -1,0 +1,9 @@
+@import "../globalMixins.scss";
+
+.btn {
+    @include btn;
+}
+
+.loader {
+    @include loading_circle;
+}

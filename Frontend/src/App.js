@@ -70,22 +70,49 @@ import { isIE } from 'react-device-detect';
 
 import { setdarktheme, setlighttheme } from './lib/theme';
 import 'react-toastify/dist/ReactToastify.css';
+
 import { ToastContainer } from 'react-toastify';
 import './lib/locale';
 
 import Test from './Components/Test';
+import useTranslation from './lib/locale';
 
 export const loginContext = createContext();
 
 axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
 
 function App() {
+    const { i18n } = useTranslation();
     const [auth, setislogin] = useState(false);
     const [userinfo, setuserinfo] = useState(false);
     const location = useLocation();
 
     // false : not login
     // true : login r
+
+    const userinfo_initialize = (info) => {
+        switch (info.theme) {
+            case 'dark':
+                setdarktheme();
+                break;
+            case 'light':
+                setlighttheme();
+                break;
+            default:
+                break;
+        }
+
+        switch (info.lang) {
+            case 'en':
+                i18n.changeLanguage('en');
+                break;
+            case 'vn':
+                i18n.changeLanguage('vn');
+                break;
+            default:
+                break;
+        }
+    };
 
     useEffect(() => {
         axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth');
@@ -94,6 +121,7 @@ function App() {
             .post('auth/whoami')
             .then((resp) => {
                 if (resp.data.status === 'OK') {
+                    userinfo_initialize(resp.data.data);
                     setuserinfo(resp.data.data);
                 } else {
                     setuserinfo(null);
@@ -104,21 +132,6 @@ function App() {
                 setuserinfo(null);
             });
     }, [auth]);
-
-    useEffect(() => {
-        if (userinfo) {
-            switch (userinfo.theme) {
-                case 'dark':
-                    setdarktheme();
-                    break;
-                case 'light':
-                    setlighttheme();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }, [userinfo]);
 
     if (isIE) {
         // Checking if the user is running this on Internet Explorer

@@ -17,7 +17,7 @@ function Theme() {
     const context = useContext(settingContext);
     const userinfo = useContext(loginContext);
     const { t } = useTranslation();
-    useLayoutEffect(() => context.settext(t('setting.theme.title')), []);
+    useLayoutEffect(() => context.settext('setting.theme.title'), []);
 
     const [selected, setselected] = useState(userinfo.userinfo.theme === 'light' ? 0 : 1);
 
@@ -41,7 +41,7 @@ function Theme() {
         if (null) return;
 
         axios
-            .post(`user/update/${userinfo.userinfo.id}`, {
+            .post(`user/update`, {
                 theme: theme,
             })
             .then((resp) => {

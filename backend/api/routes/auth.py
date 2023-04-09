@@ -174,7 +174,6 @@ def reset_password():
 @app.route('/api/auth/resend', methods=["POST"])
 def resend_code():
 
-
     data = request.get_json()
 
     if "uuid" not in data:
@@ -187,6 +186,9 @@ def resend_code():
             'status':"FAIL",
             'err':"Invalid recovery credentials"
         })
+
+
+    # print(rec.expiry_time, datetime.now())
 
     if rec.expiry_time < datetime.now():
         db.session.delete(rec)

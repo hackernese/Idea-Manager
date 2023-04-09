@@ -162,6 +162,30 @@
     animation: shake_error_msg 0.3s forwards;
     -webkit-animation: shake_error_msg 0.3s forwards;
 }
+
+@mixin rotate_anime {
+    @keyframes rotateme {
+        from {
+            opacity: 0;
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+        }
+        to {
+            opacity: 1;
+            transform: rotate(360deg);
+            -webkit-transform: rotate(360deg);
+            -moz-transform: rotate(360deg);
+            -ms-transform: rotate(360deg);
+            -o-transform: rotate(360deg);
+        }
+    }
+    animation: rotateme 0.5s backwards;
+    -webkit-animation: rotateme 0.5s backwards;
+}
+
 @mixin loading_circle {
     @keyframes loading {
         from {
@@ -174,7 +198,7 @@
     width: 2em;
     height: 2em;
     border-radius: 50%;
-    border: 3px solid black;
+    border: 3px solid var(--textcolor);
     border-right: 3px solid transparent;
     border-left: 3px solid transparent;
     animation: loading 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;

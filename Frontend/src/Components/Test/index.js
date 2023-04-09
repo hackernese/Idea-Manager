@@ -2,11 +2,13 @@ import classNames from 'classnames/bind';
 import styles from './style.module.scss';
 import { useState } from 'react';
 import { setlighttheme, setdarktheme } from '../../lib/theme';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function Test() {
     const [theme, settheme] = useState(false);
+    const { i18n } = useTranslation();
 
     // 0 === light, 1 === Dark
 
@@ -22,6 +24,14 @@ function Test() {
                 className={cx('btn')}
             >
                 {!theme ? 'Dark' : 'Light'}
+            </button>
+            <button
+                onClick={() => {
+                    i18n.changeLanguage(i18n.language === 'en' ? 'vn' : 'en');
+                }}
+                className={cx('btn', 'btn2')}
+            >
+                {i18n.language}
             </button>
         </>
     );

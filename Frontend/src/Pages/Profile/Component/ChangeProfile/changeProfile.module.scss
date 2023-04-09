@@ -7,6 +7,10 @@
 .container {
 	padding: 1em;
 
+	> .MuiStack-root {
+		width: 100%;
+	}
+
 	h1 {
 		@include boldfont;
 		font-size: 1.2em;
@@ -20,12 +24,8 @@
 		font-size: 0.7em;
 	}
 
-	button {
-		@include btn;
-	}
-
 	> div {
-		div:not(.loader) {
+		> div:not(.loader, .exceptme) {
 			width: 40%;
 			margin-bottom: 1em;
 		}
