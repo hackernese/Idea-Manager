@@ -78,6 +78,8 @@
     box-shadow: 0px 3px 5px #00000033;
 }
 
+@import "../../../globalMixins.scss";
+
 .wrapper > div:nth-child(1) > div {
     display: flex;
 }
@@ -159,28 +161,18 @@
     margin-right: 1em;
     align-items: center;
     background-color: var(--backgroundcolor);
-    img {
-        border: 1px solid var(--blurborder);
-        padding: 5px;
-        width: 30px;
-        height: 30px;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 0 3px 0 #333;
-        transition: all 0.3s ease-out;
-        -webkit-transition: all 0.3s ease-out;
-        -moz-transition: all 0.3s ease-out;
-        -ms-transition: all 0.3s ease-out;
-        -o-transition: all 0.3s ease-out;
+
+    > svg {
+        margin-right: 0.3em;
+        height: 1.7em;
+    }
+
+    svg {
+        color: var(--textcolor);
     }
 
     * {
         cursor: pointer;
-    }
-
-    img:hover {
-        filter: invert(100%);
-        -webkit-filter: invert(100%);
     }
 }
 
@@ -219,9 +211,10 @@ div.Toggle-responsive > div:nth-child(1) > div > ul {
 }
 
 .dropdown-menu {
+    @include dropdown_animation;
     position: absolute;
     right: 3em;
-    top: 4em;
+    top: 3em;
     padding: 16px 16px 16px 25px;
     border-radius: 8px;
     box-shadow: 2px 1px 4px 0 #9f9898ef;
@@ -304,9 +297,6 @@ div.Toggle-responsive > div:nth-child(1) > div > ul {
         }
     }
 
-    .wrapper {
-    }
-
     .wrapper .col-9,
     .wrapper .col-1,
     .wrapper .col-3 {
@@ -324,21 +314,38 @@ div.Toggle-responsive > div:nth-child(1) > div > ul {
         justify-content: end;
         padding-left: 27px;
         transform: scale(1.5);
+
+        > svg {
+            @include RoundBorder;
+            box-shadow: 0 0 5px var(--btncolor);
+            @include slide_left_animation;
+            @include transition;
+        }
+
         img {
             width: 30px;
             height: 30px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 0 3px 0 #333;
         }
         span {
             display: none;
             // margin-left: 7px;
             // color: #817e7e;
         }
+
+        &:active svg {
+            transform: scale(0.99);
+            -webkit-transform: scale(0.99);
+            -moz-transform: scale(0.99);
+            -ms-transform: scale(0.99);
+            -o-transform: scale(0.99);
+        }
     }
 
     .dropdown-menu {
+        @include dropup_animation;
+
         padding: 16px 16px 16px 25px;
         border-radius: 8px;
         box-shadow: 2px 1px 4px 0 #9f9898ef;
@@ -347,6 +354,7 @@ div.Toggle-responsive > div:nth-child(1) > div > ul {
         bottom: 4em;
         top: auto;
         z-index: 100;
+
         ul li {
             width: 100%;
             padding: 8px;

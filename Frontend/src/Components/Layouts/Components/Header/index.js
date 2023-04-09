@@ -1,14 +1,16 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import logo from '../../../../Images/logo.png';
-import user_setting from '../../../../Images/user.png';
+// import user_setting from '../../../../Images/user.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown, faListUl } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faListUl, faCircleUser as faCircleUserFill } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect, useContext, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { loginContext } from '../../../../App';
 import { useTranslation } from 'react-i18next';
+import { IsMobile } from 'react-device-detect';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
@@ -26,6 +28,8 @@ function Header() {
 
     const IsMobile = useMediaQuery({ maxWidth: 1100 }); // false
     // const role = useState('')
+
+    const [settingicon, setsettingicon] = useState(faCircleUser);
 
     useEffect(() => {
         if (!IsMobile) {
@@ -142,7 +146,20 @@ function Header() {
                         </div>
                         <div className={cx('col-3')}>
                             <div className={cx('user-logo', 'd-flex', 'j-right')}>
-                                <img onClick={() => setToggleUserState(!toggleUserState)} src={user_setting}></img>
+                                {IsMobile && (
+                                    <FontAwesomeIcon
+                                        icon={faCircleUserFill}
+                                        onClick={() => setToggleUserState(!toggleUserState)}
+                                    />
+                                )}
+                                {!IsMobile && (
+                                    <FontAwesomeIcon
+                                        onMouseEnter={() => setsettingicon(faCircleUserFill)}
+                                        onMouseLeave={() => setsettingicon(faCircleUser)}
+                                        icon={settingicon}
+                                        onClick={() => setToggleUserState(!toggleUserState)}
+                                    />
+                                )}
                                 <span>
                                     <FontAwesomeIcon icon={faCaretDown} />
                                 </span>
