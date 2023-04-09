@@ -141,7 +141,7 @@ function Header() {
                             </div>
                         </div>
                         <div className={cx('col-3')}>
-                            <div className={cx('user-logo', 'd-flex', 'j-right', '')}>
+                            <div className={cx('user-logo', 'd-flex', 'j-right')}>
                                 <img onClick={() => setToggleUserState(!toggleUserState)} src={user_setting}></img>
                                 <span>
                                     <FontAwesomeIcon icon={faCaretDown} />
