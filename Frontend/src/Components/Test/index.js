@@ -8,9 +8,15 @@ const cx = classNames.bind(styles);
 
 function Test() {
     const [theme, settheme] = useState(false);
+    const [show, setshow] = useState(true);
     const { i18n } = useTranslation();
 
     // 0 === light, 1 === Dark
+
+    window.hide_test = () => setshow(false);
+    window.show_test = () => setshow(true);
+
+    if (!show) return '';
 
     return (
         <>
