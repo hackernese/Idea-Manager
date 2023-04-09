@@ -91,6 +91,7 @@
     img {
         height: 2.2em;
         object-fit: contain;
+        filter: drop-shadow(1px 1px 0.08px var(--textcolor));
         margin: auto;
     }
 }

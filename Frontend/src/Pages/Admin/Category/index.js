@@ -1,4 +1,4 @@
-import styles from './style.module.scss';
+import styles from './category.module.scss';
 import classNames from 'classnames/bind';
 import { useOutlet } from 'react-router-dom';
 
@@ -13,7 +13,10 @@ function Category() {
 
     return (
         <div>
-            <h1>This page will list out all existing category</h1>
+            <h1>Category</h1>
+            <div className='Container'>
+                
+            </div>
         </div>
     );
 }

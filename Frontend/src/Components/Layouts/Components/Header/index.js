@@ -1,6 +1,7 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
 import logo from '../../../../Images/logo.png';
+import icon from '../../../../Images/icon.png';
 // import user_setting from '../../../../Images/user.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faListUl, faCircleUser as faCircleUserFill } from '@fortawesome/free-solid-svg-icons';
@@ -44,7 +45,7 @@ function Header() {
             <div className={cx('wrapper', 'd-flex', 'f-wrap')}>
                 <div className={cx('col-2')}>
                     <div className={cx('logo', 't-right')}>
-                        <img src={logo}></img>
+                        <img src={icon}></img>
                     </div>
                 </div>
                 <div className={cx('responsive-btn')}>
