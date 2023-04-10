@@ -13,6 +13,7 @@ export const setlighttheme = () => {
     style.setProperty('--inverted', 'invert(1)');
     style.setProperty('--backward-invert', 'invert(0)');
     style.setProperty('--blurborder', 'rgba(0, 0, 0, 0.219)');
+    // style.setProperty('--homebackground', '#5d5d74');
 };
 
 export const setdarktheme = () => {
@@ -26,4 +27,5 @@ export const setdarktheme = () => {
     style.setProperty('--inverted', 'invert(0)');
     style.setProperty('--backward-invert', 'invert(1)');
     style.setProperty('--blurborder', 'rgba(255, 255, 255, 0.219)');
+    // style.setProperty('--homebackground', 'red');
 };

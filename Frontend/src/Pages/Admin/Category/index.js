@@ -1,8 +1,5 @@
-import styles from './category.module.scss';
-import classNames from 'classnames/bind';
+import styles from './style.module.scss';
 import { useOutlet } from 'react-router-dom';
-
-const cx = classNames.bind(styles);
 
 function Category() {
     const outlet = useOutlet();
@@ -12,11 +9,8 @@ function Category() {
     }
 
     return (
-        <div>
+        <div className={styles.base}>
             <h1>Category</h1>
-            <div className='Container'>
-                
-            </div>
         </div>
     );
 }
