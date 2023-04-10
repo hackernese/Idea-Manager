@@ -1,5 +1,7 @@
 import styles from './style.module.scss';
+import LoadingButton from '../../../Components/LoadingButton';
 import { useOutlet } from 'react-router-dom';
+import classNames from 'classnames';
 
 function Category() {
     const outlet = useOutlet();
@@ -10,7 +12,13 @@ function Category() {
 
     return (
         <div className={styles.base}>
-            <h1>Category</h1>
+            <div className={styles.header}>
+                <p>List of category</p>
+            </div>
+            <button>Create a new category</button>
+            <section>
+                free fire
+            </section>
         </div>
     );
 }
