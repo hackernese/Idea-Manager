@@ -85,15 +85,14 @@
 .tab ul a {
 	padding: 15px 50px 12px 36px;
 	display: block;
-	background-color: #00000089;
 	border-radius: 8px;
 	margin: 1rem 0;
 	font-size: 1.5rem;
 	color: #fff;
 
-	&:hover {
+	&:not(.selected):hover {
 		cursor: pointer;
-		background-color: crimson;
+		background-color: var(--blurborder);
 	}
 	transition: all 0.2s ease-out;
 	-webkit-transition: all 0.2s ease-out;
@@ -120,6 +119,26 @@
 	h1,
 	p {
 		color: var(--textcolor);
+	}
+
+	ul a {
+		color: var(--textcolor);
+		@include transition;
+		&:active {
+			transform: scale(0.9);
+			-webkit-transform: scale(0.9);
+			-moz-transform: scale(0.9);
+			-ms-transform: scale(0.9);
+			-o-transform: scale(0.9);
+		}
+		&:hover {
+			color: var(--backgroundcolor);
+		}
+	}
+
+	.selected {
+		background-color: var(--secondarycolor);
+		color: var(--backgroundcolor);
 	}
 
 	> div:nth-child(2) {
@@ -201,6 +220,7 @@
 		}
 		> div:nth-child(2) {
 			overflow: auto;
+			overflow-x: hidden;
 			width: 100%;
 			position: absolute;
 			top: 0;

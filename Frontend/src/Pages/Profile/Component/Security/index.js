@@ -10,8 +10,74 @@ import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import axios from 'axios';
 import LoadingCircle from '../../../../Components/LoadingCircle';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 
 const cx = classNames.bind(styles);
+
+const getIcon = (os) => {
+    if (['iOS', 'Mac OS X', 'Mac OS'].includes(os)) return faApple;
+
+    if ('Linux' === os) return faLinux;
+    if ('Android' === os) return faAndroid;
+    if (os.includes('Windows')) return faWindows;
+
+    return faCircleQuestion; // Unknown OS
+};
+
+function LoginMobile({ id, os, browser, l, ip, date }) {
+    const isMobile = useMediaQuery({ maxWidth: 1100 });
+
+    const { t } = useTranslation();
+
+    if (!isMobile) return;
+
+    return (
+        <div key={id} className={cx('phone')}>
+            <div>
+                <label>OS</label>
+                <label>
+                    <FontAwesomeIcon icon={getIcon(os)} />
+                    {os}
+                </label>
+            </div>
+            <div>
+                <label>{t('setting.security.browser')}</label>
+                <label>{browser}</label>
+            </div>
+            <div>
+                <label>{t('setting.security.location')}</label>
+                <label>{l}</label>
+            </div>
+            <div>
+                <label>{t('setting.security.ip')}</label>
+                <label>{ip}</label>
+            </div>
+            <div>
+                <label>{t('setting.security.time')}</label>
+                <label>{date}</label>
+            </div>
+        </div>
+    );
+}
+
+function LoginDesktop({ id, os, browser, l, ip, date }) {
+    const isMobile = useMediaQuery({ maxWidth: 1100 });
+
+    if (isMobile) return;
+
+    return (
+        <div key={id}>
+            <label>
+                <FontAwesomeIcon icon={getIcon(os)} />
+                {os}
+            </label>
+            <label>{browser}</label>
+            <label>{l}</label>
+            <label>{ip}</label>
+            <label>{date}</label>
+        </div>
+    );
+}
 
 function Security() {
     const { t } = useTranslation();
@@ -25,17 +91,9 @@ function Security() {
     const [logins, addlogins] = useReducer((state, l) => {
         return [...state, ...l];
     }, []);
+    const isMobile = useMediaQuery({ maxWidth: 1100 });
+
     // Reference to the input of username and password
-
-    const getIcon = (os) => {
-        if (['iOS', 'Mac OS X', 'Mac OS'].includes(os)) return faApple;
-
-        if ('Linux' === os) return faLinux;
-        if ('Android' === os) return faAndroid;
-        if (os.includes('Windows')) return faWindows;
-
-        return faCircleQuestion; // Unknown OS
-    };
 
     return (
         <AnimatedOutlet>
@@ -44,27 +102,41 @@ function Security() {
                 <p>{t('setting.security.login_text')}</p>
                 <div>
                     <section>
-                        <div>
-                            <label>{t('setting.security.os')}</label>
-                            <label>{t('setting.security.browser')}</label>
-                            <label>{t('setting.security.location')}</label>
-                            <label>{t('setting.security.ip')}</label>
-                            <label>{t('setting.security.time')}</label>
-                        </div>
+                        {!isMobile && (
+                            <div>
+                                <label>{t('setting.security.os')}</label>
+                                <label>{t('setting.security.browser')}</label>
+                                <label>{t('setting.security.location')}</label>
+                                <label>{t('setting.security.ip')}</label>
+                                <label>{t('setting.security.time')}</label>
+                            </div>
+                        )}
                     </section>
                     <section>
                         {logins.map((e, i) => {
                             return (
-                                <div key={e.id}>
-                                    <label>
-                                        <FontAwesomeIcon icon={getIcon(e.os)} />
-                                        {e.os}
-                                    </label>
-                                    <label>{e.browser}</label>
-                                    <label>{e.l}</label>
-                                    <label>{e.ip}</label>
-                                    <label>{e.date}</label>
-                                </div>
+                                <LoginDesktop
+                                    key={e.id}
+                                    l={e.l}
+                                    ip={e.ip}
+                                    date={e.date}
+                                    id={e.id}
+                                    browser={e.browser}
+                                    os={e.os}
+                                ></LoginDesktop>
+                            );
+                        })}
+                        {logins.map((e, i) => {
+                            return (
+                                <LoginMobile
+                                    key={e.id}
+                                    l={e.l}
+                                    ip={e.ip}
+                                    date={e.date}
+                                    id={e.id}
+                                    browser={e.browser}
+                                    os={e.os}
+                                ></LoginMobile>
                             );
                         })}
 

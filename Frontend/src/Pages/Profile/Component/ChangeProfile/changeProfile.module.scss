@@ -4,8 +4,21 @@
 	@include loading_circle;
 }
 
+@media screen and (max-width: 1100px) {
+	.container {
+		padding-bottom: 5em !important;
+
+		> div:nth-child(1) {
+			div {
+				width: 100% !important;
+			}
+		}
+	}
+}
+
 .container {
 	padding: 1em;
+	padding-bottom: 2em;
 
 	> .MuiStack-root {
 		width: 100%;
@@ -22,6 +35,12 @@
 		opacity: 0.8;
 		margin-bottom: 1em;
 		font-size: 0.7em;
+	}
+
+	.phone-div {
+		div {
+			width: 100% !important;
+		}
 	}
 
 	> div {
