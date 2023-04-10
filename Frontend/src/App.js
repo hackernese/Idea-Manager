@@ -74,6 +74,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import './lib/locale';
 
+import { useMediaQuery } from 'react-responsive';
+import { Slide, Flip } from 'react-toastify';
+
 import Test from './Components/Test';
 import useTranslation from './lib/locale';
 
@@ -86,6 +89,7 @@ function App() {
     const [auth, setislogin] = useState(false);
     const [userinfo, setuserinfo] = useState(false);
     const location = useLocation();
+    const isMobile = useMediaQuery({ maxWidth: 1100 });
 
     // false : not login
     // true : login r
@@ -282,7 +286,11 @@ function App() {
                     </Routes>
                 </AnimatePresence>
             </loginContext.Provider>
-            <ToastContainer theme="dark" position="bottom-right" />
+            <ToastContainer
+                theme="dark"
+                position={isMobile ? 'bottom-center' : 'bottom-right'}
+                transition={isMobile ? Slide : Flip}
+            />
 
             <Test></Test>
         </>
