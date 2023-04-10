@@ -3,7 +3,8 @@ from flask import request, jsonify, render_template
 from db import db, User, Sessions, RecoverAccountDB, Logins # Importing and initializing the database
 from . import login_required, bad_request, unauthorized_req
 from flask_mail import Message
-from datetime import datetime
+from datetime import datetime, timedelta
+from setting import RECOVERY_TOKEN_EXPIRY_MINUTES
 import requests, json
 
 
@@ -146,7 +147,7 @@ def reset_password():
     # Creating new recovery record
     rec = RecoverAccountDB(user.id)
     db.session.add(rec)
-    db.session.commit()
+    db.session.flush()
 
     # Grabbing the url and also the code
     recovery_code = rec.recover_code
@@ -163,6 +164,10 @@ def reset_password():
         username = user.username
     )
     mail.send(msg)
+
+    # Set expiry time
+    rec.expiry_time = datetime.now() + timedelta(minutes=RECOVERY_TOKEN_EXPIRY_MINUTES)
+    db.session.commit();
 
     return jsonify({
         'status' : "OK",

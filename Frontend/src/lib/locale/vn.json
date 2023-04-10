@@ -69,7 +69,10 @@
             },
             "msg": {
                 "success_lang": "Đã chuyển sang ngôn ngữ ",
-                "error_lang": "Đã xảy ra lỗi không mong muốn, không thể chuyển sang ngôn ngữ khác."
+                "error_lang": "Đã xảy ra lỗi không mong muốn, không thể chuyển sang ngôn ngữ khác.",
+                "success_passwd": "Cập nhật mật khẩu thành công.",
+                "invalid_passwd": "Mật khẩu hiện tại không hợp lệ.",
+                "fail": "Đã xảy ra lỗi không mong đợi trong quá trình yêu cầu."
             }
         }
     }

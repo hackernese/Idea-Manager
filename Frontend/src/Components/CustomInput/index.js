@@ -6,11 +6,20 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 
 const cx = classNames.bind(style);
 
-function CustomInput({ animation = true, custom_ref, onChange, onKeyDown, placeholder, type = 'password' }) {
+function CustomInput({
+    variant = '',
+    animation = true,
+    custom_ref,
+    onChange,
+    onKeyDown,
+    placeholder,
+    type = 'password',
+    onClick,
+}) {
     const [slashInput, setslashInput] = useState(false);
 
     return (
-        <div className={cx('i', animation ? 'anime' : '')}>
+        <div className={cx('i', animation ? 'anime' : '', variant)} onClick={onClick}>
             <input
                 onKeyDown={onKeyDown}
                 onChange={onChange}

@@ -26,6 +26,12 @@
     background-color: #ffc107 !important;
 }
 
+@media screen and (max-width: 1100px) {
+    .popup > div {
+        max-width: 85% !important;
+    }
+}
+
 .popup {
     position: fixed;
     z-index: 10;

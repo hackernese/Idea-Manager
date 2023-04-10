@@ -2,16 +2,26 @@ import classNames from 'classnames/bind';
 import styles from './style.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState, useEffect } from 'react';
+import { layoutContext } from '../Layouts/HeaderOnly';
 import { CSSTransition } from 'react-transition-group';
 import './transition.scss';
 
 const cx = classNames.bind(styles);
 
 function Popup({ title, text, buttons, onexit }) {
+    const setextraclass = useContext(layoutContext);
     const [loading, setloading] = useState(false);
     const [show, setshow] = useState(true);
     const ref = useRef(null);
+
+    useEffect(() => {
+        setextraclass('zindex');
+
+        return () => {
+            setextraclass('');
+        };
+    }, []);
 
     return (
         <CSSTransition unmountOnExit nodeRef={ref} in={show} onExited={onexit} timeout={300} classNames="popup">

@@ -69,7 +69,10 @@
             },
             "msg": {
                 "success_lang": "Successfully switched to ",
-                "error_lang": "Unexpected error occurred, unable to switch to different language."
+                "error_lang": "Unexpected error occurred, unable to switch to different language.",
+                "success_passwd" : "Successfully updated password.",
+                "invalid_passwd" : "Invalid current password.",
+                "fail" : "An unexpected error occurred during the request"
             }
         }
     }

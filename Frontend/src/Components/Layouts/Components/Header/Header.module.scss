@@ -161,11 +161,11 @@
     margin: auto;
     margin-right: 1em;
     align-items: center;
-    background-color: var(--backgroundcolor);
 
     > svg {
         margin-right: 0.3em;
         height: 1.7em;
+        background-color: var(--backgroundcolor);
     }
 
     svg {

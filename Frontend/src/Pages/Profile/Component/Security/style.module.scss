@@ -1,5 +1,46 @@
 @import "../../../../Components/globalMixins.scss";
 
+@mixin overwrite_padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.phone {
+    display: block !important;
+    font-size: 1.2em !important;
+
+    label:nth-child(1) {
+        padding-left: 0 !important;
+        font-weight: bold;
+        color: var(--secondarycolor);
+        &::after {
+            content: " :";
+        }
+    }
+    label:nth-child(2) {
+        text-align: right;
+    }
+
+    > div {
+        box-shadow: none !important;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0 !important;
+    }
+    > div:hover {
+        background-color: transparent !important;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .security {
+        > div > section:nth-of-type(1) {
+            height: 1em;
+            background-color: var(--blurborder);
+        }
+    }
+}
+
 .security {
     overflow: auto;
     padding: 1em;
