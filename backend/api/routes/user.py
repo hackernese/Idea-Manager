@@ -234,6 +234,17 @@ def change_user_info(user, data):
 
     if "passwd" in data:
         # Updating the password only
+
+        if "cpass" not in data:
+            # if there is no confirm password
+            return bad_request('Missing confirm password.')
+
+        if not user.check_password(data['cpass']):
+            return jsonify({
+                'status' : "FAIL",
+                'err' : "INVALID_PASS"
+            })
+
         try:
             user.set_new_password( data['passwd'].strip())
             db.session.flush()

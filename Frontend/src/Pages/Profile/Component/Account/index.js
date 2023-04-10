@@ -6,15 +6,14 @@ import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
 import { error, success, info } from '../../../../lib/toast';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
+import LoadingButton from '../../../../Components/LoadingButton';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function Password() {
     const context = useContext(settingContext);
     const { t } = useTranslation();
-
-    const [loader1, setloader1] = useState(false);
-    const [loader2, setloader2] = useState(false);
 
     const newpassref = createRef();
     const cfpassref = createRef();
@@ -29,21 +28,7 @@ function Password() {
                     <h1>{t('setting.account.email_t')}</h1>
                     <p>{t('setting.account.email_text')}</p>
                     <CustomInput type="text" animation={false} placeholder="email@domain.ext"></CustomInput>
-                    {loader1 && <div className={cx('loader')}></div>}
-                    {!loader1 && (
-                        <button
-                            onClick={() => {
-                                info(
-                                    'The system has sent a confirmation message to your email, please confirm that this email is your in order to change it.',
-                                    10000,
-                                );
-
-                                // setloader1(true);
-                            }}
-                        >
-                            {t('setting.account.update')}
-                        </button>
-                    )}
+                    <LoadingButton text={t('setting.account.update')}></LoadingButton>
                 </div>
                 <div>
                     <h1>{t('setting.account.pass_t')}</h1>
@@ -64,17 +49,7 @@ function Password() {
                         placeholder={t('setting.account.currentpass')}
                     ></CustomInput>
 
-                    {loader2 && <div className={cx('loader')}></div>}
-                    {!loader2 && (
-                        <button
-                            onClick={() => {
-                                success('Hello world');
-                                // setloader2(true);
-                            }}
-                        >
-                            {t('setting.account.update')}
-                        </button>
-                    )}
+                    <LoadingButton text={t('setting.account.update')}></LoadingButton>
                 </div>
             </div>
         </AnimatedOutlet>
