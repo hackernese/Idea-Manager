@@ -48,7 +48,12 @@
             "pass_text": "The following form is used to update your current password.",
             "newpass": "New password...",
             "cpass": "Confirm password...",
-            "currentpass": "Current password.."
+            "currentpass": "Current password..",
+            "msg": {
+                "success_passwd": "Successfully updated password.",
+                "invalid_passwd": "Invalid current password.",
+                "fail": "An unexpected error occurred during the request"
+            }
         },
         "profile": {
             "title": "Profile",
@@ -70,9 +75,9 @@
             "msg": {
                 "success_lang": "Successfully switched to ",
                 "error_lang": "Unexpected error occurred, unable to switch to different language.",
-                "success_passwd" : "Successfully updated password.",
-                "invalid_passwd" : "Invalid current password.",
-                "fail" : "An unexpected error occurred during the request"
+                "success_gender": "Successfully changed gender to ",
+                "success_info": "Successfully updated user info.",
+                "fail": "An unexpected error occurred during the request"
             }
         }
     }

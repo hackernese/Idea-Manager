@@ -6,7 +6,7 @@ from db import db, Sessions, User, Department, Role, UserRoles
 from sqlalchemy.exc import IntegrityError
 from setting import MAX_USER_PER_PAGE
 from dateutil import parser as TimeParser
-import json
+import json, phonenumbers
 
 @app.route('/api/user/add', methods=['POST'])
 @login_required(role_allow=['manager', 'administrator'])
@@ -190,8 +190,24 @@ def change_user_info(user, data):
     if "phone" in data:
         # Updating the phone number only
         try:
+
+            number = phonenumbers.parse(data['phone'])
+            if not phonenumbers.is_possible_number(number):
+                db.session.rollback()
+                return jsonify({
+                    'status' : "FAIL",
+                    'err' : "Invalid phone number"
+                })
+
+
             user.phone = data['phone'].strip()
             db.session.flush()
+        except phonenumbers.phonenumberutil.NumberParseException:
+            db.session.rollback();
+            return jsonify({
+                'status' : "FAIL",
+                'err' : "Missing or invalid region code."
+            })
         except IntegrityError:
             db.session.rollback()
             return created_request('This phone number has already been used')

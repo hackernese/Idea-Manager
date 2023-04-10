@@ -113,19 +113,19 @@ function Password() {
                                     cpass: cpass,
                                 });
                             } catch {
-                                error(t('setting.profile.msg.fail'));
+                                error(t('setting.account.msg.fail'));
                                 return;
                             }
 
                             // Checking if fail
                             if (resp.data.status === 'FAIL' && resp.data.err === 'INVALID_PASS') {
-                                error(t('setting.profile.msg.invalid_passwd'));
+                                error(t('setting.account.msg.invalid_passwd'));
                                 setcurrentpass('error');
                                 return;
                             }
 
                             // Working here
-                            success(t('setting.profile.msg.success_passwd'));
+                            success(t('setting.account.msg.success_passwd'));
 
                             newpassref.current.value = '';
                             cfpassref.current.value = '';
