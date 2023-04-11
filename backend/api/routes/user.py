@@ -8,7 +8,8 @@ from setting import MAX_USER_PER_PAGE
 from dateutil import parser as TimeParser
 from secrets import token_urlsafe
 from flask_mail import Message
-import json, phonenumbers
+from flask import render_template
+import json, phonenumbers, smtplib
 
 
 @app.route('/api/user/email/verify', methods=["POST"])
@@ -229,12 +230,15 @@ def change_user_info(user, data):
         user.new_email = email
 
         # Creating a message which send to the user email later
+
         msg = Message('Verify your email',
             sender=app.config.get("MAIL_USERNAME"),
             recipients=[email])
-        msg.body = f"This is your email token => {user.craft_verify_url(code)}"
-        mail.send(msg)
-
+        msg.html = render_template('email_verify.html', username=user.username, url=user.craft_verify_url(code))
+        try:
+            mail.send(msg)
+        except smtplib.SMTPRecipientsRefused:
+            pass
 
     if "phone" in data:
         # Updating the phone number only
