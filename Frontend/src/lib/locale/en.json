@@ -1,12 +1,13 @@
 {
-
-    "mailverify" : {
-        "invalid" : "Invalid token was provided.",
-        "exist" : "Someone else has already updated to this email.",
-        "fail" : "Unexpected error occurred",
-        "success" : "Successfully updated to new email"
+    "mailverify": {
+        "invalid": "Invalid token was provided.",
+        "exist": "Someone else has already updated to this email.",
+        "fail": "Unexpected error occurred",
+        "success": "Successfully updated to new email"
     },
-
+    "home": {
+        "title": "Welcome to Idea Manager"
+    },
     "header": {
         "navbar": {
             "submission": "Submission",

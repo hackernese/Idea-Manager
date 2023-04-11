@@ -2,12 +2,15 @@ import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import styles from './home.module.scss';
 import friends from '../../Images/friends.png';
 import professional from '../../Images/professional.png';
+import { useTranslation } from 'react-i18next';
 
 function Home() {
+    const { t } = useTranslation();
+
     return (
         <AnimatedOutlet>
             <div className={styles.welcomebox}>
-                <h2>Welcome to Idea Manager</h2>
+                <h2>{t('home.title')}</h2>
                 <p>
                     This website is made to help employees add their ideas about different topics through a custom made
                     website using html pla pla

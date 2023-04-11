@@ -1,4 +1,13 @@
 {
+    "mailverify": {
+        "invalid": "Mã thông báo không hợp lệ.",
+        "exist": "Người dùng khác đã sử dụng email này.",
+        "fail": "Đã xảy ra lỗi không mong đợi.",
+        "success": "Cập nhật email mới thành công."
+    },
+    "home": {
+        "title": "Chào mừng tới Idea Manager"
+    },
     "header": {
         "navbar": {
             "submission": "Nộp đơn",
