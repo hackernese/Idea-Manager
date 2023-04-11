@@ -148,6 +148,8 @@ function Security() {
                                     })
                                     .then((resp) => {
                                         if (resp.data.status === 'OK') {
+                                            console.log(resp.data);
+
                                             addlogins(resp.data.data);
                                             setreqlogin(reqlogin + 1);
 
