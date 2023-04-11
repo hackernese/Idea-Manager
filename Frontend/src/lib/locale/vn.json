@@ -52,7 +52,8 @@
             "msg": {
                 "success_passwd": "Cập nhật mật khẩu thành công.",
                 "invalid_passwd": "Mật khẩu hiện tại không hợp lệ.",
-                "fail": "Đã xảy ra lỗi không mong đợi trong quá trình yêu cầu."
+                "fail": "Đã xảy ra lỗi không mong đợi trong quá trình yêu cầu.",
+                "mail_msg": "Hệ thống đã gửi thành công một liên kết xác nhận đến email mới của bạn. Vui lòng xác nhận để cập nhật."
             }
         },
         "profile": {

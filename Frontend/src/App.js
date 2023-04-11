@@ -162,6 +162,10 @@ function App() {
                         setislogin(v);
                     },
                     setuserinfo: setuserinfo,
+                    reassign: (newv) => {
+                        const temp = Object.assign(userinfo, newv);
+                        setuserinfo(temp);
+                    },
                 }}
             >
                 <AnimatePresence mode="wait">

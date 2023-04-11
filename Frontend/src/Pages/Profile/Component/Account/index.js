@@ -7,14 +7,19 @@ import { useTranslation } from 'react-i18next';
 import { error, success, info } from '../../../../lib/toast';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import LoadingButton from '../../../../Components/LoadingButton';
+import { loginContext } from '../../../../App';
 import axios from 'axios';
+import { create } from '@mui/material/styles/createTransitions';
 
 const cx = classNames.bind(styles);
 
 function Password() {
+    const authContext = useContext(loginContext);
     const context = useContext(settingContext);
     const { t } = useTranslation();
 
+    const email_input_ref = createRef();
+    const email_btn_ref = createRef();
     const newpassref = createRef();
     const cfpassref = createRef();
     const currentpasswd = createRef();
@@ -24,6 +29,7 @@ function Password() {
     const [npass, setnpass] = useState('');
     const [cpass, setcpass] = useState('');
     const [currentpass, setcurrentpass] = useState('');
+    const [email, setemail] = useState('');
 
     useLayoutEffect(() => context.settext('setting.account.title'), []);
 
@@ -33,8 +39,47 @@ function Password() {
                 <div>
                     <h1>{t('setting.account.email_t')}</h1>
                     <p>{t('setting.account.email_text')}</p>
-                    <CustomInput type="text" animation={false} placeholder="email@domain.ext"></CustomInput>
-                    <LoadingButton text={t('setting.account.update')}></LoadingButton>
+                    <CustomInput
+                        onClick={() => setemail('')}
+                        variant={email}
+                        custom_ref={email_input_ref}
+                        default_value={authContext.userinfo.email}
+                        type="text"
+                        animation={false}
+                        placeholder="email@domain.ext"
+                        onKeyDown={({ key }) => {
+                            if (key === 'Enter') email_btn_ref.current.click();
+                        }}
+                    ></CustomInput>
+                    <LoadingButton
+                        custom_ref={email_btn_ref}
+                        text={t('setting.account.update')}
+                        onClick={async () => {
+                            const mail = email_input_ref.current.value.trim();
+
+                            if (!mail) {
+                                setemail('error');
+                                return;
+                            }
+
+                            let resp;
+
+                            try {
+                                resp = await axios.post('user/update', {
+                                    email: mail,
+                                });
+                            } catch {
+                                error(t('setting.account.msg.fail'));
+                                return;
+                            }
+
+                            if (resp.data.status === 'OK') {
+                                info(t('setting.account.msg.mail_msg'));
+                            } else {
+                                error(resp.data.err);
+                            }
+                        }}
+                    ></LoadingButton>
                 </div>
                 <div>
                     <h1>{t('setting.account.pass_t')}</h1>

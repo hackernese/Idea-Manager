@@ -59,7 +59,7 @@ class User(AbstractBase):
     # Optional columns / fields...
     phone = db.Column(db.String(15), nullable=True, unique=True) # maximum length of phone number is 15 chars
     birthday = db.Column(db.DateTime, nullable=True)
-    gender = db.Column(db.String(50), nullable=False, default="unknown")
+    gender = db.Column(db.String(50), nullable=False, default="others")
     address = db.Column(db.Text, nullable=True)
     theme = db.Column(db.String(50), default="light")
     language = db.Column(db.String(50), default="en")

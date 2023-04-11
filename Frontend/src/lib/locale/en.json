@@ -52,7 +52,8 @@
             "msg": {
                 "success_passwd": "Successfully updated password.",
                 "invalid_passwd": "Invalid current password.",
-                "fail": "An unexpected error occurred during the request"
+                "fail": "An unexpected error occurred during the request",
+                "mail_msg": "The system has successfully sent a confirmation link to your new email. Please confirm to update."
             }
         },
         "profile": {

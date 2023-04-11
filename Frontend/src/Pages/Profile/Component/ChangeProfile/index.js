@@ -72,31 +72,24 @@ function ChangeProfile() {
                             const address = addressref.current.value.trim();
                             const phone = phoneref.current.value.trim();
 
-                            if (!phone) {
-                                setphonevariant('error');
-                                return;
-                            }
+                            let json = { birthday: date };
 
-                            if (!address) {
-                                setaddrvariant('error');
-                                return;
-                            }
+                            if (phone) json.phone = phone;
+                            if (address) json.address = address;
 
                             let resp;
 
                             try {
-                                resp = await axios.post('user/update', {
-                                    address: address,
-                                    phone: phone,
-                                    birthday: date,
-                                });
+                                resp = await axios.post('user/update', json);
                             } catch (e) {
                                 error(t('setting.profile.msg.fail'));
                                 return;
                             }
 
-                            if (resp.data.status === 'OK') success(t('setting.profile.msg.success_info'));
-                            else error(resp.data.err);
+                            if (resp.data.status === 'OK') {
+                                authContext.reassign({ address: address, phone: phone, birthday: date });
+                                success(t('setting.profile.msg.success_info'));
+                            } else error(resp.data.err);
                         }}
                     ></LoadingButton>
                 </div>
@@ -136,8 +129,7 @@ function ChangeProfile() {
 
                             if (ret.data.status === 'OK') {
                                 success(t('setting.profile.msg.success_gender') + ' ' + value);
-                                authContext.userinfo.gender = code;
-                                authContext.setuserinfo(authContext.userinfo);
+                                authContext.reassign({ gender: code });
                                 // Resetting the data of authContext to make sure that the next time the user
                                 // re-visits this page, it is still going to show the latest data
                             }
