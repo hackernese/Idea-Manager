@@ -46,6 +46,7 @@ import EditDepartment from './Pages/Admin/Department/Edit';
 // User sub-components for admin
 import AddNewUser from './Pages/Admin/User/Add';
 import UserSetting from './Pages/Admin/User/setting';
+import EmailVerify from './Pages/Profile/EmailVerify';
 // Role sub-components for admin
 import EditRole from './Pages/Admin/Role/Edit';
 import AddRole from './Pages/Admin/Role/Add';
@@ -87,6 +88,7 @@ axios.defaults.baseURL = `http://127.0.0.1:5000/api`;
 function App() {
     const { i18n } = useTranslation();
     const [auth, setislogin] = useState(false);
+    const [triggerWhoami, settriggerWhoami] = useState(0);
     const [userinfo, setuserinfo] = useState(false);
     const location = useLocation();
     const isMobile = useMediaQuery({ maxWidth: 1100 });
@@ -135,7 +137,7 @@ function App() {
                 console.log(err);
                 setuserinfo(null);
             });
-    }, [auth]);
+    }, [auth, triggerWhoami]);
 
     if (isIE) {
         // Checking if the user is running this on Internet Explorer
@@ -158,6 +160,7 @@ function App() {
                 value={{
                     userinfo: userinfo,
                     is_auth: auth,
+                    trigger_whoami: () => settriggerWhoami(triggerWhoami + 1),
                     set_login_status: (v) => {
                         setislogin(v);
                     },
@@ -249,6 +252,7 @@ function App() {
                                 </Fragment>
                             }
                         ></Route>
+                        <Route path="mail_verify" element={<EmailVerify></EmailVerify>}></Route>
                         <Route
                             path="/setting"
                             element={

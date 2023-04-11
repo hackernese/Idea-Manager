@@ -86,6 +86,10 @@ class User(AbstractBase):
     reaction_ref = db.relationship('Reaction', backref='user', lazy=True, cascade='all, delete')
     logins_ref = db.relationship('Logins', backref='use', lazy=True, cascade='all, delete')
 
+    def craft_verify_url(self, code):
+        protocol = "http" if not SSL else "https"
+        return f"{protocol}://{RECOVERY_URL_BASE}:{FRONTEND_PORT}/mail_verify?token={code}"
+
     def __init__(self, username, password, email, department) -> None:
         self.username = username.strip()
         self.password = generate_password_hash(password.strip())

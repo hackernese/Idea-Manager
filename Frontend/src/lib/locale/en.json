@@ -1,4 +1,12 @@
 {
+
+    "mailverify" : {
+        "invalid" : "Invalid token was provided.",
+        "exist" : "Someone else has already updated to this email.",
+        "fail" : "Unexpected error occurred",
+        "success" : "Successfully updated to new email"
+    },
+
     "header": {
         "navbar": {
             "submission": "Submission",

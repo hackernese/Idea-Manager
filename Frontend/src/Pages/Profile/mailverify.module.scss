@@ -1,0 +1,13 @@
+@import "../../Components/globalMixins.scss";
+
+.main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: absolute;
+}
+
+.loader {
+    margin: auto;
+    @include loading_circle;
+}

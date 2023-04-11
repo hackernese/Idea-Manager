@@ -232,15 +232,9 @@ def change_user_info(user, data):
         msg = Message('Verify your email',
             sender=app.config.get("MAIL_USERNAME"),
             recipients=[email])
-        msg.body = f"This is your email token => {code}"
+        msg.body = f"This is your email token => {user.craft_verify_url(code)}"
         mail.send(msg)
 
-        # try:
-        #     user.email = data['email'].strip()
-        #     db.session.flush()
-        # except IntegrityError:
-        #     db.session.rollback()
-        #     return created_request('This email has already been used')
 
     if "phone" in data:
         # Updating the phone number only
