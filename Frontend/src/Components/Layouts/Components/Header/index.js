@@ -8,7 +8,7 @@ import { faCaretDown, faListUl, faCircleUser as faCircleUserFill } from '@fortaw
 import { faCircleUser } from '@fortawesome/free-regular-svg-icons';
 import { useMediaQuery } from 'react-responsive';
 import { useEffect, useContext, useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { loginContext } from '../../../../App';
 import { useTranslation } from 'react-i18next';
 import { IsMobile } from 'react-device-detect';
@@ -16,6 +16,7 @@ import axios from 'axios';
 
 const cx = classNames.bind(styles);
 function Header() {
+    const navigate = useNavigate();
     const [toggleState, setToggleState] = useState(true);
     const [toggleUserState, setToggleUserState] = useState(false);
     const { t } = useTranslation();
@@ -45,7 +46,10 @@ function Header() {
             <div className={cx('wrapper', 'd-flex', 'f-wrap')}>
                 <div className={cx('col-2')}>
                     <div className={cx('logo', 't-right')}>
-                        <img src={icon}></img>
+                        <img src={icon} onClick={()=>{
+                            navigate('/');
+                        }}></img>
+                        <Link to='/'>IdeaManager</Link>
                     </div>
                 </div>
                 <div className={cx('responsive-btn')}>
@@ -69,14 +73,14 @@ function Header() {
                                 <ul className={cx('d-flex', 'j-center')}>
                                     {/* Checking to see if the current user has access to which tab */}
 
-                                    <li>
+                                    {/* <li>
                                         <NavLink
                                             to="/home"
                                             className={({ isActive }) => (isActive ? cx('selected') : '')}
                                         >
                                             home
                                         </NavLink>
-                                    </li>
+                                    </li> */}
 
                                     {(isAdmin || isManager) && (
                                         <>

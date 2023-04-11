@@ -5,11 +5,13 @@
     position: fixed;
     height: 100%;
     width: 100%;
+    display: flex;
 
     > div {
         @include SlightRoundBorder;
-        height: 10em;
-        width: 10em;
+        height: 60%;
+        width: 70%;
         background-color: var(--backgroundcolor);
+        margin : auto;
     }
 }

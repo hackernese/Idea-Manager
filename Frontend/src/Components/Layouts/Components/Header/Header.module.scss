@@ -89,10 +89,27 @@
 
 .logo {
     img {
+        cursor: pointer;
+        @include transition;
         height: 2.2em;
         object-fit: contain;
-        filter: drop-shadow(1px 1px 0.08px var(--textcolor));
+        filter: var(--backward-invert);
         margin: auto;
+    }
+    a{
+        @include transition;
+        @include boldfont;
+        font-size: 1.3em;
+        margin : auto;
+        margin-left: 0.5em;
+        color : var(--textcolor);
+        cursor: pointer;
+    }
+    a:hover{
+        color : var(--secondarycolor);
+    }
+    a:active, img:active{
+        transform: scale(0.95);
     }
 }
 

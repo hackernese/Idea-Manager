@@ -239,9 +239,9 @@ function App() {
                             }
                         >
                             <Route path=":id" element={<SubmissionID></SubmissionID>}>
-                                <Route path="details" element={<SubmissionDetails></SubmissionDetails>} />
+                                {/* <Route path="details" element={<SubmissionDetails></SubmissionDetails>} /> */}
                                 <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
-                                <Route path="idea/:idea_id/details" element={<IdeaDetails></IdeaDetails>} />
+                                <Route path="idea/:idea_id" element={<IdeaDetails></IdeaDetails>} />
                             </Route>
                         </Route>
                         <Route

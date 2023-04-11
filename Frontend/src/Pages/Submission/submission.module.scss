@@ -1,0 +1,84 @@
+@import '../../Components/globalMixins.scss';
+@import './customMixins.scss';
+
+.doc {
+     @include transition;
+     @include SlightRoundBorder;
+     box-shadow: 0px 2px 8px #00000063;
+     display: flex;
+     padding: 0.5em;
+     justify-content: space-between;
+
+     * {
+          margin: auto;
+     }
+
+     cursor: pointer;
+
+     label,
+     svg {
+          cursor: pointer;
+     }
+
+     background-color: var(--backgroundcolor);
+
+     &:hover {
+          transform: scale(1.01);
+          filter: invert(1);
+
+     }
+
+     label {
+          color: var(--textcolor);
+     }
+
+     >div {
+          display: flex;
+          flex-direction: row;
+          gap: 1em;
+     }
+
+     svg {
+          @include transition;
+          cursor: pointer;
+          height: 1.3em;
+          width: 1.3em;
+          color: var(--textcolor);
+          // background-color: blue;
+          padding: 5px;
+
+          &:hover {
+               @include SquareRoundBorder;
+               background-color: var(--backgroundcolor);
+               filter: invert(1);
+          }
+
+          &:active {
+               transform: scale(0.9)
+          }
+
+     }
+
+
+}
+
+.submission {
+
+     height: 100%;
+     width: calc(100% - 4em);
+     margin: 2em;
+
+     padding-bottom: 2em;
+
+     >h1 {
+          @include boldfont;
+          @include slide_left_animation;
+          color: var(--textcolor);
+     }
+
+     >div {
+          @include table;
+     }
+
+
+}

@@ -1,0 +1,188 @@
+@import '../../Components/globalMixins.scss';
+@import './customMixins.scss';
+
+
+.subid {
+     position: relative;
+     overflow: auto;
+     height: 100%;
+     width: calc(100% - 4em);
+     margin: 2em;
+
+     padding-bottom: 2em;
+
+     >h1 {
+          @include boldfont;
+          @include slide_left_animation;
+          color: var(--textcolor);
+     }
+
+
+     >div:has(h2) {
+          @include lightfont;
+          color: var(--textcolor);
+          display: flex;
+          justify-content: flex-start;
+          gap: 0.6em;
+          font-size: 0.8em;
+          opacity: 0.8;
+
+          h2 {
+               font-size: 1em;
+               font-weight: bold;
+               color: var(--secondarycolor);
+          }
+     }
+
+}
+
+.table {
+     @include table;
+
+     >div:nth-child(1) {
+          >label:nth-child(6) {
+               text-align: right;
+          }
+
+          >label:nth-child(1) {
+               padding-left: 2em;
+          }
+     }
+
+     >div:nth-child(1)>label {
+          flex: 1;
+     }
+
+}
+
+
+.doc {
+     @include transition;
+     @include SlightRoundBorder;
+     box-shadow: 0px 2px 8px #00000063;
+     display: flex;
+     padding: 0.5em;
+     justify-content: space-between;
+
+     >div {
+          @include boldfont;
+          position: relative;
+
+
+          svg {
+               position: absolute;
+               margin: auto;
+               margin-left: 1em;
+               top: 0;
+               bottom: 0;
+          }
+     }
+
+
+
+     * {
+          flex: 1;
+          margin: auto;
+     }
+
+     padding-left: 2em;
+     cursor: pointer;
+
+     label,
+     svg {
+          cursor: pointer;
+     }
+
+     background-color: var(--backgroundcolor);
+
+     // &:hover {
+     //      transform: scale(1.01);
+     //      filter: invert(1);
+
+     // }
+
+     label {
+          color: var(--textcolor);
+     }
+
+
+     svg {
+          margin: auto;
+          @include transition;
+          cursor: pointer;
+          height: 1.3em;
+          width: 1.3em;
+          color: var(--textcolor);
+          padding: 5px;
+     }
+
+     svg:hover {
+          @include RoundBorder;
+          background-color: var(--blurborder);
+     }
+
+     svg:active {
+          transform: scale(0.9);
+     }
+
+     cursor: pointer;
+
+     &:hover {
+          background-color: crimson;
+
+          label,
+          svg {
+               color: white;
+          }
+
+          // svg,
+          // label {
+          //      color: var(--backgroundcolor);
+
+          // }
+     }
+
+     // &:active {
+     //      transform: scale(0.99999999999999);
+     // }
+
+}
+
+
+.addbtn {
+     @include transition;
+     @include RoundBorder;
+     @include slide_right_animation;
+     position: absolute;
+     height: 2.5em;
+     width: 2.5em;
+     background-color: var(--btncolor);
+     display: flex;
+     right: 1em;
+     top: 1em;
+     cursor: pointer;
+     box-shadow: 0 0 5px rgba(0, 0, 0, 0.713);
+
+     svg {
+          @include transition;
+          height: 1.2em;
+          width: 1.2em;
+          margin: auto;
+          color: var(--backgroundcolor);
+     }
+
+     &:hover {
+          background-color: crimson;
+
+          svg {
+               color: white;
+          }
+
+          transform: scale(1.09);
+     }
+
+     &:active {
+          transform: scale(0.95);
+     }
+
+}
