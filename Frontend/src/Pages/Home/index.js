@@ -3,6 +3,11 @@ import styles from './home.module.scss';
 import friends from '../../Images/friends.png';
 import professional from '../../Images/professional.png';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+// import { faFolderOpen } from '@fortawesome/free-brands-svg-icons';
+// import { faUser } from '@fortawesome/free-regular-svg-icons';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
     const { t } = useTranslation();
