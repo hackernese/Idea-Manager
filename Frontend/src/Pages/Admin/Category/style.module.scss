@@ -1,10 +1,14 @@
 @import "../../../Components/globalMixins.scss";
 
-.base{
+button {
+    @include btn;
+}
+
+.base {
     padding: 3em;
 
-    >.header{
-        background-color: var(--secondarycolor); 
+    >.header {
+        background-color: var(--secondarycolor);
         padding: 2px;
         height: 3em;
         padding-top: 13px;
@@ -15,7 +19,8 @@
         vertical-align: middle;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         @include SlightRoundBorder;
-        >p{
+
+        >p {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,16 +32,17 @@
             text-align: center; // Center the text horizontally
         }
     }
-    >button{
+
+    >button {
         @include btn;
         display: inline-block;
         text-align: center;
         align-items: center;
         vertical-align: middle;
-        float:right;
+        float: right;
     }
-    
-    >section{
+
+    >section {
         margin-top: 3em;
     }
 }
