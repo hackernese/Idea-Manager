@@ -63,8 +63,12 @@ class User(AbstractBase):
     address = db.Column(db.Text, nullable=True)
     theme = db.Column(db.String(50), default="light")
     language = db.Column(db.String(50), default="en")
-    oauth = db.Column(db.Text)
-    # iirc, maximum length of address field is 30000 characters, but Text should also be good
+
+    # When the user updates their new email, it is going to send a new code to their new email for verification
+    # if the user access the link in the mail, it is going to compare the code to email_token and if it's correct
+    # then update the current mail with the "new_email" below
+    email_token = db.Column(db.String(100), default=None, nullable=True, unique=True)
+    new_email = db.Column(db.String(345), default=None, nullable=True)
 
 
     __table_args__ = (
