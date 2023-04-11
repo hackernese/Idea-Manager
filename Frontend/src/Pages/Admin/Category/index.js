@@ -18,7 +18,7 @@ function Category() {
             <button>Create a new category</button>
             <section>
                 <div>
-                    <label>Name</label>
+                    <label>Nameoisdfjdf</label>
                     <label>Actions</label>
                 </div>
             </section>
