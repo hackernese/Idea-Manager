@@ -17,7 +17,10 @@ function Category() {
             </div>
             <button>Create a new category</button>
             <section>
-                free fire
+                <div>
+                    <label>Name</label>
+                    <label>Actions</label>
+                </div>
             </section>
         </div>
     );
