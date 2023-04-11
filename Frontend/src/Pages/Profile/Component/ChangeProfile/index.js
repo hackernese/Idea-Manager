@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './changeProfile.module.scss';
-import { useContext, useLayoutEffect } from 'react';
+import { createRef, useContext, useLayoutEffect, useState } from 'react';
 import { settingContext } from '../..';
 import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import { error, success } from '../../../../lib/toast';
 import DropDown from '../../../../Components/DropDown';
 import DatePicker from '../../../../Components/DatePicker';
 import LoadingButton from '../../../../Components/LoadingButton';
+import { loginContext } from '../../../../App';
 import axios from 'axios';
 
 const cx = classNames.bind(styles);
@@ -16,8 +17,18 @@ const cx = classNames.bind(styles);
 function ChangeProfile() {
     const { t, i18n } = useTranslation();
     const context = useContext(settingContext);
-    useLayoutEffect(() => context.settext('setting.profile.title'), []);
+    const authContext = useContext(loginContext);
 
+    const temp_date = new Date(authContext.userinfo.birthday);
+    // Updating basic infor states
+    const [date, setdate] = useState(temp_date == 'Invalid Date' ? new Date() : temp_date);
+    const phoneref = createRef();
+    const addressref = createRef();
+    const [addrvariant, setaddrvariant] = useState('');
+    const [phonevariant, setphonevariant] = useState('');
+    const btnref = createRef();
+
+    useLayoutEffect(() => context.settext('setting.profile.title'), []);
     return (
         <AnimatedOutlet>
             <div className={cx('container')}>
@@ -25,20 +36,60 @@ function ChangeProfile() {
                     <h1>{t('setting.profile.general')}</h1>
                     <p>{t('setting.profile.generaltext')}</p>
                     <CustomInput
-                        type="text"
+                        default_value={authContext.userinfo.phone}
+                        type="tel"
+                        variant={phonevariant}
+                        custom_ref={phoneref}
                         animation={false}
-                        placeholder={t('setting.profile.phoneholder')}
+                        placeholder="e.g. 84-999-999-9999"
+                        onClick={() => {
+                            setphonevariant('');
+                        }}
                     ></CustomInput>
                     <CustomInput
+                        default_value={authContext.userinfo.address}
+                        variant={addrvariant}
+                        custom_ref={addressref}
                         type="text"
                         animation={false}
                         placeholder={t('setting.profile.addressholder')}
+                        onKeyDown={({ key }) => {
+                            if (key === 'Enter') btnref.current.click();
+                        }}
+                        onClick={() => {
+                            setaddrvariant('');
+                        }}
                     ></CustomInput>
-                    <DatePicker label={t('setting.profile.birthday')}></DatePicker>
+                    <DatePicker
+                        default_day={date}
+                        onChange={(e) => setdate(e.$d)}
+                        label={t('setting.profile.birthday')}
+                    ></DatePicker>
                     <LoadingButton
+                        custom_ref={btnref}
                         text={t('setting.profile.update')}
                         onClick={async () => {
-                            console.log(1);
+                            const address = addressref.current.value.trim();
+                            const phone = phoneref.current.value.trim();
+
+                            let json = { birthday: date };
+
+                            if (phone) json.phone = phone;
+                            if (address) json.address = address;
+
+                            let resp;
+
+                            try {
+                                resp = await axios.post('user/update', json);
+                            } catch (e) {
+                                error(t('setting.profile.msg.fail'));
+                                return;
+                            }
+
+                            if (resp.data.status === 'OK') {
+                                authContext.reassign({ address: address, phone: phone, birthday: date });
+                                success(t('setting.profile.msg.success_info'));
+                            } else error(resp.data.err);
                         }}
                     ></LoadingButton>
                 </div>
@@ -50,17 +101,38 @@ function ChangeProfile() {
                         value={[
                             {
                                 v: t('setting.profile.genders.male'),
+                                ret: 'male',
+                                s: authContext.userinfo.gender === 'male' ? true : false,
                             },
                             {
                                 v: t('setting.profile.genders.female'),
+                                ret: 'female',
+                                s: authContext.userinfo.gender === 'female' ? true : false,
                             },
                             {
                                 v: t('setting.profile.genders.others'),
-                                s: true,
+                                s: authContext.userinfo.gender === 'others' ? true : false,
+                                ret: 'others',
                             },
                         ]}
-                        onChange={async ({ value }) => {
-                            console.log(value);
+                        onChange={async ({ value, code }) => {
+                            let ret;
+
+                            try {
+                                ret = await axios.post('user/update', {
+                                    gender: code,
+                                });
+                            } catch {
+                                error(t('setting.profile.msg.fail'));
+                                return;
+                            }
+
+                            if (ret.data.status === 'OK') {
+                                success(t('setting.profile.msg.success_gender') + ' ' + value);
+                                authContext.reassign({ gender: code });
+                                // Resetting the data of authContext to make sure that the next time the user
+                                // re-visits this page, it is still going to show the latest data
+                            }
                         }}
                     ></DropDown>
                 </div>

@@ -48,7 +48,13 @@
             "pass_text": "Biểu mẫu sau được sử dụng để cập nhật mật khẩu hiện tại của bạn.",
             "newpass": "Mật khẩu mới...",
             "cpass": "Xác nhận mật khẩu...",
-            "currentpass": "Mật khẩu hiện tại..."
+            "currentpass": "Mật khẩu hiện tại...",
+            "msg": {
+                "success_passwd": "Cập nhật mật khẩu thành công.",
+                "invalid_passwd": "Mật khẩu hiện tại không hợp lệ.",
+                "fail": "Đã xảy ra lỗi không mong đợi trong quá trình yêu cầu.",
+                "mail_msg": "Hệ thống đã gửi thành công một liên kết xác nhận đến email mới của bạn. Vui lòng xác nhận để cập nhật."
+            }
         },
         "profile": {
             "title": "Hồ sơ cá nhân",
@@ -70,8 +76,8 @@
             "msg": {
                 "success_lang": "Đã chuyển sang ngôn ngữ ",
                 "error_lang": "Đã xảy ra lỗi không mong muốn, không thể chuyển sang ngôn ngữ khác.",
-                "success_passwd": "Cập nhật mật khẩu thành công.",
-                "invalid_passwd": "Mật khẩu hiện tại không hợp lệ.",
+                "success_gender": "Thay đổi giới tính thành công thành ",
+                "success_info": "Cập nhật thông tin người dùng thành công.",
                 "fail": "Đã xảy ra lỗi không mong đợi trong quá trình yêu cầu."
             }
         }

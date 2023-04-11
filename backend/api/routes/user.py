@@ -1,12 +1,48 @@
 
-from app import app
+from app import app, mail
 from . import login_required, bad_request, created_request
 from flask import jsonify, request
 from db import db, Sessions, User, Department, Role, UserRoles
 from sqlalchemy.exc import IntegrityError
 from setting import MAX_USER_PER_PAGE
 from dateutil import parser as TimeParser
-import json
+from secrets import token_urlsafe
+from flask_mail import Message
+from flask import render_template
+import json, phonenumbers, smtplib
+
+
+@app.route('/api/user/email/verify', methods=["POST"])
+@login_required()
+def email_verify():
+
+    data = request.get_json()
+
+    if "token" not in data:
+        return bad_request("Missing token")
+
+    user = request.session.user
+
+    if user.email_token != data['token']:
+        return jsonify({
+            'status' : "FAIL",
+            'err' : "INVALID_CODE"
+        })
+    try:
+        user.email = user.new_email
+        user.new_email = None
+        user.email_token = None
+        db.session.commit()
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({
+            'status' : "FAIL",
+            'err' : "EXIST_ERR"
+        })
+
+    return jsonify({
+        'status' : "OK"
+    })
 
 @app.route('/api/user/add', methods=['POST'])
 @login_required(role_allow=['manager', 'administrator'])
@@ -180,18 +216,51 @@ def change_user_info(user, data):
 
     if "email" in data:
         # Updating the email only
+        email = data['email'].strip()
+        check = db.session.query(User.email).filter(User.email==email).first()
+
+        if check:
+            return jsonify({
+                'status' : "FAIL",
+                'err' : "This email has already been used"
+            })
+
+        code = token_urlsafe(100)
+        user.email_token = code
+        user.new_email = email
+
+        # Creating a message which send to the user email later
+
+        msg = Message('Verify your email',
+            sender=app.config.get("MAIL_USERNAME"),
+            recipients=[email])
+        msg.html = render_template('email_verify.html', username=user.username, url=user.craft_verify_url(code))
         try:
-            user.email = data['email'].strip()
-            db.session.flush()
-        except IntegrityError:
-            db.session.rollback()
-            return created_request('This email has already been used')
+            mail.send(msg)
+        except smtplib.SMTPRecipientsRefused:
+            pass
 
     if "phone" in data:
         # Updating the phone number only
         try:
+
+            number = phonenumbers.parse(data['phone'])
+            if not phonenumbers.is_possible_number(number):
+                db.session.rollback()
+                return jsonify({
+                    'status' : "FAIL",
+                    'err' : "Invalid phone number"
+                })
+
+
             user.phone = data['phone'].strip()
             db.session.flush()
+        except phonenumbers.phonenumberutil.NumberParseException:
+            db.session.rollback();
+            return jsonify({
+                'status' : "FAIL",
+                'err' : "Missing or invalid region code."
+            })
         except IntegrityError:
             db.session.rollback()
             return created_request('This phone number has already been used')

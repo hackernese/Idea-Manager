@@ -1,0 +1,15 @@
+@import "../../Components/globalMixins.scss";
+
+.tandc {
+    @include gradientBackground;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+
+    > div {
+        @include SlightRoundBorder;
+        height: 10em;
+        width: 10em;
+        background-color: var(--backgroundcolor);
+    }
+}

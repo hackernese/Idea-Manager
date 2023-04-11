@@ -59,12 +59,16 @@ class User(AbstractBase):
     # Optional columns / fields...
     phone = db.Column(db.String(15), nullable=True, unique=True) # maximum length of phone number is 15 chars
     birthday = db.Column(db.DateTime, nullable=True)
-    gender = db.Column(db.String(50), nullable=False, default="unknown")
+    gender = db.Column(db.String(50), nullable=False, default="others")
     address = db.Column(db.Text, nullable=True)
     theme = db.Column(db.String(50), default="light")
     language = db.Column(db.String(50), default="en")
-    oauth = db.Column(db.Text)
-    # iirc, maximum length of address field is 30000 characters, but Text should also be good
+
+    # When the user updates their new email, it is going to send a new code to their new email for verification
+    # if the user access the link in the mail, it is going to compare the code to email_token and if it's correct
+    # then update the current mail with the "new_email" below
+    email_token = db.Column(db.String(100), default=None, nullable=True, unique=True)
+    new_email = db.Column(db.String(345), default=None, nullable=True)
 
 
     __table_args__ = (
@@ -81,6 +85,10 @@ class User(AbstractBase):
     recover_ref = db.relationship('RecoverAccountDB', backref='user', lazy=True, cascade='all, delete')
     reaction_ref = db.relationship('Reaction', backref='user', lazy=True, cascade='all, delete')
     logins_ref = db.relationship('Logins', backref='use', lazy=True, cascade='all, delete')
+
+    def craft_verify_url(self, code):
+        protocol = "http" if not SSL else "https"
+        return f"{protocol}://{RECOVERY_URL_BASE}:{FRONTEND_PORT}/mail_verify?token={code}"
 
     def __init__(self, username, password, email, department) -> None:
         self.username = username.strip()
