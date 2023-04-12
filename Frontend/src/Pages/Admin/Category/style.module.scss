@@ -4,6 +4,8 @@ button {
     @include btn;
 }
 
+
+
 .base {
     padding: 3em;
 
@@ -44,5 +46,36 @@ button {
 
     >section {
         margin-top: 3em;
+    }
+
+    .main{
+        height: 40em;
+        padding: 2em;
+        padding-top: 5em;
+    
+        >div{
+            @include table_style;
+        }
+
+        svg{
+            font-size: 20px;
+            padding-inline: 3px;
+            cursor: pointer;
+            color: var(--textcolor);
+            padding: 5px;
+            @include transition;
+
+            &:hover{
+                @include SquareRoundBorder;
+                background-color: var(--backgroundcolor);
+                filter: invert(1);
+            }
+        }
+        .action{
+            margin-inline: 1px;
+            font-size: 10px;
+
+            @include boldfont
+        }
     }
 }

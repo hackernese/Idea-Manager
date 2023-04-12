@@ -260,7 +260,7 @@
 
          >div {
               @include boldfont;
-              font-size: 0.8em;
+              font-size: 1em;
               @include SlightRoundBorder;
               background-color: var(--backgroundcolor);
               color: var(--textcolor);
@@ -281,7 +281,7 @@
 
          >div {
               @include lightfont;
-              font-size: 0.8em;
+              font-size: 1em;
               @include SlightRoundBorder;
               background-color: var(--backgroundcolor);
               box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
