@@ -67,6 +67,7 @@ function Login() {
     const usernameref = createRef();
     const passwdref = createRef();
     const [errtext, seterrtext] = useState('');
+    const btnref = createRef();
 
     if (context.userinfo) {
         // context.userinfo != null
@@ -79,10 +80,19 @@ function Login() {
             <h1 className={cx('login-title')}>Login</h1>
             <h2 className={cx('login-description')}>Hi, welcome back!</h2>
             <input ref={usernameref} className={cx('input-name')} type={'text'} placeholder="User Name"></input>
-            <input ref={passwdref} className={cx('input-password')} type={'password'} placeholder="Password"></input>
+            <input
+                onKeyDown={({ key }) => {
+                    if (key === 'Enter') btnref.current.click();
+                }}
+                ref={passwdref}
+                className={cx('input-password')}
+                type={'password'}
+                placeholder="Password"
+            ></input>
 
             <label className={cx('err')}>{errtext}</label>
             <button
+                ref={btnref}
                 className={cx('login-btn')}
                 onClick={() => {
                     const passwd = passwdref.current.value.trim();
