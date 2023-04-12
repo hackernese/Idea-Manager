@@ -6,12 +6,17 @@ import LoadingButton from '../../Components/LoadingButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { faFileZipper, faFileCsv } from '@fortawesome/free-solid-svg-icons';
+import { loginContext } from '../../App';
+import { useContext } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Submission() {
+    const context = useContext(loginContext);
     const navigate = useNavigate();
     const outlet = useOutlet();
+
+    console.log(context.userinfo.role);
 
     if (outlet) {
         return outlet;
@@ -43,8 +48,12 @@ function Submission() {
                                         navigate('2323');
                                     }}
                                 />
-                                <FontAwesomeIcon title="Download Zipped documents" icon={faFileZipper} />
-                                <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
+                                {context.userinfo.role === 'manager' && (
+                                    <>
+                                        <FontAwesomeIcon title="Download Zipped documents" icon={faFileZipper} />
+                                        <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>

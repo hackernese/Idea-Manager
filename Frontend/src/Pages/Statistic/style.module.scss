@@ -1,0 +1,33 @@
+@import '../../Components/globalMixins.scss';
+
+
+
+.main {
+
+     h1 {
+          @include slide_left_animation;
+          @include boldfont;
+          margin-bottom: 1em;
+          padding-left: 0.5em;
+     }
+
+     padding: 2em;
+     color: var(--textcolor);
+
+     >div {
+          @include slide_right_animation;
+          @include table_style;
+          height: 40em;
+
+          >div:nth-child(1) {
+               height: 4em;
+          }
+
+          // >div:nth-child(1) {
+          //      overflow: auto;
+
+          // }
+
+     }
+
+}

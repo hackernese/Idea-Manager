@@ -92,6 +92,10 @@ function App() {
     const [userinfo, setuserinfo] = useState(false);
     const location = useLocation();
     const isMobile = useMediaQuery({ maxWidth: 1100 });
+    const [isadmin, setisadmin] = useState(false);
+    const [ismanager, setismanager] = useState(false);
+    const [isstaff, setisstaff] = useState(false);
+    const [iscoordiantor, setiscoordinator] = useState(false);
 
     // false : not login
     // true : login r
@@ -129,6 +133,13 @@ function App() {
                 if (resp.data.status === 'OK') {
                     userinfo_initialize(resp.data.data);
                     setuserinfo(resp.data.data);
+
+                    // CHecking the role;
+                    const data = resp.data.data;
+                    setisadmin(data.role === 'administrator');
+                    setismanager(data.role === 'manager');
+                    setisstaff(data.role == 'staff');
+                    setiscoordinator(data.role === 'coordinator');
                 } else {
                     setuserinfo(null);
                 }
@@ -153,11 +164,14 @@ function App() {
     if (userinfo === false) {
         return <label>Loading...</label>;
     }
-
     return (
         <>
             <loginContext.Provider
                 value={{
+                    isadmin: isadmin,
+                    isstaff: isstaff,
+                    iscoordiantor: iscoordiantor,
+                    ismanager: ismanager,
                     userinfo: userinfo,
                     is_auth: auth,
                     trigger_whoami: () => settriggerWhoami(triggerWhoami + 1),
@@ -268,16 +282,18 @@ function App() {
                             <Route path="general" element={<ChangeProfile></ChangeProfile>}></Route>
                             <Route path="account" element={<Account></Account>}></Route>
                         </Route>
-                        <Route
-                            path="/manager/statistics"
-                            element={
-                                <ProtectedRoute>
-                                    <HeaderOnly>
-                                        <StatisticPage />
-                                    </HeaderOnly>
-                                </ProtectedRoute>
-                            }
-                        ></Route>
+                        {ismanager && (
+                            <Route
+                                path="/manager/statistics"
+                                element={
+                                    <ProtectedRoute>
+                                        <HeaderOnly>
+                                            <StatisticPage />
+                                        </HeaderOnly>
+                                    </ProtectedRoute>
+                                }
+                            ></Route>
+                        )}
                         <Route
                             path="/recovery"
                             element={
