@@ -11,7 +11,7 @@ function TickBox({ click, value, force_select }) {
     // current form to be unticked if its "value" doesn't
     // match "force_select"
 
-    if (force_select !== null)
+    if (force_select !== undefined && force_select !== null)
         if (force_select === value)
             // TIckbox can be in two mode, first mode is independent, this box doesn't
             // involve the other boxes which doesn't need a "force_select",

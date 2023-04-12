@@ -5,7 +5,7 @@ import { InView } from 'react-intersection-observer';
 
 const cx = classNames.bind(styles);
 
-function LoadingCircle({ tag = 'section', onIntersect }) {
+function LoadingCircle({ tag = 'section', onIntersect = () => {} }) {
     // by default it's <section>
     // unless someone else specify another tag
 

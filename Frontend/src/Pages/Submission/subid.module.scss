@@ -1,5 +1,5 @@
 @import '../../Components/globalMixins.scss';
-@import './customMixins.scss';
+
 
 
 .subid {
@@ -37,114 +37,48 @@
 }
 
 .table {
-     @include table;
+     @include table_style;
+     height: 45em;
+     margin-top: 1.5em;
 
-     >div:nth-child(1) {
-          >label:nth-child(6) {
-               text-align: right;
+     >div:nth-child(2)>div {
+
+          * {
+               cursor: pointer;
+
           }
 
-          >label:nth-child(1) {
-               padding-left: 2em;
-          }
-     }
-
-     >div:nth-child(1)>label {
-          flex: 1;
-     }
-
-}
-
-
-.doc {
-     @include transition;
-     @include SlightRoundBorder;
-     box-shadow: 0px 2px 8px #00000063;
-     display: flex;
-     padding: 0.5em;
-     justify-content: space-between;
-
-     >div {
-          @include boldfont;
-          position: relative;
-
-
-          svg {
-               position: absolute;
-               margin: auto;
-               margin-left: 1em;
-               top: 0;
-               bottom: 0;
-          }
-     }
-
-
-
-     * {
-          flex: 1;
-          margin: auto;
-     }
-
-     padding-left: 2em;
-     cursor: pointer;
-
-     label,
-     svg {
-          cursor: pointer;
-     }
-
-     background-color: var(--backgroundcolor);
-
-     // &:hover {
-     //      transform: scale(1.01);
-     //      filter: invert(1);
-
-     // }
-
-     label {
-          color: var(--textcolor);
-     }
-
-
-     svg {
-          margin: auto;
           @include transition;
-          cursor: pointer;
-          height: 1.3em;
-          width: 1.3em;
-          color: var(--textcolor);
-          padding: 5px;
-     }
 
-     svg:hover {
-          @include RoundBorder;
-          background-color: var(--blurborder);
-     }
-
-     svg:active {
-          transform: scale(0.9);
-     }
-
-     cursor: pointer;
-
-     &:hover {
-          background-color: crimson;
-
-          label,
-          svg {
-               color: white;
+          &:hover {
+               filter: invert(1);
+               transform: scale(1.02);
           }
 
-          // svg,
-          // label {
-          //      color: var(--backgroundcolor);
-
-          // }
+          &:active {
+               transform: scale(0.95);
+          }
      }
 
-     // &:active {
-     //      transform: scale(0.99999999999999);
-     // }
+     >div:nth-child(2)>div>div {
+          display: flex;
+          gap: 0.5em;
+
+          svg {
+               @include transition;
+               margin: auto;
+               margin-left: 0.5em;
+               cursor: pointer;
+               padding: 0.5em;
+          }
+
+          svg:hover {
+               @include SlightRoundBorder;
+               background-color: var(--backgroundcolor);
+               filter: invert(1);
+          }
+
+     }
 
 }
 

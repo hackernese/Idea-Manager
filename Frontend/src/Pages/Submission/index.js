@@ -1,4 +1,4 @@
-import { useOutlet } from 'react-router-dom';
+import { useNavigate, useOutlet } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import styles from './submission.module.scss';
 import classNames from 'classnames/bind';
@@ -10,6 +10,7 @@ import { faFileZipper, faFileCsv } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 function Submission() {
+    const navigate = useNavigate();
     const outlet = useOutlet();
 
     if (outlet) {
@@ -22,10 +23,12 @@ function Submission() {
                 <h1>Submissions :</h1>
                 <div>
                     <div>
-                        <label>Name</label>
-                        <label>Deadline 1</label>
-                        <label>Deadline 2</label>
-                        <label>Actions</label>
+                        <div>
+                            <label>Name</label>
+                            <label>Deadline 1</label>
+                            <label>Deadline 2</label>
+                            <label>Actions</label>
+                        </div>
                     </div>
                     <div>
                         <div className={cx('doc')}>
@@ -33,7 +36,13 @@ function Submission() {
                             <label>adawd 1</label>
                             <label>awdawd 2</label>
                             <div>
-                                <FontAwesomeIcon title="View Ideas" icon={faFolderOpen} />
+                                <FontAwesomeIcon
+                                    title="View Ideas"
+                                    icon={faFolderOpen}
+                                    onClick={() => {
+                                        navigate('2323');
+                                    }}
+                                />
                                 <FontAwesomeIcon title="Download Zipped documents" icon={faFileZipper} />
                                 <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
                             </div>

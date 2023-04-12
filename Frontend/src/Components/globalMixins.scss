@@ -1,12 +1,14 @@
 @mixin gradientBackground {
-    background: #83a4d4; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-        to right,
-        #b6fbff,
-        #83a4d4
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #83a4d4;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right,
+            #b6fbff,
+            #83a4d4);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
 @mixin RoundBorder {
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -14,6 +16,7 @@
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
+
 @mixin SlightRoundBorder {
     border-radius: 15px;
     -webkit-border-radius: 15px;
@@ -21,6 +24,7 @@
     -ms-border-radius: 15px;
     -o-border-radius: 15px;
 }
+
 @mixin SquareRoundBorder {
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -48,9 +52,11 @@
 @mixin lightfont {
     font-family: MontserratLight;
 }
+
 @mixin boldfont {
     font-family: MontserratMeidum;
 }
+
 @mixin dropdown_animation {
     @keyframes animation_down {
         from {
@@ -61,6 +67,7 @@
             -ms-transform: translateY(-3em);
             -o-transform: translateY(-3em);
         }
+
         to {
             transform: translateY(0);
             opacity: 1;
@@ -70,9 +77,11 @@
             -o-transform: translateY(0);
         }
     }
+
     animation: animation_down 0.4s backwards;
     -webkit-animation: animation_down 0.4s backwards;
 }
+
 @mixin dropup_animation {
     @keyframes animation_up {
         from {
@@ -83,6 +92,7 @@
             -ms-transform: translateY(3em);
             -o-transform: translateY(3em);
         }
+
         to {
             transform: translateY(0);
             opacity: 1;
@@ -92,9 +102,11 @@
             -o-transform: translateY(0);
         }
     }
+
     animation: animation_up 0.4s backwards;
     -webkit-animation: animation_up 0.4s backwards;
 }
+
 @mixin slide_left_animation {
     @keyframes animation_left {
         from {
@@ -105,6 +117,7 @@
             -ms-transform: translateX(3em);
             -o-transform: translateX(3em);
         }
+
         to {
             opacity: 1;
             transform: translateX(0);
@@ -114,9 +127,11 @@
             -o-transform: translateX(0);
         }
     }
+
     animation: animation_left 0.4s backwards;
     -webkit-animation: animation_left 0.4s backwards;
 }
+
 @mixin slide_right_animation {
     @keyframes animation_right {
         from {
@@ -127,6 +142,7 @@
             -ms-transform: translateX(-3em);
             -o-transform: translateX(-3em);
         }
+
         to {
             opacity: 1;
             transform: translateX(0);
@@ -136,29 +152,36 @@
             -o-transform: translateX(0);
         }
     }
+
     animation: animation_right 0.4s backwards;
     -webkit-animation: animation_right 0.4s backwards;
 }
+
 @mixin shaking_label {
     @keyframes shake_error_msg {
         0% {
             transform: translateX(10px);
             opacity: 0;
         }
+
         25% {
             transform: translate(-10px);
         }
+
         50% {
             transform: translate(10px);
             opacity: 1;
         }
+
         75% {
             transform: translateX(-10px);
         }
+
         100% {
             transform: translateX(0);
         }
     }
+
     animation: shake_error_msg 0.3s forwards;
     -webkit-animation: shake_error_msg 0.3s forwards;
 }
@@ -173,6 +196,7 @@
             -ms-transform: rotate(90deg);
             -o-transform: rotate(90deg);
         }
+
         to {
             opacity: 1;
             transform: rotate(360deg);
@@ -182,6 +206,7 @@
             -o-transform: rotate(360deg);
         }
     }
+
     animation: rotateme 0.5s backwards;
     -webkit-animation: rotateme 0.5s backwards;
 }
@@ -191,10 +216,12 @@
         from {
             transform: rotate(0deg);
         }
+
         to {
             transform: rotate(360deg);
         }
     }
+
     width: 2em;
     height: 2em;
     border-radius: 50%;
@@ -243,55 +270,112 @@
 
 @mixin table_style {
 
-
+    @include SlightRoundBorder;
+    overflow: hidden;
     border: 2px solid var(--blurborder);
 
     height: 100%;
     display: flex;
     flex-direction: column;
 
-    >div:nth-child(1) {
-         @include boldfont;
-         padding-right: 1em;
-         padding-left: 1em;
-         color: var(--textcolor);
-         box-shadow: 0 0 5px black;
-         z-index: 1;
+    >div {
+        padding: 1em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        overflow-x: hidden;
 
-         >div {
-              @include boldfont;
-              font-size: 1em;
-              @include SlightRoundBorder;
-              background-color: var(--backgroundcolor);
-              color: var(--textcolor);
-              padding: 1em;
-              display: flex;
-              justify-content: space-around;
-         }
+        >div {
+            >* {
+                flex: 1;
+            }
+
+            > :nth-child(1) {
+                padding-left: 1.5em;
+            }
+
+        }
+
+    }
+
+    label {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    >div:nth-child(1) {
+        @include boldfont;
+        padding-top: 0;
+        padding-bottom: 0;
+        color: var(--textcolor);
+        box-shadow: 0 0 5px black;
+        z-index: 1;
+
+        >div {
+            @include boldfont;
+            font-size: 1em;
+            @include SlightRoundBorder;
+            background-color: var(--backgroundcolor);
+            // box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
+            color: var(--textcolor);
+            padding: 1em;
+            display: flex;
+            justify-content: space-around;
+        }
     }
 
     >div:nth-child(2) {
-         padding: 1em;
-         padding-top: 2em;
-         padding-bottom: 2em;
-         overflow: auto;
-         display: flex;
-         flex-direction: column;
-         gap: 1em;
+        overflow-y: auto;
 
-         >div {
-              @include lightfont;
-              font-size: 1em;
-              @include SlightRoundBorder;
-              background-color: var(--backgroundcolor);
-              box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
-              color: var(--textcolor);
-              padding: 1em;
-              display: flex;
-              justify-content: space-around;
+        >div {
+            @include lightfont;
+            font-size: 1em;
+            @include SlightRoundBorder;
+            background-color: var(--backgroundcolor);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
+            color: var(--textcolor);
+            padding: 1em;
+            display: flex;
+            justify-content: space-around;
 
-         }
+        }
 
     }
 
+}
+
+@mixin hover_underly {
+
+    @include transition;
+    margin: auto;
+    opacity: 0.5;
+    position: relative;
+    padding-bottom: 4px;
+
+    &::after {
+        content: "";
+        width: 0;
+        height: 2px;
+        position: absolute;
+        border-radius: 10px;
+        bottom: 0;
+        margin: auto;
+        right: 0;
+        left: 0;
+        transition: all 300ms ease;
+    }
+
+    &:hover {
+        color: #007bff;
+        opacity: 1;
+
+        &::after {
+            background-color: #007bff;
+            width: 100%;
+        }
+
+    }
 }

@@ -43,26 +43,28 @@ function SubmissionID() {
                 </div>
                 <div className={cx('table')}>
                     <div>
-                        <label>Title</label>
-                        <label>Brief</label>
-                        <label>Views</label>
-                        <label>Like</label>
-                        <label>Dislike</label>
+                        <div>
+                            <label>Title</label>
+                            <label>Brief</label>
+                            <label>Views</label>
+                            <label>Like</label>
+                            <label>Dislike</label>
+                        </div>
                     </div>
                     <div>
                         <div
-                            className={cx('doc')}
                             onClick={() => {
                                 navigate(`idea/1`);
                             }}
                         >
-                            <label>dwadawd</label>
-                            <label>adawd 1</label>
-                            <label>12</label>
+                            <label>12dwa2323d</label>
+                            <label>www12</label>
+                            <label>1awd2</label>
                             <div>
                                 <label>2</label>
                                 <FontAwesomeIcon
                                     onClick={(e) => {
+                                        e.stopPropagation();
                                         handle_likedislike(e, true);
                                     }}
                                     icon={islike ? faThumbsUp : ReThumbUp}
@@ -73,6 +75,7 @@ function SubmissionID() {
                                 <label>2</label>
                                 <FontAwesomeIcon
                                     onClick={(e) => {
+                                        e.stopPropagation();
                                         handle_likedislike(e, false);
                                     }}
                                     icon={!islike ? faThumbsDown : ReThumbDown}

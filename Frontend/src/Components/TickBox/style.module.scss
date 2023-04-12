@@ -1,10 +1,9 @@
-
 @import '../globalMixins.scss';
 
 
-.ticked{
+.ticked {
 
-    &::after{
+    &::after {
         opacity: 1 !important;
     }
 
@@ -12,29 +11,30 @@
     opacity: 1 !important;
 }
 
-.checkbox{
+.checkbox {
     @include transition_01s;
     @include RoundBorder;
-    height : 1em;
+    height: 1em;
     width: 1em;
     display: flex;
     justify-content: center;
-    border : 1.5px solid var(--textcolor);
-    position:relative;
+    border: 1.5px solid var(--textcolor);
+    position: relative;
     opacity: 0.3;
+    cursor: pointer;
 
-    &:hover{
+    &:hover {
         opacity: 1;
     }
 
-    &::after{
+    &::after {
         @include transition_01s;
         @include RoundBorder;
         content: "";
         display: block;
         margin: auto;
-        height : 0.6em;
-        width : 0.6em;
+        height: 0.6em;
+        width: 0.6em;
         background-color: var(--primarycolor);
         opacity: 0;
     }

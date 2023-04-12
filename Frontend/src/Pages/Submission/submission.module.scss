@@ -1,36 +1,9 @@
 @import '../../Components/globalMixins.scss';
-@import './customMixins.scss';
 
 .doc {
      @include transition;
      @include SlightRoundBorder;
-     box-shadow: 0px 2px 8px #00000063;
-     display: flex;
-     padding: 0.5em;
-     justify-content: space-between;
 
-     * {
-          margin: auto;
-     }
-
-     cursor: pointer;
-
-     label,
-     svg {
-          cursor: pointer;
-     }
-
-     background-color: var(--backgroundcolor);
-
-     &:hover {
-          transform: scale(1.01);
-          filter: invert(1);
-
-     }
-
-     label {
-          color: var(--textcolor);
-     }
 
      >div {
           display: flex;
@@ -77,7 +50,9 @@
      }
 
      >div {
-          @include table;
+          @include table_style;
+          height: 45em;
+          margin-top: 1em;
      }
 
 

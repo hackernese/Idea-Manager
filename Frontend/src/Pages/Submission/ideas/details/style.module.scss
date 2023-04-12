@@ -1,0 +1,205 @@
+@import '../../../../Components/globalMixins.scss';
+
+
+.main {
+     padding: 2em;
+     @include transition;
+}
+
+.info {
+     display: flex;
+     flex-direction: column;
+     @include boldfont;
+     gap: 0.5em;
+     color: var(--textcolor);
+
+
+     >div>label:nth-child(1) {
+          color: var(--secondarycolor);
+          font-size: 1em;
+          font-weight: bold;
+
+          &::after {
+               content: " : "
+          }
+     }
+
+     >div {
+          display: flex;
+          justify-content: flex-start;
+          gap: 1em;
+     }
+}
+
+.inputclass {
+     @include SlightRoundBorder;
+     @include dropup_animation;
+     background-color: var(--backgroundcolor);
+     box-shadow: 0 0 10px var(--blurborder);
+     padding: 0.5em;
+     width: 100%;
+
+     position: sticky;
+     margin: auto;
+     right: 0;
+     left: 0;
+     bottom: 0;
+
+     >div {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+
+          >div:nth-child(1) {
+               width: 100%;
+          }
+
+          input {
+               border: none;
+          }
+
+          input:focus {
+               border: none;
+          }
+
+          button {
+               @include SlightRoundBorder;
+               height: 100%;
+          }
+     }
+
+     >section {
+
+          display: flex;
+          justify-content: center;
+
+          * {
+               margin-top: auto;
+               margin-bottom: auto;
+          }
+
+          label {
+               margin-left: 1em;
+          }
+     }
+
+}
+
+
+.comments {
+     padding: 1.5em;
+     color: var(--textcolor);
+     gap: 1em;
+     border: 2px solid var(--blurborder);
+     height: 40em;
+     margin-top: 1em;
+     overflow-y: auto;
+     overflow-x: hidden;
+     position: relative;
+     box-shadow: inset 0 0 5px #0000008a;
+     display: flex;
+     flex-direction: column;
+
+     >div {
+          padding-bottom: 2em;
+          flex: 1;
+     }
+
+     >div>div:hover {
+          transform: scale(1.01)
+     }
+
+     >div>div {
+          @include transition;
+          @include slide_left_animation;
+          @include SlightRoundBorder;
+          flex: 1;
+          box-shadow: 0 0 5px var(--blurborder);
+          border: 2px solid var(--blurborder);
+          display: grid;
+          grid-template-areas:
+               "icon title date"
+               "icon text text"
+          ;
+          overflow: hidden;
+          margin-bottom: 1.5em;
+          grid-template-columns: 3.5em 1fr 1fr;
+          grid-template-rows: 2em auto;
+          padding-top: 0.5em;
+          padding-bottom: 0.6em;
+
+          label {
+               @include boldfont;
+               font-size: 0.9em;
+               align-self: center;
+
+          }
+     }
+
+     >div>div>section {
+          grid-area: icon;
+          display: flex;
+
+          svg {
+               height: 2.5em;
+               margin: auto;
+               margin-top: 0.5em;
+               margin-right: 0;
+          }
+     }
+
+     >div>div>label:nth-of-type(1) {
+          grid-area: title;
+          padding-left: 0.8em;
+          font-weight: bold;
+     }
+
+     >div>div>label:nth-of-type(2) {
+          grid-area: date;
+          padding-right: 3em;
+          text-align: right;
+          opacity: 0.7;
+          font-size: 0.7em;
+     }
+
+     >div>div>p {
+          grid-area: text;
+          padding: 0.8em;
+          padding-top: 0;
+          font-size: 1em;
+     }
+}
+
+.header {
+     display: flex;
+     justify-content: flex-start;
+     gap: 1em;
+     padding-bottom: 1em;
+     border-bottom: 2px solid var(--blurborder);
+     margin-bottom: 1em;
+
+     h1 {
+          @include boldfont;
+          font-size: 1.5em;
+          color: var(--textcolor);
+     }
+
+     svg {
+          margin: auto;
+          margin-left: 0;
+          margin-right: 0;
+          @include transition;
+          @include RoundBorder;
+          height: 1em;
+          width: 1em;
+          padding: 0.5em;
+          color: var(--textcolor);
+          cursor: pointer;
+
+     }
+
+     svg:hover {
+          background-color: var(--backgroundcolor);
+          filter: invert(1);
+     }
+}

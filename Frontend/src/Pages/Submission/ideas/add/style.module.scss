@@ -1,0 +1,180 @@
+@import '../../../../Components/globalMixins.scss';
+
+.relative {
+     position: fixed;
+     width: 100%;
+     height: 100%;
+     display: flex;
+     overflow: auto;
+     padding-bottom: 6em;
+
+}
+
+.main {
+     @include SquareRoundBorder;
+     @include transition;
+     border: 2px solid var(--blurborder);
+     padding: 2em;
+     display: flex;
+     flex-direction: column;
+     gap: 1.5em;
+     width: 40%;
+     margin: auto;
+     margin-top: 5%;
+
+     svg {
+          height: 1em;
+          width: 1em;
+          padding: 0.5em;
+     }
+
+     svg:hover {
+          background-color: var(--backgroundcolor);
+     }
+
+     h2 {
+          @include boldfont;
+          font-size: 0.8em;
+          opacity: 0.8;
+          margin-bottom: 0.5em;
+          color: var(--textcolor);
+
+          &::after {
+               content: "*";
+               color: red;
+          }
+
+     }
+
+
+
+}
+
+.termandcond {
+
+     display: flex;
+     justify-content: space-between;
+
+     >div:first-child {
+
+          display: flex;
+          gap: 0.5em;
+
+          * {
+               margin: auto;
+          }
+
+          a {
+               @include hover_underly;
+               color: var(--textcolor);
+               text-decoration: none;
+               font-size: 0.8em;
+
+          }
+     }
+
+}
+
+.updoc {
+     @include SquareRoundBorder;
+     padding: 0.3em;
+     display: flex;
+     border: 2px solid var(--blurborder);
+
+     input {
+          display: none;
+     }
+
+     >svg {
+          @include slide_left_animation;
+          color: var(--secondarycolor);
+          margin: auto;
+          margin-right: 1em;
+     }
+
+     label {
+          @include transition;
+          @include boldfont;
+          opacity: 0.5;
+          font-size: 0.8em;
+          height: auto;
+          margin: auto;
+          margin-left: 1em;
+          margin-right: 1em;
+          color: var(--textcolor);
+     }
+
+     .noopacity {
+          opacity: 1;
+     }
+
+     section {
+          @include transition;
+          cursor: pointer;
+          @include SquareRoundBorder;
+          padding: 0.4em;
+          display: flex;
+          opacity: 0.3;
+          border: 2px solid transparent;
+
+
+          svg {
+               color: var(--textcolor);
+               width: 1em;
+               height: 1em;
+               margin: auto;
+
+          }
+
+          &:hover {
+               opacity: 1;
+               @include RoundBorder;
+               border-color: var(--backgroundcolor);
+               background-color: var(--backgroundcolor);
+               filter: invert(1);
+               border: 2px solid var(--textcolor);
+
+          }
+
+          &:active {
+               transform: scale(0.9);
+          }
+     }
+
+}
+
+.d1 {
+
+     position: relative;
+     padding-bottom: 0.5em;
+     border-bottom: 2px solid var(--blurborder);
+     display: flex;
+     color: var(--textcolor);
+     justify-content: space-between;
+
+     svg {
+          cursor: pointer;
+          @include transition;
+          @include RoundBorder;
+          margin: auto;
+          margin-left: 1em;
+
+          &:hover {
+               background-color: var(--btncolor);
+               color: white;
+          }
+
+          &:active {
+               transform: scale(0.9)
+          }
+
+     }
+
+     h1 {
+          @include boldfont;
+          font-size: 1.5em;
+          margin-right: 1em;
+
+     }
+
+}
