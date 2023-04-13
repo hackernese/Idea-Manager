@@ -64,8 +64,26 @@ function Submission() {
                                                     title="Download Zipped documents"
                                                     icon={faFileZipper}
                                                     onClick={() => {
-                                                        axios.get(`submission/download_zip/${e.id}`).then((resp) => {
+                                                        axios({
+                                                            url: `submission/download_zip/${e.id}`,
+                                                            method: 'GET',
+                                                            responseType: 'blob',
+                                                        }).then((resp) => {
                                                             console.log(resp);
+
+                                                            // Virtual link to the object in memory
+                                                            const href = URL.createObjectURL(resp.data);
+                                                            const link = document.createElement('a');
+                                                            link.href = href;
+                                                            link.setAttribute('download', `Submission-${e.id}.zip`);
+
+                                                            // Silently append to the body then click it
+                                                            document.body.appendChild(link);
+                                                            link.click();
+
+                                                            // AFter clicking it, remove it since it's no longer needed
+                                                            document.body.removeChild(link);
+                                                            URL.revokeObjectURL(href);
                                                         });
                                                     }}
                                                 />

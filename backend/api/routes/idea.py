@@ -143,7 +143,11 @@ def list_all_ideas(submission_id):
         if ideas:
             result = []
             for idea in ideas:
+
                 idea_dict = {
+                    'like': 12,
+                    'dislike': 12,
+                    'views': len(idea.view_ref),
                     'id': idea.id,
                     'title': idea.title,
                     'brief': idea.brief,

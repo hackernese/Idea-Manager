@@ -97,6 +97,9 @@ class User(AbstractBase):
     logins_ref = db.relationship(
         'Logins', backref='use', lazy=True, cascade='all, delete')
 
+    view_ref = db.relationship(
+        'Views', backref='user', lazy=True, cascade='all, delete')
+
     def craft_verify_url(self, code):
         protocol = "http" if not SSL else "https"
         return f"{protocol}://{RECOVERY_URL_BASE}:{FRONTEND_PORT}/mail_verify?token={code}"
@@ -195,6 +198,12 @@ class Department(AbstractBase):
         'User', backref='department', lazy=True, cascade='all, delete')
 
 
+class Views(AbstractBase):
+
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    idea_id = db.Column(db.Integer, db.ForeignKey("idea.id"), nullable=False)
+
+
 class Idea(AbstractBase):
 
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -214,6 +223,9 @@ class Idea(AbstractBase):
         'Reaction', backref='idea', lazy=True, cascade='all, delete')
     comment_ref = db.relationship(
         'Comments', backref='idea', lazy=True, cascade='all, delete')
+    view_ref = db.relationship(
+        'Views', backref="idea", lazy=True, cascade='all, delete'
+    )
 
 
 class Reaction(AbstractBase):
