@@ -15,12 +15,22 @@ function IdeaDetails() {
     const navigate = useNavigate();
     const { idea_id } = useParams();
     const [data, setdata] = useState(null);
+    const [comments, setcomment] = useState([]);
+    const [isanon, setanon] = useState(false);
+    const [trigger, settrigger] = useState(0);
+    const commentref = createRef();
 
     useEffect(() => {
         axios.post(`idea/get/${idea_id}`).then((resp) => {
             if (resp.data.status === 'OK') setdata(resp.data.data);
         });
     }, []);
+
+    useEffect(() => {
+        axios.post(`idea/${idea_id}/comment/list`).then((resp) => {
+            if (resp.data.status === 'OK') setcomment(resp.data.msg);
+        });
+    }, [trigger]);
 
     if (data === null) return <section className={style.loader}></section>;
 
@@ -64,159 +74,56 @@ function IdeaDetails() {
                 </div>
                 <div className={style.comments}>
                     <div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <div>
-                            <section>
-                                <FontAwesomeIcon icon={faCircleUser} />
-                            </section>
-                            <label>Name here</label>
-                            <label>Time here </label>
-                            <p>
-                                There was something beautiful in his hate. It wasn't the hate itself as it was a
-                                disgusting display of racism and intolerance. It was what propelled the hate and the
-                                fact that although he had this hate, he didn't understand where it came from. It was at
-                                that moment that she realized that there was hope in changing him.
-                            </p>
-                        </div>
-                        <LoadinngCirlce></LoadinngCirlce>
+                        {comments.map((e) => {
+                            return (
+                                <div key={e.id}>
+                                    <section>
+                                        <FontAwesomeIcon icon={faCircleUser} />
+                                    </section>
+                                    <label>{e.user_name}</label>
+                                    <label>{e.created}</label>
+                                    <p>{e.comment}</p>
+                                </div>
+                            );
+                        })}
+
+                        <LoadinngCirlce
+                            onIntersect={(t) => {
+                                t(true);
+                            }}
+                        ></LoadinngCirlce>
                     </div>
                     <section className={style.inputclass}>
                         <div>
-                            <CustomInput placeholder="Write comment here..." type="text"></CustomInput>
-                            <LoadingButton text="Post"></LoadingButton>
+                            <CustomInput
+                                custom_ref={commentref}
+                                placeholder="Write comment here..."
+                                type="text"
+                            ></CustomInput>
+                            <LoadingButton
+                                onClick={async () => {
+                                    axios
+                                        .post(`idea/comment/${idea_id}`, {
+                                            comment: commentref.current.value.trim(),
+                                            is_anonymous: isanon,
+                                        })
+                                        .then((resp) => {
+                                            if (resp.data.status === 'OK') {
+                                                settrigger(trigger + 1);
+                                                success(resp.data.msg);
+                                            }
+                                        });
+                                }}
+                                text="Post"
+                            ></LoadingButton>
                         </div>
 
                         <section>
-                            <TickBox></TickBox>
+                            <TickBox
+                                click={(e) => {
+                                    setanon(e);
+                                }}
+                            ></TickBox>
                             <label>Anonymous</label>
                         </section>
                     </section>

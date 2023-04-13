@@ -354,7 +354,7 @@ def comment_on_idea(idea_id):
                 # send email to idea's owner
                 msg = Message('Your Idea Had New Comment!',
                               sender=app.config.get("MAIL_USERNAME"),
-                              recipients=[idea.user.first().email])  # get idea's owner email
+                              recipients=[idea.user.email])  # get idea's owner email
                 msg.body = f"Your \"{idea.title}\" Idea Has Been Commented by {current_user.username} "
                 mail.send(msg)
 
@@ -387,7 +387,8 @@ def list_all_comment(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
         # get comments from idea
-        comments = idea.comment_ref
+        comments = idea.comment_ref.order_by(Comments.created_on)
+
         if comments:
             result = []
             # append each comment to dictionary
@@ -396,7 +397,8 @@ def list_all_comment(idea_id):
                     'id': comment.id,
                     'idea_id': idea.id,
                     'comment': comment.comment,
-                    'is_anonymous': comment.is_anonymous
+                    'is_anonymous': comment.is_anonymous,
+                    'created': str(comment.created_on)
                 }
                 if comment.is_anonymous == False:
                     user = User.query.get(comment.user_id)

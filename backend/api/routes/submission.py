@@ -7,6 +7,7 @@ from . import login_required
 from flask import jsonify, request, send_file
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
+import csv
 
 
 @app.route('/api/submission/add', methods=['POST'])
@@ -210,3 +211,46 @@ def download_zip(submission_id):
             'status': 'FAIL',
             'err': 'No Submission Found'
         })
+
+
+@app.route('/api/submission/download/csv/<submission_id>', methods=["POST", "GET"])
+@login_required(role_allow=["manager"])
+def download_csv_info(submission_id):
+
+    submission = Submission.query.get(submission_id)
+    if not submission:
+        return jsonify({
+            'status': "FAIL",
+            'err': "Invalid submission"
+        })
+
+    path = os.path.join(basedir, 'temp', f"Submission-{submission_id}.csv")
+
+    with open(path, "w", newline='') as proto:
+
+        fieldnames = ["Vol.", "ID", "Title", "Content", "Filename",
+                      "Total views", 'like', 'dislike', "Author"]
+        writer = csv.DictWriter(proto, fieldnames=fieldnames)
+
+        # Start by putting in the header first
+        writer.writeheader()
+
+        # Putting in data
+        ideas = submission.reference.all()
+        for (id_, i) in enumerate(ideas):
+
+            data = {
+                'Vol.': id_,
+                'ID': i.id,
+                "Title": str(i.title),
+                'Content': str(i.content),
+                'Filename': os.path.basename(i.doc_file),
+                'Author': str(i.user.username),
+                'like': i.react_ref.filter_by(react=True).count(),
+                'dislike': i.react_ref.filter_by(react=False).count(),
+                'Total views': len(i.view_ref)
+            }
+
+            writer.writerow(data)
+
+    return send_file(path, as_attachment=True)

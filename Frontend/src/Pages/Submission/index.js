@@ -87,7 +87,31 @@ function Submission() {
                                                         });
                                                     }}
                                                 />
-                                                <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
+                                                <FontAwesomeIcon
+                                                    title="Download CSV informaton"
+                                                    icon={faFileCsv}
+                                                    onClick={() => {
+                                                        axios({
+                                                            url: `submission/download/csv/${e.id}`,
+                                                            method: 'GET',
+                                                            responseType: 'blob',
+                                                        }).then((resp) => {
+                                                            // Virtual link to the object in memory
+                                                            const href = URL.createObjectURL(resp.data);
+                                                            const link = document.createElement('a');
+                                                            link.href = href;
+                                                            link.setAttribute('download', `Submission-${e.id}.csv`);
+
+                                                            // Silently append to the body then click it
+                                                            document.body.appendChild(link);
+                                                            link.click();
+
+                                                            // AFter clicking it, remove it since it's no longer needed
+                                                            document.body.removeChild(link);
+                                                            URL.revokeObjectURL(href);
+                                                        });
+                                                    }}
+                                                />
                                             </>
                                         )}
                                     </div>
