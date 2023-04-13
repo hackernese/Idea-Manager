@@ -1,24 +1,29 @@
 @import '../../../Components/globalMixins.scss';
 
-button {
-    @include btn;
-}
+section {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -90%);
 
-.base {
-    padding: 3em;
+    button {
+        @include btn;
+        vertical-align: middle;
+        font-size: 18px;
+    }
 
     > .header {
-        background-color: var(--secondarycolor);
-        padding: 2px;
-        height: 5em;
-        padding-top: 13px;
+        background-color: var(--secondarycolor2);
+        padding: px;
+        height: 57px;
+        padding-top: 16px;
+        margin-right: 5em;
         width: 10em;
         display: inline-block;
         text-align: center;
         align-items: center;
         vertical-align: middle;
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-        @include SlightRoundBorder;
+        @include SquareRoundBorder;
 
         > p {
             display: flex;
@@ -32,6 +37,10 @@ button {
             text-align: center; // Center the text horizontally
         }
     }
+}
+
+.base {
+    padding: 3em;
 
     > button {
         @include btn;
@@ -51,9 +60,14 @@ button {
         padding: 2em;
         padding-top: 5em;
 
+        svg:nth-child(2) {
+            color: #d64646;
+        }
+
         > div {
-            @include table_style;
-            border: 15px solid var(--blurborder);
+            @include table_style_vertical;
+            border: 2px solid var(--blurborder);
+            box-shadow: 2px 6px 6px 0px (var(--blurcolor2));
         }
 
         svg {
@@ -66,7 +80,7 @@ button {
 
             &:hover {
                 @include SquareRoundBorder;
-                background-color: var(--backgroundcolor);
+                background-color: var(--secondarycolor2);
                 filter: invert(1);
             }
         }

@@ -6,7 +6,7 @@ import { createRef, useEffect, useState } from 'react';
 import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
 
 const cx = classNames.bind(styles);
@@ -21,7 +21,7 @@ function Role() {
     useEffect(() => {
         // Created
         axios.post('role/list').then((resp) => {
-            setRole(resp.data.msg);
+            setRole(resp.data.data);
         });
     }, []);
 
@@ -42,7 +42,7 @@ function Role() {
             .then((resp) => {
                 console.log(resp.data);
                 axios.post('role/list').then((resp) => {
-                    setRole(resp.data.msg);
+                    setRole(resp.data.data);
                 });
             });
         setShowPopup(false);
@@ -60,7 +60,7 @@ function Role() {
             .then((resp) => {
                 console.log(resp.data);
                 axios.post('role/list').then((resp) => {
-                    setRole(resp.data.msg);
+                    setRole(resp.data.data);
                 });
             });
         setShowPopupEdit(false);
@@ -73,17 +73,19 @@ function Role() {
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
-                <div className={styles.header}>
-                    <p>Role</p>
-                </div>
-                <button onClick={handleButtonClick}>Create a new role</button>
+                <section>
+                    <div className={styles.header}>
+                        <p>Role</p>
+                    </div>
+                    <button onClick={handleButtonClick}>Create a new role</button>
+                </section>
+
                 {showPopup && <Popup handleClose={handleClosePopup} refinput={refinput} confbutton={confbutton} />}
                 <div className={styles.main}>
                     <div>
                         <div>
                             <div>
                                 <label>Name</label>
-                                <label>Date created</label>
                                 <label>Actions</label>
                             </div>
                         </div>
@@ -92,11 +94,10 @@ function Role() {
                                 return (
                                     <div key={i}>
                                         <label>{e.name}</label>
-                                        <label>{e.created_on}</label>
                                         <div className={styles.smallbuttons}>
                                             <FontAwesomeIcon
                                                 title="Edit Role"
-                                                icon={faPenToSquare}
+                                                icon={faFilePen}
                                                 onClick={() => {
                                                     setcurrentrole(e);
                                                     setShowPopupEdit(true);
@@ -105,12 +106,12 @@ function Role() {
 
                                             <FontAwesomeIcon
                                                 title="Delete Role"
-                                                icon={faTrash}
+                                                icon={faTrashCan}
                                                 onClick={() => {
                                                     axios.delete(`role/delete/${e.id}`).then((resp) => {
                                                         console.log(resp.data);
                                                         axios.post('role/list').then((resp) => {
-                                                            setRole(resp.data.msg);
+                                                            setRole(resp.data.data);
                                                         });
                                                     });
                                                 }}

@@ -3,9 +3,7 @@
     /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
     /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right,
-            #b6fbff,
-            #83a4d4);
+    background: linear-gradient(to right, #b6fbff, #83a4d4);
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -269,7 +267,6 @@
 }
 
 @mixin table_style {
-
     @include SlightRoundBorder;
     overflow: hidden;
     border: 2px solid var(--blurborder);
@@ -278,7 +275,7 @@
     display: flex;
     flex-direction: column;
 
-    >div {
+    > div {
         padding: 1em;
         padding-top: 2em;
         padding-bottom: 2em;
@@ -287,17 +284,15 @@
         gap: 1em;
         overflow-x: hidden;
 
-        >div {
-            >* {
+        > div {
+            > * {
                 flex: 1;
             }
 
             > :nth-child(1) {
                 padding-left: 1.5em;
             }
-
         }
-
     }
 
     label {
@@ -306,7 +301,7 @@
         flex-direction: column;
     }
 
-    >div:nth-child(1) {
+    > div:nth-child(1) {
         @include boldfont;
         padding-top: 0;
         padding-bottom: 0;
@@ -314,7 +309,7 @@
         box-shadow: 0 0 5px black;
         z-index: 1;
 
-        >div {
+        > div {
             @include boldfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -327,10 +322,10 @@
         }
     }
 
-    >div:nth-child(2) {
+    > div:nth-child(2) {
         overflow-y: auto;
 
-        >div {
+        > div {
             @include lightfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -340,27 +335,22 @@
             padding: 1em;
             display: flex;
             justify-content: space-around;
-
         }
-
     }
-
 }
 
 @mixin responsive_table {
-
     border-radius: 0;
 
-    >div:nth-child(1)>div {
+    > div:nth-child(1) > div {
         overflow: hidden;
 
         * {
             padding: 0;
         }
-
     }
 
-    >div>div {
+    > div > div {
         flex-direction: column;
         justify-content: center;
 
@@ -373,15 +363,10 @@
             text-align: center;
             margin: auto;
         }
-
     }
-
-
 }
 
-
 @mixin hover_underly {
-
     @include transition;
     margin: auto;
     opacity: 0.5;
@@ -389,7 +374,7 @@
     padding-bottom: 4px;
 
     &::after {
-        content: "";
+        content: '';
         width: 0;
         height: 2px;
         position: absolute;
@@ -409,7 +394,6 @@
             background-color: #007bff;
             width: 100%;
         }
-
     }
 }
 
@@ -429,4 +413,87 @@
     left: 0;
     right: 0;
     margin: auto;
+}
+
+@mixin table_style_vertical {
+    @include SlightRoundBorder;
+    overflow: hidden;
+    border: 2px solid var(--blurborder);
+    position: absolute;
+    width: 50em;
+    height: 40em;
+    left: 50%;
+    transform: translate(-50%);
+
+    display: flex;
+    flex-direction: column;
+
+    > div {
+        padding: 1em;
+        padding-top: 2em;
+        padding-bottom: 2em;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        overflow-x: hidden;
+
+        > div {
+            > * {
+                flex: 1;
+            }
+
+            > :nth-child(1) {
+                padding-left: 1.5em;
+            }
+        }
+    }
+
+    label {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    > div:nth-child(1) {
+        @include boldfont;
+        padding-top: 0;
+        padding-bottom: 0;
+        background-color: var(--backgroundcolor2);
+        color: var(--textcolor);
+        box-shadow: 0 0 5px black;
+        z-index: 1;
+
+        > div {
+            @include boldfont;
+            font-size: 1em;
+            text-align: center;
+            @include SlightRoundBorder;
+            background-color: var(--backgroundcolor2);
+            // box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
+            color: var(--textcolor);
+            padding: 1em;
+            display: flex;
+            justify-content: space-around;
+
+            > label {
+                background-color: var(--backgroundcolor2);
+            }
+        }
+    }
+    > div:nth-child(2) {
+        overflow-y: auto;
+
+        > div {
+            @include lightfont;
+            font-size: 1em;
+            @include SlightRoundBorder;
+            background-color: var(--backgroundcolor);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
+            color: var(--textcolor);
+            padding: 1em;
+            display: flex;
+            text-align: center;
+            justify-content: space-around;
+        }
+    }
 }
