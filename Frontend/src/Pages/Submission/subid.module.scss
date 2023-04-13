@@ -39,6 +39,10 @@
 
 }
 
+.loader {
+     @include waiting_circle;
+}
+
 
 .paginate {
      margin: auto;

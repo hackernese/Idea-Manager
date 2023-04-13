@@ -8,17 +8,73 @@ import styles from './subid.module.scss';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 import axios from 'axios';
+import { use } from 'i18next';
 
 const cx = classNames.bind(styles);
 
+function Record({ username, title, brief, views, like, dislike, id }) {
+    const [islike, setislike] = useState(true);
+    const navigate = useNavigate();
+
+    const handle_likedislike = (event, code) => {
+        event.preventDefault();
+        setislike(code);
+
+        if (code) {
+            axios.post(`idea/like/${id}`);
+        } else {
+            axios.post(`idea/dislike/${id}`);
+        }
+    };
+
+    return (
+        <div
+            onClick={() => {
+                navigate(`idea/${id}`);
+            }}
+        >
+            <label>{username}</label>
+            <label>{title}</label>
+            <label>{brief}</label>
+            <label>{views}</label>
+            <div>
+                <label>{like}</label>
+                <FontAwesomeIcon
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handle_likedislike(e, true);
+                    }}
+                    icon={islike ? faThumbsUp : ReThumbUp}
+                ></FontAwesomeIcon>
+            </div>
+
+            <div>
+                <label>{dislike}</label>
+                <FontAwesomeIcon
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        handle_likedislike(e, false);
+                    }}
+                    icon={!islike ? faThumbsDown : ReThumbDown}
+                ></FontAwesomeIcon>
+            </div>
+        </div>
+    );
+}
+
 function SubmissionID() {
     const navigate = useNavigate();
+
     const outlet = useOutlet();
     const { id } = useParams();
-    const [islike, setislike] = useState(true);
     const [d1, setd1] = useState('');
     const [d2, setd2] = useState('');
     const [name, setname] = useState('');
+
+    // Ideas states
+    const [idea, setidea] = useState([]);
+    const [page, setpage] = useState(1);
+    const [total_page, settotal] = useState(null);
 
     useEffect(() => {
         axios.post(`submission/get/${id}`).then((resp) => {
@@ -28,15 +84,29 @@ function SubmissionID() {
             setname(resp.data.name);
         });
     }, []);
+    // Grabbing the current idea here
+    useEffect(() => {
+        axios
+            .post(`submission/${id}/idea/list`, {
+                p: page - 1,
+            })
+            .then((resp) => {
+                if (resp.data.status === 'OK') {
+                    setidea(resp.data.msg.data);
+                    settotal(resp.data.msg.page);
+                } else {
+                    // Could be error or end of page
+                }
+            });
+    }, [page]);
 
     if (outlet) {
         return outlet;
     }
 
-    const handle_likedislike = (event, code) => {
-        event.preventDefault();
-        setislike(code);
-    };
+    if (total_page === null) {
+        return <section className={cx('loader')}></section>;
+    }
 
     return (
         <AnimatedOutlet>
@@ -67,41 +137,29 @@ function SubmissionID() {
                         </div>
                     </div>
                     <div>
-                        <div
-                            onClick={() => {
-                                navigate(`idea/1`);
-                            }}
-                        >
-                            <label>User 1</label>
-                            <label>12dwa2323d</label>
-                            <label>www12</label>
-                            <label>1awd2</label>
-                            <div>
-                                <label>2</label>
-                                <FontAwesomeIcon
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handle_likedislike(e, true);
-                                    }}
-                                    icon={islike ? faThumbsUp : ReThumbUp}
-                                ></FontAwesomeIcon>
-                            </div>
-
-                            <div>
-                                <label>2</label>
-                                <FontAwesomeIcon
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handle_likedislike(e, false);
-                                    }}
-                                    icon={!islike ? faThumbsDown : ReThumbDown}
-                                ></FontAwesomeIcon>
-                            </div>
-                        </div>
+                        {idea.map((e, index) => (
+                            <Record
+                                key={index}
+                                username={e.user_name}
+                                id={e.id}
+                                title={e.title}
+                                brief={e.brief}
+                                views={e.views}
+                                like={e.like}
+                                dislike={e.dislike}
+                            ></Record>
+                        ))}
                     </div>
                 </div>
                 <section className={cx('paginate')}>
-                    <Pagination count={10} variant="rounded" />
+                    <Pagination
+                        page={page}
+                        count={total_page}
+                        variant="rounded"
+                        onChange={(e, value) => {
+                            setpage(value);
+                        }}
+                    />
                 </section>
                 <div
                     className={cx('addbtn')}

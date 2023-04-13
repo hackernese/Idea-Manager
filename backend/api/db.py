@@ -93,7 +93,7 @@ class User(AbstractBase):
     recover_ref = db.relationship(
         'RecoverAccountDB', backref='user', lazy=True, cascade='all, delete')
     reaction_ref = db.relationship(
-        'Reaction', backref='user', lazy=True, cascade='all, delete')
+        'Reaction', backref='user', lazy='dynamic', cascade='all, delete')
     logins_ref = db.relationship(
         'Logins', backref='use', lazy=True, cascade='all, delete')
 

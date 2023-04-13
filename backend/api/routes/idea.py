@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
 from flask_mail import Message
+import math
 
 
 @app.route("/api/idea/<idea_id>/set/doc", methods=["POST"])
@@ -138,7 +139,11 @@ def list_all_ideas(submission_id):
 
     if submission:
         # get ideas from submission
-        ideas = submission.reference.offset(page*5).limit(5).all()
+
+        total_page = math.ceil(submission.reference.count() / 5)
+
+        ideas = submission.reference.order_by(
+            Idea.created_on.desc()).offset(page*5).limit(5).all()
 
         if ideas:
             result = []
@@ -147,6 +152,7 @@ def list_all_ideas(submission_id):
                 idea_dict = {
                     'like': 12,
                     'dislike': 12,
+                    'islike': True,
                     'views': len(idea.view_ref),
                     'id': idea.id,
                     'title': idea.title,
@@ -169,7 +175,10 @@ def list_all_ideas(submission_id):
 
             return jsonify({
                 'status': 'OK',
-                'msg': result
+                'msg': {
+                    "data": result,
+                    "page": total_page
+                }
             })
         else:
             return jsonify({
