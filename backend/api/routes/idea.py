@@ -22,7 +22,8 @@ def set_doc_for_idea(idea_id):
             if data:
                 file = data['doc_file']
                 file_name = secure_filename(file.filename)
-                file.save(f"{basedir}/uploads/{file_name}")
+                file.save(os.path.join(basedir, "uploads",
+                          f"Idea-{idea.id}.{file_name}"))
                 # add filename into DB
                 idea.doc_file = file_name
                 db.session.commit()
@@ -88,10 +89,14 @@ def add_idea(submission_id):
             db.session.add(idea)
             db.session.flush()
 
+            id_ = idea.id
+
+            db.session.commit()
+
             return jsonify({
                 'status': 'OK',
                 'msg': {
-                    "id": idea.id
+                    "id": id_
                 }
             })
 

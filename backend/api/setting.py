@@ -6,10 +6,20 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 os.chdir(basedir)
 
 
-TOKEN_EXPIRY_DAYS : int = 30
+try:
+    os.mkdir(f"{basedir}/uploads")
+except FileExistsError:
+    pass
+
+try:
+    os.mkdir(f"{basedir}/temp")
+except FileExistsError:
+    pass
+
+TOKEN_EXPIRY_DAYS: int = 30
 # The expiry days for all of the cookies when a user logs in
 
-RECOVERY_TOKEN_EXPIRY_MINUTES : int = 15
+RECOVERY_TOKEN_EXPIRY_MINUTES: int = 15
 # Indicates how many minutes will a recovery token record be valid before it's expired
 
 
@@ -26,11 +36,10 @@ SSL = False
 FRONTEND_PORT = 3000
 # ! NOTE : Remember to change it to 80 once deployed
 
-RECOVERY_URL_BASE = "localhost";
+RECOVERY_URL_BASE = "localhost"
 # Later on when it is crafted, it will be something like this
 # ==> https://localhost:PORT/recovery/r/<token>
 # ! NOTE : This url is on the frontend, not the URL Pointing to the API
-
 
 
 # --------- Pagination setting -------------------
@@ -58,48 +67,46 @@ MAIL_CONFIG = {
 }
 
 
-
-
 # Default user list, leave it empty if you want to manually add the user yourself
 DEFAULT_USER_LIST = [
     {
-        'email' : 'manager@gmail.com',
-        'name' : 'manager',
-        'pass' : 'manager',
-        'department' : 'Security',
-        'role' : 'manager'
+        'email': 'manager@gmail.com',
+        'name': 'manager',
+        'pass': 'manager',
+        'department': 'Security',
+        'role': 'manager'
     },
     {
-        'email' : "admin@gmail.com",
-        'name' : "admin",
-        'pass' : "admin",
-        "department" : "University",
-        "role" : "administrator"
+        'email': "admin@gmail.com",
+        'name': "admin",
+        'pass': "admin",
+        "department": "University",
+        "role": "administrator"
     },
     {
-        'email' : "staff@gmail.com",
-        'name' : "staff",
-        'pass' : "staff",
-        "department" : "University",
-        "role" : "staff"
+        'email': "staff@gmail.com",
+        'name': "staff",
+        'pass': "staff",
+        "department": "University",
+        "role": "staff"
     }
 ]
 DEFAULT_ROLE_LIST = [
     {
-        "r":"administrator",
-        "m" : True # Mandatory, cannot delete me
+        "r": "administrator",
+        "m": True  # Mandatory, cannot delete me
     },
     {
-        "r":"manager",
-        "m" : True # Mandatory, cannot delete me
+        "r": "manager",
+        "m": True  # Mandatory, cannot delete me
     },
     {
-        "r":"coordinator",
-        "m" : True # Mandatory, cannot delete me
+        "r": "coordinator",
+        "m": True  # Mandatory, cannot delete me
     },
     {
-        "r":"staff",
-        "m" : True # Mandatory, cannot delete me
+        "r": "staff",
+        "m": True  # Mandatory, cannot delete me
     }
 
 ]

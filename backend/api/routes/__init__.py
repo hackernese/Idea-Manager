@@ -1,20 +1,24 @@
+import automodinit
 from flask import request, jsonify
 from db import Sessions, UserRoles, ROLE_ID_LIST, db
 from functools import wraps
 from datetime import datetime
 
 UNAUTHORIZED_RESPONSE = {
-    "status" : "FAIL",
-    'err' : "Unauthorized"
+    "status": "FAIL",
+    'err': "Unauthorized"
 }
 
-bad_request = lambda msg:(jsonify({'status' : "FAIL", 'err' : msg}), 400)
-created_request = lambda msg:(jsonify({'status' : "FAIL", 'err' : msg}), 201)
-unauthorized_req = lambda msg:(jsonify({'status' : "FAIL", 'err' : msg}), 401)
+
+def bad_request(msg): return (jsonify({'status': "FAIL", 'err': msg}), 400)
+def created_request(msg): return (jsonify({'status': "FAIL", 'err': msg}), 201)
 
 
-def login_required(role_allow : str | list ="*", allow_personal_user=False) -> callable:
+def unauthorized_req(msg): return (
+    jsonify({'status': "FAIL", 'err': msg}), 401)
 
+
+def login_required(role_allow: str | list = "*", allow_personal_user=False) -> callable:
     """
 
         Enforcing Authentication on this route, if there is no authentication it is going
@@ -48,15 +52,17 @@ def login_required(role_allow : str | list ="*", allow_personal_user=False) -> c
 
             session = Sessions.query.filter_by(token=token).first()
 
-            if role_allow!="*":
+            if role_allow != "*":
 
                 # Time to check to see if the user is authorized to enter this route
                 # or not
 
-                authorized_role_list = [ ROLE_ID_LIST[i] for i in role_allow if ROLE_ID_LIST ]
+                authorized_role_list = [ROLE_ID_LIST[i]
+                                        for i in role_allow if ROLE_ID_LIST]
                 # Grabbing the list of role id which this user is allowed to be in
 
-                ret = session.user.userrole_ref.filter(UserRoles.roleid.in_(authorized_role_list)).first()
+                ret = session.user.userrole_ref.filter(
+                    UserRoles.roleid.in_(authorized_role_list)).first()
                 # Checking if this user is inside the authorized role id list
 
                 if not ret:
@@ -73,7 +79,7 @@ def login_required(role_allow : str | list ="*", allow_personal_user=False) -> c
                     # full access to this route
                     # if they are normal users then i have to check to see if their id matches
                     # the user_id first
-                    if str(session.user.id)!=kwargs['user_id']:
+                    if str(session.user.id) != kwargs['user_id']:
                         return jsonify(UNAUTHORIZED_RESPONSE)
 
             if session.expiry_time < datetime.now():
@@ -82,8 +88,8 @@ def login_required(role_allow : str | list ="*", allow_personal_user=False) -> c
                 db.session.delete(session)
                 db.session.commit()
                 return jsonify({
-                    'status' : "FAIL",
-                    'err' : "Expired session"
+                    'status': "FAIL",
+                    'err': "Expired session"
                 }), 401
 
             request.session = session
@@ -96,8 +102,10 @@ def login_required(role_allow : str | list ="*", allow_personal_user=False) -> c
     return wrapper
 
 
-__all__ = ["I will get rewritten"] # <--- See ? it will get rewritten, End of Story !
-import automodinit;automodinit.automodinit(__name__, __file__, globals());del automodinit
+# <--- See ? it will get rewritten, End of Story !
+__all__ = ["I will get rewritten"]
+automodinit.automodinit(__name__, __file__, globals())
+del automodinit
 # OK here is the thing, please don't ask me to explain the two lines of code above,
 # they were recommended by the official docs => https://pypi.org/project/automodinit/
 # Why do they exist ? good question

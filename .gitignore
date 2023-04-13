@@ -13,3 +13,10 @@ __pycache__
 # caching files in python
 storage.db
 # Ignoring the temporary SQLite3 database file
+
+
+temp/
+# Ignore temporary file
+
+uploads/
+# IGnore uploda files

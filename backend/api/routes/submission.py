@@ -185,12 +185,18 @@ def download_zip(submission_id):
                 })
             else:
                 # Create a name for the ZIP file
-                zip_file_name = f"Submission{submission.id}.zip"
 
-                # Create a new ZIP file and write the files to it
+                zip_file_name = os.path.join(
+                    basedir, "temp",  f"Submission{submission.id}.zip")
+
+                if os.path.isfile(zip_file_name):
+                    os.remove(zip_file_name)
+
+               # Create a new ZIP file and write the files to it
                 with zipfile.ZipFile(zip_file_name, 'w') as zip:
-                    for file_path in file_paths:
-                        zip.write(file_path, os.path.basename(file_path))
+                    for (index, file_path) in enumerate(file_paths):
+                        zip.write(
+                            file_path, f"Idea{index}/{os.path.basename(file_path)}")
 
                 # Send the ZIP file as a response to the client
                 return send_file(zip_file_name, as_attachment=True)
