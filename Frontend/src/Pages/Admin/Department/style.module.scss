@@ -1,0 +1,80 @@
+@import '../../../Components/globalMixins.scss';
+
+button {
+    @include btn;
+}
+
+.base {
+    padding: 3em;
+
+    > .header {
+        background-color: var(--secondarycolor);
+        padding: 2px;
+        height: 5em;
+        padding-top: 13px;
+        width: 10em;
+        display: inline-block;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        @include SlightRoundBorder;
+
+        > p {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @include boldfont;
+            height: auto;
+            color: var(--backgroundcolor); // Change to desired text color
+            font-size: 18px; // Change to desired text size
+            font-weight: bold; // Change to desired text weight
+            text-align: center; // Center the text horizontally
+        }
+    }
+
+    > button {
+        @include btn;
+        display: inline-block;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        float: right;
+    }
+
+    > section {
+        margin-top: 3em;
+    }
+
+    .main {
+        height: 40em;
+        padding: 2em;
+        padding-top: 5em;
+
+        > div {
+            @include table_style;
+            border: 15px solid var(--blurborder);
+        }
+
+        svg {
+            font-size: 20px;
+            padding-inline: 3px;
+            cursor: pointer;
+            color: var(--textcolor);
+            padding: 5px;
+            @include transition;
+
+            &:hover {
+                @include SquareRoundBorder;
+                background-color: var(--backgroundcolor);
+                filter: invert(1);
+            }
+        }
+        .action {
+            margin-inline: 1px;
+            font-size: 10px;
+
+            @include boldfont;
+        }
+    }
+}

@@ -36,13 +36,8 @@ import Home from './Pages/Home';
 
 // Administrator pages go here
 import Admin from './Pages/Admin';
-import AddNewCategory from './Pages/Admin/Category/Add';
-import CategoryDetails from './Pages/Admin/Category/Details';
-import EditCategory from './Pages/Admin/Category/Edit';
+
 // Department sub-components for admin
-import AddNewDepartment from './Pages/Admin/Department/Add';
-import DepartmentDetails from './Pages/Admin/Department/Details';
-import EditDepartment from './Pages/Admin/Department/Edit';
 // User sub-components for admin
 import AddNewUser from './Pages/Admin/User/Add';
 import UserSetting from './Pages/Admin/User/setting';
@@ -217,17 +212,9 @@ function App() {
                                 </ProtectedRoute>
                             }
                         >
-                            <Route path="category" element={<Category></Category>}>
-                                <Route path=":id/edit" element={<EditCategory></EditCategory>}></Route>
-                                <Route path=":id/details" element={<CategoryDetails></CategoryDetails>}></Route>
-                                <Route path="add" element={<AddNewCategory></AddNewCategory>}></Route>
-                            </Route>
+                            <Route path="category" element={<Category></Category>}></Route>
 
-                            <Route path="department" element={<Department></Department>}>
-                                <Route path="add" element={<AddNewDepartment></AddNewDepartment>}></Route>
-                                <Route path=":id/edit" element={<EditDepartment></EditDepartment>}></Route>
-                                <Route path=":id/details" element={<DepartmentDetails></DepartmentDetails>}></Route>
-                            </Route>
+                            <Route path="department" element={<Department></Department>}></Route>
 
                             <Route path="user" element={<User></User>}>
                                 <Route path="add" element={<AddNewUser></AddNewUser>} />

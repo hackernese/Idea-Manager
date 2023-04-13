@@ -128,8 +128,7 @@ function Category() {
                         refinputEdit={refinputEdit}
                         confbuttonEdit={() => {
                             console.log(current_cat.id);
-                            // console.log(e);
-                            // confbuttonEdit(e);
+                            confbuttonEdit(current_cat);
                         }}
                     />
                 )}
