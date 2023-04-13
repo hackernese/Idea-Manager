@@ -42,6 +42,7 @@ function Category() {
                     setcat(resp.data.msg);
                 });
             });
+        setShowPopup(false);
     };
 
     const refinputEdit = createRef();
@@ -55,6 +56,7 @@ function Category() {
     };
 
     const confbuttonEdit = (aaa) => {
+        console.log(aaa.id);
         axios
             .post(`category/update/${aaa.id}`, {
                 name: refinputEdit.current.value,
@@ -65,6 +67,7 @@ function Category() {
                     setcat(resp.data.msg);
                 });
             });
+        setShowPopupEdit(false);
     };
 
     if (outlet) {
@@ -105,6 +108,7 @@ function Category() {
                                                     handleClose={handleClosePopupEdit}
                                                     refinputEdit={refinputEdit}
                                                     confbuttonEdit={() => {
+                                                        console.log(e);
                                                         confbuttonEdit(e);
                                                     }}
                                                 />
