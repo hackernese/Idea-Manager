@@ -23,8 +23,9 @@ function TickBox({ click, value, force_select }) {
     return (
         <div
             onClick={() => {
-                setticked(!ticked);
-                if (click) click(value);
+                const new_v = !ticked;
+                setticked(new_v);
+                if (click) click(value ? value : new_v);
             }}
             className={classes}
         ></div>

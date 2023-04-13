@@ -10,7 +10,12 @@
 
 }
 
+.load {
+     @include waiting_circle;
+}
+
 .main {
+     @include slide_right_animation;
      @include SquareRoundBorder;
      @include transition;
      border: 2px solid var(--blurborder);
@@ -176,5 +181,28 @@
           margin-right: 1em;
 
      }
+
+}
+
+@media screen and (max-width: 500px) {
+
+     .relative {
+
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          height: calc(100% - 66.531px);
+          padding: 0;
+          margin: 0;
+          width: 100%;
+
+          >div {
+               margin: auto;
+               width: 100%;
+               border: none;
+          }
+
+     }
+
 
 }

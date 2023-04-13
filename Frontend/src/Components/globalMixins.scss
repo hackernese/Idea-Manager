@@ -347,6 +347,39 @@
 
 }
 
+@mixin responsive_table {
+
+    border-radius: 0;
+
+    >div:nth-child(1)>div {
+        overflow: hidden;
+
+        * {
+            padding: 0;
+        }
+
+    }
+
+    >div>div {
+        flex-direction: column;
+        justify-content: center;
+
+        > :nth-child(1) {
+            padding: 0;
+        }
+
+        * {
+            padding: 0;
+            text-align: center;
+            margin: auto;
+        }
+
+    }
+
+
+}
+
+
 @mixin hover_underly {
 
     @include transition;
@@ -378,4 +411,22 @@
         }
 
     }
+}
+
+@mixin responsive_content {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: calc(100% - 66.531px);
+    width: 100%;
+}
+
+@mixin waiting_circle {
+    @include loading_circle;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 }

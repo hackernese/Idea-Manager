@@ -5,6 +5,7 @@
 .subid {
      position: relative;
      overflow: auto;
+     overflow-x: hidden;
      height: 100%;
      width: calc(100% - 4em);
      margin: 2em;
@@ -34,12 +35,41 @@
           }
      }
 
+
+
+}
+
+
+.paginate {
+     margin: auto;
+     margin-top: 1em;
+     display: flex;
+     justify-content: center;
+
+     button {
+          color: var(--textcolor);
+          border: 1px solid var(--blurborder);
+     }
+
+     button[aria-current="true"] {
+          font-weight: bold;
+          color: white;
+          background-color: var(--secondarycolor) !important;
+     }
+
 }
 
 .table {
      @include table_style;
-     height: 45em;
+     height: 35em;
      margin-top: 1.5em;
+     position: relative;
+
+
+     >div:nth-child(1) {
+          height: 5em;
+     }
+
 
      >div:nth-child(2)>div {
 
@@ -117,6 +147,51 @@
 
      &:active {
           transform: scale(0.95);
+     }
+
+}
+
+
+@media screen and (max-width: 1100px) {
+
+     .subid {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          height: calc(100% - 66.531px);
+          padding: 0;
+          margin: 0;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+
+          >div:not(.table) {
+               margin-left: 1em;
+               margin-right: 1em;
+          }
+
+          h1 {
+               padding-top: 0.5em;
+               padding-left: 0.4em;
+          }
+
+     }
+
+     .addbtn {
+          margin-top: 1em;
+     }
+
+     .table {
+          @include responsive_table;
+          display: flex;
+
+          >div:nth-child(1) {
+               flex: 1;
+          }
+
+          >div:nth-child(2) {
+               flex: 2;
+          }
      }
 
 }

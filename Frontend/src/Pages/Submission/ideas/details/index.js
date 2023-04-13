@@ -25,7 +25,7 @@ function IdeaDetails() {
                             navigate(-1);
                         }}
                     />
-                    <h1>This is the detals of the Idea</h1>
+                    <h1>Idea Info :</h1>
                 </div>
                 <div className={style.info}>
                     <div>

@@ -256,7 +256,7 @@ div.Toggle-responsive>div:nth-child(1)>div>ul {
 
 .dropdown-menu {
     @include dropdown_animation;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     right: 3em;
     top: 3em;

@@ -23,6 +23,7 @@
         -ms-transform: rotate(-90deg);
         -o-transform: rotate(-90deg);
     }
+
     label,
     svg {
         opacity: 1;
@@ -53,7 +54,7 @@
         user-select: none;
     }
 
-    > div {
+    >div {
         @include SlightRoundBorder;
         @include boldfont;
         @include transition;
@@ -73,10 +74,12 @@
         color: var(--textcolor);
 
         &:hover {
+
             label,
             svg {
                 opacity: 1;
             }
+
             border: 2px solid var(--textcolor);
         }
 
@@ -107,36 +110,39 @@
         }
     }
 
-    > section {
+    section {
         @include SlightRoundBorder();
         @include lightfont();
         @include dropdown_animation();
         font-size: 0.8em;
-        display: flex;
+        overflow-y: auto;
         justify-content: center;
         flex-direction: column;
         gap: 0.5em;
         padding: 0.5em;
-        overflow: hidden;
+        overflow-x: hidden;
         color: white;
         background-color: #3c3c3c;
         box-shadow: 0 0 5px black;
         position: absolute;
         z-index: 100;
         max-width: 20em;
+        max-height: 20em;
+
         label {
             cursor: pointer;
             @include transition;
-
+            width: 100%;
             // Avoiding when the text is too long here
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-
+            height: 3.5em;
             display: inline-block;
             padding: 1em;
             position: relative;
             padding-right: 3.5em;
+
             svg {
                 @include rotate_anime;
                 position: absolute;

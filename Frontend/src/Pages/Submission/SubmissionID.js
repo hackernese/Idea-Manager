@@ -5,7 +5,9 @@ import { faCircleInfo, faPlus, faThumbsDown, faThumbsUp } from '@fortawesome/fre
 import { faThumbsDown as ReThumbDown, faThumbsUp as ReThumbUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './subid.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Pagination } from '@mui/material';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -14,6 +16,18 @@ function SubmissionID() {
     const outlet = useOutlet();
     const { id } = useParams();
     const [islike, setislike] = useState(true);
+    const [d1, setd1] = useState('');
+    const [d2, setd2] = useState('');
+    const [name, setname] = useState('');
+
+    useEffect(() => {
+        axios.post(`submission/get/${id}`).then((resp) => {
+            if (resp.data.status === 'FAIL') return;
+            setd1(new Date(resp.data.deadline1).toDateString());
+            setd2(new Date(resp.data.deadline2).toDateString());
+            setname(resp.data.name);
+        });
+    }, []);
 
     if (outlet) {
         return outlet;
@@ -30,20 +44,21 @@ function SubmissionID() {
                 <h1>Ideas List :</h1>
                 <div>
                     <h2>Name :</h2>
-                    <label>Name here</label>
+                    <label>{name}</label>
                 </div>
                 <div>
                     <h2>Deadline 1 :</h2>
 
-                    <label>Name here</label>
+                    <label>{d1}</label>
                 </div>
                 <div>
                     <h2>Deadline 2 :</h2>
-                    <label>Name here</label>
+                    <label>{d2}</label>
                 </div>
                 <div className={cx('table')}>
                     <div>
                         <div>
+                            <label>Posted by</label>
                             <label>Title</label>
                             <label>Brief</label>
                             <label>Views</label>
@@ -57,6 +72,7 @@ function SubmissionID() {
                                 navigate(`idea/1`);
                             }}
                         >
+                            <label>User 1</label>
                             <label>12dwa2323d</label>
                             <label>www12</label>
                             <label>1awd2</label>
@@ -84,6 +100,9 @@ function SubmissionID() {
                         </div>
                     </div>
                 </div>
+                <section className={cx('paginate')}>
+                    <Pagination count={10} variant="rounded" />
+                </section>
                 <div
                     className={cx('addbtn')}
                     title="Add new ideas."

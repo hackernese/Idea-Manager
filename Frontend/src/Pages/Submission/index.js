@@ -2,21 +2,29 @@ import { useNavigate, useOutlet } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import styles from './submission.module.scss';
 import classNames from 'classnames/bind';
-import LoadingButton from '../../Components/LoadingButton';
+import LoadingCircle from '../../Components/LoadingCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { faFileZipper, faFileCsv } from '@fortawesome/free-solid-svg-icons';
 import { loginContext } from '../../App';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function Submission() {
     const context = useContext(loginContext);
     const navigate = useNavigate();
+    const [submission, setsubmission] = useState([]);
     const outlet = useOutlet();
 
-    console.log(context.userinfo.role);
+    useEffect(() => {
+        axios.post('submission/list').then((resp) => {
+            if (resp.data.status === 'OK') {
+                setsubmission(resp.data.msg);
+            }
+        });
+    }, []);
 
     if (outlet) {
         return outlet;
@@ -36,26 +44,33 @@ function Submission() {
                         </div>
                     </div>
                     <div>
-                        <div className={cx('doc')}>
-                            <label>dwadawd</label>
-                            <label>adawd 1</label>
-                            <label>awdawd 2</label>
-                            <div>
-                                <FontAwesomeIcon
-                                    title="View Ideas"
-                                    icon={faFolderOpen}
-                                    onClick={() => {
-                                        navigate('2323');
-                                    }}
-                                />
-                                {context.userinfo.role === 'manager' && (
-                                    <>
-                                        <FontAwesomeIcon title="Download Zipped documents" icon={faFileZipper} />
-                                        <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
-                                    </>
-                                )}
-                            </div>
-                        </div>
+                        {submission.map((e) => {
+                            return (
+                                <div className={cx('doc')} key={e.id}>
+                                    <label>{e.name}</label>
+                                    <label>{new Date(e.deadline1).toDateString()}</label>
+                                    <label>{new Date(e.deadline2).toDateString()}</label>
+                                    <div>
+                                        <FontAwesomeIcon
+                                            title="View Ideas"
+                                            icon={faFolderOpen}
+                                            onClick={() => {
+                                                navigate(`${e.id}`);
+                                            }}
+                                        />
+                                        {context.userinfo.role === 'manager' && (
+                                            <>
+                                                <FontAwesomeIcon
+                                                    title="Download Zipped documents"
+                                                    icon={faFileZipper}
+                                                />
+                                                <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
