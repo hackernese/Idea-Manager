@@ -14,6 +14,7 @@ function Category() {
     const [cat, setcat] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const refinput = createRef();
+    const [current_cat, setcurrentcat] = useState(null);
 
     useEffect(() => {
         // Created
@@ -47,13 +48,6 @@ function Category() {
 
     const refinputEdit = createRef();
     const [showPopupEdit, setShowPopupEdit] = useState(false);
-    const handlePopupEdit = () => {
-        setShowPopupEdit(true);
-    };
-
-    const handleClosePopupEdit = () => {
-        setShowPopupEdit(false);
-    };
 
     const confbuttonEdit = (aaa) => {
         console.log(aaa.id);
@@ -101,18 +95,12 @@ function Category() {
                                             <FontAwesomeIcon
                                                 title="Edit Category"
                                                 icon={faPenToSquare}
-                                                onClick={handlePopupEdit}
+                                                onClick={() => {
+                                                    setcurrentcat(e);
+                                                    setShowPopupEdit(true);
+                                                }}
                                             />
-                                            {showPopupEdit && (
-                                                <Popupedit
-                                                    handleClose={handleClosePopupEdit}
-                                                    refinputEdit={refinputEdit}
-                                                    confbuttonEdit={() => {
-                                                        console.log(e);
-                                                        confbuttonEdit(e);
-                                                    }}
-                                                />
-                                            )}
+
                                             <FontAwesomeIcon
                                                 title="Delete Category"
                                                 icon={faTrash}
@@ -132,6 +120,19 @@ function Category() {
                         </div>
                     </div>
                 </div>
+                {showPopupEdit && (
+                    <Popupedit
+                        handleClose={() => {
+                            setShowPopupEdit(false);
+                        }}
+                        refinputEdit={refinputEdit}
+                        confbuttonEdit={() => {
+                            console.log(current_cat.id);
+                            // console.log(e);
+                            // confbuttonEdit(e);
+                        }}
+                    />
+                )}
             </div>
         </AnimatedOutlet>
     );

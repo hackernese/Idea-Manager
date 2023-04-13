@@ -160,7 +160,7 @@ function AddNewIdea() {
                                 if (file.size) {
                                     // There is a file and the size is not empty
                                     const upform = new FormData();
-                                    upform.append(file);
+                                    upform.append('doc_file', file);
                                     let resp_file;
 
                                     console.log(resp.data);

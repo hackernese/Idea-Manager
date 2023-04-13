@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './style.module.scss';
 const cx = classNames.bind(styles);
 
-function TickBox({ click, value, force_select }) {
+function TickBox({ click, value = undefined, force_select }) {
     const [ticked, setticked] = useState(false);
     let classes = ticked ? `${cx('checkbox')} ${cx('ticked')}` : cx('checkbox');
 
@@ -27,7 +27,7 @@ function TickBox({ click, value, force_select }) {
                 setticked(new_v);
                 // if (click) click(value ? value : new_v);
                 console.log(value);
-                if (click) click(value);
+                if (click) click(value !== undefined ? value : new_v);
             }}
             className={classes}
         ></div>
