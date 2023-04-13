@@ -170,7 +170,7 @@ def download_zip(submission_id):
     file_paths = []
     if submission:
         # get all Ideas from sub
-        ideas = submission.reference
+        ideas = submission.reference.all()
         if ideas:
             for idea in ideas:
                 file_name = idea.doc_file
