@@ -220,7 +220,7 @@ class Idea(AbstractBase):
 
     # Reference to the user table
     react_ref = db.relationship(
-        'Reaction', backref='idea', lazy=True, cascade='all, delete')
+        'Reaction', backref='idea', lazy='dynamic', cascade='all, delete')
     comment_ref = db.relationship(
         'Comments', backref='idea', lazy=True, cascade='all, delete')
     view_ref = db.relationship(
@@ -231,6 +231,8 @@ class Idea(AbstractBase):
 class Reaction(AbstractBase):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     idea_id = db.Column(db.Integer, db.ForeignKey("idea.id"), nullable=False)
+
+    react = db.Column(db.Boolean, nullable=True)
 
 
 class Comments(AbstractBase):

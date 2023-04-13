@@ -1,4 +1,4 @@
-import { useNavigate, useOutlet, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useOutlet, useParams, useSearchParams } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import classNames from 'classnames/bind';
 import { faCircleInfo, faPlus, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
@@ -8,23 +8,27 @@ import styles from './subid.module.scss';
 import { useEffect, useState } from 'react';
 import { Pagination } from '@mui/material';
 import axios from 'axios';
-import { use } from 'i18next';
 
 const cx = classNames.bind(styles);
 
-function Record({ username, title, brief, views, like, dislike, id }) {
-    const [islike, setislike] = useState(true);
+function Record({ username, title, brief, views, like, dislike, react, id, trigger }) {
+    const [islike, setislike] = useState(react);
     const navigate = useNavigate();
+    const [params, setparams] = useSearchParams();
 
     const handle_likedislike = (event, code) => {
         event.preventDefault();
         setislike(code);
 
-        if (code) {
-            axios.post(`idea/like/${id}`);
-        } else {
-            axios.post(`idea/dislike/${id}`);
-        }
+        const url = code ? `idea/like/${id}` : `idea/dislike/${id}`;
+
+        axios.post(url).then((resp) => {
+            if (resp.data.status === 'OK') {
+                // Everything is ok, time to re-request the data
+
+                trigger();
+            }
+        });
     };
 
     return (
@@ -44,7 +48,7 @@ function Record({ username, title, brief, views, like, dislike, id }) {
                         e.stopPropagation();
                         handle_likedislike(e, true);
                     }}
-                    icon={islike ? faThumbsUp : ReThumbUp}
+                    icon={islike === true ? faThumbsUp : ReThumbUp}
                 ></FontAwesomeIcon>
             </div>
 
@@ -55,7 +59,7 @@ function Record({ username, title, brief, views, like, dislike, id }) {
                         e.stopPropagation();
                         handle_likedislike(e, false);
                     }}
-                    icon={!islike ? faThumbsDown : ReThumbDown}
+                    icon={islike === false ? faThumbsDown : ReThumbDown}
                 ></FontAwesomeIcon>
             </div>
         </div>
@@ -67,16 +71,21 @@ function SubmissionID() {
 
     const outlet = useOutlet();
     const { id } = useParams();
+    const [params, setparams] = useSearchParams();
+    const p = params.get('p');
+
     const [d1, setd1] = useState('');
     const [d2, setd2] = useState('');
     const [name, setname] = useState('');
 
     // Ideas states
     const [idea, setidea] = useState([]);
-    const [page, setpage] = useState(1);
+    const [page, setpage] = useState(!p ? 1 : parseInt(p));
     const [total_page, settotal] = useState(null);
+    const [trigger_re_request, trigger] = useState(0);
 
     useEffect(() => {
+        if (outlet) return;
         axios.post(`submission/get/${id}`).then((resp) => {
             if (resp.data.status === 'FAIL') return;
             setd1(new Date(resp.data.deadline1).toDateString());
@@ -86,25 +95,33 @@ function SubmissionID() {
     }, []);
     // Grabbing the current idea here
     useEffect(() => {
-        axios
-            .post(`submission/${id}/idea/list`, {
-                p: page - 1,
-            })
-            .then((resp) => {
-                if (resp.data.status === 'OK') {
-                    setidea(resp.data.msg.data);
-                    settotal(resp.data.msg.page);
-                } else {
-                    // Could be error or end of page
-                }
-            });
-    }, [page]);
+        if (outlet) return;
+
+        if (page)
+            axios
+                .post(`submission/${id}/idea/list`, {
+                    p: page - 1,
+                })
+                .then((resp) => {
+                    if (resp.data.status === 'OK') {
+                        setidea(resp.data.msg.data);
+                        settotal(resp.data.msg.page);
+                        console.log(page, trigger_re_request);
+
+                        console.log(resp.data.msg.data);
+
+                        setparams({ p: page });
+                    } else {
+                        // Could be error or end of page
+                    }
+                });
+    }, [page, trigger_re_request]);
 
     if (outlet) {
         return outlet;
     }
 
-    if (total_page === null) {
+    if (total_page === null || page === null) {
         return <section className={cx('loader')}></section>;
     }
 
@@ -139,7 +156,7 @@ function SubmissionID() {
                     <div>
                         {idea.map((e, index) => (
                             <Record
-                                key={index}
+                                key={e.id}
                                 username={e.user_name}
                                 id={e.id}
                                 title={e.title}
@@ -147,6 +164,8 @@ function SubmissionID() {
                                 views={e.views}
                                 like={e.like}
                                 dislike={e.dislike}
+                                react={e.react}
+                                trigger={() => trigger(trigger_re_request + 1)}
                             ></Record>
                         ))}
                     </div>

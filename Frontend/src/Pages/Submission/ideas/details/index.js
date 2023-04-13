@@ -1,5 +1,4 @@
 import CustomInput from '../../../../Components/CustomInput';
-import DropDown from '../../../../Components/DropDown';
 import LoadingButton from '../../../../Components/LoadingButton';
 import LoadinngCirlce from '../../../../Components/LoadingCircle';
 import TickBox from '../../../../Components/TickBox';
@@ -7,13 +6,23 @@ import style from './style.module.scss';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileArrowUp, faCircleUser, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { success } from '../../../../lib/toast';
 import { createRef, useEffect, useState } from 'react';
-import classNames from 'classnames/bind';
+import axios from 'axios';
 
 function IdeaDetails() {
     const navigate = useNavigate();
+    const { idea_id } = useParams();
+    const [data, setdata] = useState(null);
+
+    useEffect(() => {
+        axios.post(`idea/get/${idea_id}`).then((resp) => {
+            if (resp.data.status === 'OK') setdata(resp.data.data);
+        });
+    }, []);
+
+    if (data === null) return <section className={style.loader}></section>;
 
     return (
         <AnimatedOutlet>
@@ -30,27 +39,27 @@ function IdeaDetails() {
                 <div className={style.info}>
                     <div>
                         <label>Title</label>
-                        <label>DWAAWD</label>
+                        <label>{data.title}</label>
                     </div>
                     <div>
                         <label>Brief</label>
-                        <label>DWAAWD</label>
+                        <label>{data.brief}</label>
                     </div>
                     <div>
                         <label>Content</label>
-                        <label>DWAAWD</label>
+                        <label>{data.content}</label>
                     </div>
                     <div>
                         <label>Views</label>
-                        <label>DWAAWD</label>
+                        <label>{data.views}</label>
                     </div>
                     <div>
                         <label>Submission</label>
-                        <label>DWAAWD</label>
+                        <label>{data.submission}</label>
                     </div>
                     <div>
                         <label>Category</label>
-                        <label>DWAAWD</label>
+                        <label>{data.category}</label>
                     </div>
                 </div>
                 <div className={style.comments}>

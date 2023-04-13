@@ -1,7 +1,7 @@
 import os
 from app import app, mail
 from . import login_required
-from db import Submission, db, Idea, User, Reaction, Comments
+from db import Submission, db, Idea, User, Reaction, Comments, Views
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
@@ -149,10 +149,17 @@ def list_all_ideas(submission_id):
             result = []
             for idea in ideas:
 
+                like = idea.react_ref.filter_by(react=True)
+                dislike = idea.react_ref.filter_by(react=False)
+
+                reactobj = idea.react_ref.filter_by(
+                    user_id=request.session.user.id).first()
+
                 idea_dict = {
-                    'like': 12,
-                    'dislike': 12,
-                    'islike': True,
+                    'like': like.count(),
+                    'dislike': dislike.count(),
+                    # True = Like, False = Dislike, None = not yet
+                    'react': (None if not reactobj else reactobj.react),
                     'views': len(idea.view_ref),
                     'id': idea.id,
                     'title': idea.title,
@@ -226,43 +233,41 @@ def get_idea_info(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
         # check if user who uploaded this idea is anonymous or not?
-        if idea.is_anonymous == False:
-            user = User.query.get(idea.user_id)
-            if user is not None:
-                return jsonify({
-                    'id': idea.id,
-                    'user_id': idea.user_id,
-                    'is_anonymous': idea.is_anonymous,
-                    'title': idea.title,
-                    'brief': idea.brief,
-                    'content': idea.content,
-                    'doc_file': idea.doc_file,
-                    'category_id': idea.category_id,
-                    'sub_id': idea.sub_id,
-                    'user_id': user.id,
-                    'user_name': user.username
-                })
+        user = User.query.get(idea.user_id)
 
-        else:
-            return jsonify({
-                'id': idea.id,
-                'user_id': idea.user_id,
-                'is_anonymous': idea.is_anonymous,
-                'title': idea.title,
-                'brief': idea.brief,
-                'content': idea.content,
-                'doc_file': idea.doc_file,
-                'category_id': idea.category_id,
-                'sub_id': idea.sub_id,
-                'user_id': None,
-                'user_name': 'Anonymous'
-            })
+        data = {
+            'id': idea.id,
+            'is_anonymous': idea.is_anonymous,
+            'title': idea.title,
+            'brief': idea.brief,
+            'content': idea.content,
+            'doc_file': idea.doc_file,
+            'category': idea.category.name,
+            'submission': idea.submission.name,
+            'user_id': None if idea.is_anonymous else user.id,
+            'user_name': "Anonymous" if idea.is_anonymous else user.username
+        }
 
-    else:
+        # CHecking if this user has viewed this idea in the past or not
+        ret = db.session.query(Views).filter_by(
+            user_id=request.session.user.id).filter_by(idea_id=idea.id).first()
+        if not ret:
+            db.session.add(
+                Views(user_id=request.session.user.id, idea_id=idea.id))
+            db.session.commit()
+
+        # Update the current view
+        data['views'] = len(idea.view_ref)
+
         return jsonify({
-            'status': 'FAIL',
-            'err': 'No Idea Found'
+            'status': "OK",
+            'data': data
         })
+
+    return jsonify({
+        'status': 'FAIL',
+        'err': 'No Idea Found'
+    })
 
 
 @app.route('/api/idea/like/<idea_id>', methods=['POST'])
@@ -273,15 +278,15 @@ def like_idea(idea_id):
         # check if user has reacted this idea or has not?
         reacted = request.session.user.reaction_ref.filter_by(
             idea_id=idea_id).first()
+
         if reacted:
-            reacted.like = True
-            reacted.dislike = False
+            reacted.react = True
             db.session.commit()
         else:
             # get user id
             user_id = request.session.user.id
             new_react = Reaction(
-                user_id=user_id, idea_id=idea_id, like=True, dislike=False)
+                user_id=user_id, idea_id=idea_id, react=True)
             db.session.add(new_react)
             db.session.commit()
 
@@ -306,14 +311,13 @@ def dislike_idea(idea_id):
         reacted = request.session.user.reaction_ref.filter_by(
             idea_id=idea_id).first()
         if reacted:
-            reacted.like = False
-            reacted.dislike = True
+            reacted.react = False
             db.session.commit()
         else:
             # get user id
             user_id = request.session.user.id
             new_react = Reaction(
-                user_id=user_id, idea_id=idea_id, like=False, dislike=True)
+                user_id=user_id, idea_id=idea_id, react=False)
             db.session.add(new_react)
             db.session.commit()
 

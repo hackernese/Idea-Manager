@@ -6,6 +6,10 @@
      @include transition;
 }
 
+.loader {
+     @include waiting_circle;
+}
+
 .info {
      display: flex;
      flex-direction: column;
