@@ -1,6 +1,6 @@
 import os
 from app import app, mail
-from . import login_required
+from . import login_required, send_mail
 from db import Submission, db, Idea, User, Reaction, Comments, Views
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
@@ -352,11 +352,11 @@ def comment_on_idea(idea_id):
                 db.session.commit()
 
                 # send email to idea's owner
-                msg = Message('Your Idea Had New Comment!',
-                              sender=app.config.get("MAIL_USERNAME"),
-                              recipients=[idea.user.email])  # get idea's owner email
-                msg.body = f"Your \"{idea.title}\" Idea Has Been Commented by {current_user.username} "
-                mail.send(msg)
+                send_mail(
+                    'Your Idea Had New Comment!',
+                    f"Your \"{idea.title}\" Idea Has Been Commented by {current_user.username} ",
+                    [idea.user.email]
+                )
 
                 return jsonify({
                     'status': 'OK',
@@ -387,7 +387,7 @@ def list_all_comment(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
         # get comments from idea
-        comments = idea.comment_ref.order_by(Comments.created_on)
+        comments = idea.comment_ref.order_by(Comments.created_on.desc())
 
         if comments:
             result = []

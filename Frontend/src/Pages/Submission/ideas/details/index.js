@@ -18,6 +18,7 @@ function IdeaDetails() {
     const [comments, setcomment] = useState([]);
     const [isanon, setanon] = useState(false);
     const [trigger, settrigger] = useState(0);
+    const btnref = createRef();
     const commentref = createRef();
 
     useEffect(() => {
@@ -99,8 +100,14 @@ function IdeaDetails() {
                                 custom_ref={commentref}
                                 placeholder="Write comment here..."
                                 type="text"
+                                onKeyDown={({ key }) => {
+                                    if (key === 'Enter') {
+                                        btnref.current.click();
+                                    }
+                                }}
                             ></CustomInput>
                             <LoadingButton
+                                custom_ref={btnref}
                                 onClick={async () => {
                                     axios
                                         .post(`idea/comment/${idea_id}`, {

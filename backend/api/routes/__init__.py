@@ -3,6 +3,9 @@ from flask import request, jsonify
 from db import Sessions, UserRoles, ROLE_ID_LIST, db
 from functools import wraps
 from datetime import datetime
+from threading import Thread
+from flask_mail import Message
+from app import app, mail
 
 UNAUTHORIZED_RESPONSE = {
     "status": "FAIL",
@@ -100,6 +103,21 @@ def login_required(role_allow: str | list = "*", allow_personal_user=False) -> c
         return http_wrapper
 
     return wrapper
+
+
+def send_mail(title, body, mails):
+
+    def send():
+
+        msg = Message(title, sender=app.config.get(
+            "MAIL_USERNAME"), recipients=mails)
+        msg.body = body
+
+        with app.app_context():
+
+            mail.send(msg)
+
+    Thread(target=send).start()
 
 
 # <--- See ? it will get rewritten, End of Story !
