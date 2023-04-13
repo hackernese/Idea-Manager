@@ -86,11 +86,13 @@ def add_idea(submission_id):
 
             # Save the new idea to the database
             db.session.add(idea)
-            db.session.commit()
+            db.session.flush()
 
             return jsonify({
                 'status': 'OK',
-                'msg': 'Idea Added Successfully'
+                'msg': {
+                    "id": idea.id
+                }
             })
 
         except IntegrityError:
@@ -110,10 +112,29 @@ def add_idea(submission_id):
 @login_required()
 def list_all_ideas(submission_id):
     # check if submission existed?
+
+    data = request.get_json()
+
+    if "p" not in data:
+        return jsonify({
+            'status': "FAIL",
+            'msg': "Missing page number."
+        })
+
+    try:
+        page = int(data['p'])
+    except:
+        return jsonify({
+            'status': "FAIL",
+            'msg': "Invalid page number."
+        })
+
     submission = Submission.query.get(submission_id)
+
     if submission:
         # get ideas from submission
-        ideas = submission.reference
+        ideas = submission.reference.offset(page*5).limit(5).all()
+
         if ideas:
             result = []
             for idea in ideas:
