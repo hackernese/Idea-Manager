@@ -1,9 +1,9 @@
 import { useNavigate, useOutlet, useParams, useSearchParams } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
+import DropDown from '../../Components/DropDown';
 import classNames from 'classnames/bind';
 import { faPlus, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { faFile } from '@fortawesome/free-regular-svg-icons';
-
 import { faThumbsDown as ReThumbDown, faThumbsUp as ReThumbUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './subid.module.scss';
@@ -138,7 +138,6 @@ function SubmissionID() {
                 </div>
                 <div>
                     <h2>Deadline 1 :</h2>
-
                     <label>{d1}</label>
                 </div>
                 <div>
@@ -199,6 +198,29 @@ function SubmissionID() {
                     }}
                 >
                     <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                </div>
+                <div className={cx('filter')}>
+                    <section>
+                        <DropDown
+                            value={[
+                                {
+                                    v: 'Filter',
+                                    s: true,
+                                },
+                                {
+                                    v: 'Most popular',
+                                    ret: 0,
+                                },
+                                {
+                                    v: 'Least popular',
+                                    ret: 1,
+                                },
+                            ]}
+                            onChange={(e) => {
+                                console.log(e);
+                            }}
+                        ></DropDown>
+                    </section>
                 </div>
             </div>
         </AnimatedOutlet>

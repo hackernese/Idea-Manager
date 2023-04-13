@@ -63,6 +63,9 @@
 
 }
 
+
+
+
 .notfound {
      @include dropdown_animation;
      position: absolute;
@@ -185,8 +188,24 @@
 
 }
 
+.filter {
+     position: absolute;
+     display: flex;
+     right: 6em;
+     top: 1em;
+     cursor: pointer;
+}
 
 @media screen and (max-width: 1100px) {
+
+     .filter {
+          margin-top: 1em;
+          right: 4em;
+     }
+
+     .paginate {
+          padding-bottom: 1em;
+     }
 
      .subid {
           position: fixed;

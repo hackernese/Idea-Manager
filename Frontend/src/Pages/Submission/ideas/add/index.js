@@ -6,7 +6,7 @@ import style from './style.module.scss';
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faFileArrowUp, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Form, useNavigate, useParams } from 'react-router-dom';
 import { success, error } from '../../../../lib/toast';
 import { createRef, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
@@ -65,8 +65,6 @@ function AddNewIdea() {
 
     const DetectUploadDocument = (e) => {
         setfile(e.target.files[0]);
-
-        // console.log(e.target.files[0]);
     };
 
     return (
@@ -106,6 +104,7 @@ function AddNewIdea() {
                         <h2>Upload documents</h2>
                         <div className={style.updoc}>
                             <input ref={uploadbtn} type="file" name="file" onChange={DetectUploadDocument} />
+
                             <section onClick={() => uploadbtn.current.click()}>
                                 <FontAwesomeIcon icon={faFileArrowUp} />
                             </section>

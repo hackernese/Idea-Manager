@@ -222,7 +222,7 @@ class Idea(AbstractBase):
     react_ref = db.relationship(
         'Reaction', backref='idea', lazy='dynamic', cascade='all, delete')
     comment_ref = db.relationship(
-        'Comments', backref='idea', lazy=True, cascade='all, delete')
+        'Comments', backref='idea', lazy='dynamic', cascade='all, delete')
     view_ref = db.relationship(
         'Views', backref="idea", lazy=True, cascade='all, delete'
     )
