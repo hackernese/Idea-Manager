@@ -7,6 +7,7 @@ import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import Popupedit from './popupedit';
 
 function Category() {
     const outlet = useOutlet();
@@ -37,6 +38,32 @@ function Category() {
             })
             .then((resp) => {
                 console.log(resp.data);
+                axios.post('category/list').then((resp) => {
+                    setcat(resp.data.msg);
+                });
+            });
+    };
+
+    const refinputEdit = createRef();
+    const [showPopupEdit, setShowPopupEdit] = useState(false);
+    const handlePopupEdit = () => {
+        setShowPopupEdit(true);
+    };
+
+    const handleClosePopupEdit = () => {
+        setShowPopupEdit(false);
+    };
+
+    const confbuttonEdit = () => {
+        axios
+            .post(`category/update/${e.id}`, {
+                name: refinputEdit.current.value,
+            })
+            .then((resp) => {
+                console.log(resp.data);
+                axios.post('category/list').then((resp) => {
+                    setcat(resp.data.msg);
+                });
             });
     };
 
@@ -50,15 +77,6 @@ function Category() {
                 <div className={styles.header}>
                     <p>List of category</p>
                 </div>
-                <button
-                    onClick={() => {
-                        axios.post('category/list').then((resp) => {
-                            setcat(resp.data.msg);
-                        });
-                    }}
-                >
-                    CLick me to pull
-                </button>
                 <button onClick={handleButtonClick}>Create a new category</button>
                 {showPopup && <Popup handleClose={handleClosePopup} refinput={refinput} confbutton={confbutton} />}
                 <div className={styles.main}>
@@ -77,8 +95,28 @@ function Category() {
                                         <label>{e.name}</label>
                                         <label>{e.created_on}</label>
                                         <div className={styles.smallbuttons}>
-                                            <FontAwesomeIcon title="Edit Category" icon={faPenToSquare} />
-                                            <FontAwesomeIcon title="Delete Category" icon={faTrash} />
+                                            <FontAwesomeIcon
+                                                title="Edit Category"
+                                                icon={faPenToSquare}
+                                                onClick={handlePopupEdit}
+                                            />
+                                            {showPopupEdit && (
+                                                <Popupedit
+                                                    handleClose={handleClosePopupEdit}
+                                                    refinputEdit={refinputEdit}
+                                                    confbuttonEdit={confbuttonEdit}
+                                                />
+                                            )}
+                                            <FontAwesomeIcon
+                                                title="Delete Category"
+                                                icon={faTrash}
+                                                onClick={axios.delete(`category/delete/${e.id}`).then((resp) => {
+                                                    console.log(resp.data);
+                                                    axios.post('category/list').then((resp) => {
+                                                        setcat(resp.data.msg);
+                                                    });
+                                                })}
+                                            />
                                         </div>
                                     </div>
                                 );
