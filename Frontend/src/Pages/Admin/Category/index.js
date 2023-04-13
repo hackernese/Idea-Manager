@@ -54,9 +54,9 @@ function Category() {
         setShowPopupEdit(false);
     };
 
-    const confbuttonEdit = () => {
+    const confbuttonEdit = (aaa) => {
         axios
-            .post(`category/update/${e.id}`, {
+            .post(`category/update/${aaa.id}`, {
                 name: refinputEdit.current.value,
             })
             .then((resp) => {
@@ -104,18 +104,22 @@ function Category() {
                                                 <Popupedit
                                                     handleClose={handleClosePopupEdit}
                                                     refinputEdit={refinputEdit}
-                                                    confbuttonEdit={confbuttonEdit}
+                                                    confbuttonEdit={() => {
+                                                        confbuttonEdit(e);
+                                                    }}
                                                 />
                                             )}
                                             <FontAwesomeIcon
                                                 title="Delete Category"
                                                 icon={faTrash}
-                                                onClick={axios.delete(`category/delete/${e.id}`).then((resp) => {
-                                                    console.log(resp.data);
-                                                    axios.post('category/list').then((resp) => {
-                                                        setcat(resp.data.msg);
+                                                onClick={() => {
+                                                    axios.delete(`category/delete/${e.id}`).then((resp) => {
+                                                        console.log(resp.data);
+                                                        axios.post('category/list').then((resp) => {
+                                                            setcat(resp.data.msg);
+                                                        });
                                                     });
-                                                })}
+                                                }}
                                             />
                                         </div>
                                     </div>

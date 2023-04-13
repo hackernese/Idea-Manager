@@ -160,17 +160,24 @@ function AddNewIdea() {
                                 if (file.size) {
                                     // There is a file and the size is not empty
                                     const upform = new FormData();
-                                    let resp;
-
                                     upform.append(file);
+                                    let resp_file;
+
+                                    console.log(resp.data);
+
                                     try {
-                                        resp = await axios.post('idea/<idea_id>/set/doc');
+                                        resp_file = await axios.post(`idea/${resp.data.msg.id}/set/doc`, upform, {
+                                            headers: {
+                                                'Content-Type': 'multipart/form-data',
+                                            },
+                                        });
                                     } catch {
                                         error('Created idea, but unable to set its document');
                                         return;
                                     }
-                                    await axios.post();
                                 }
+
+                                success('Successfully created new idea.');
                             }}
                             text="Create"
                         ></LoadingButton>
