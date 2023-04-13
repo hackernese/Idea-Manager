@@ -11,7 +11,9 @@ function Popupedit({ handleClose, refinputEdit, confbuttonEdit }) {
                 </button>
                 <div>
                     <div>Change the name of the category:</div>
-                    <input ref={refinputEdit} type="text" placeholder={'New name'}></input>
+                    <input ref={refinputEdit} type="text" placeholder={'New name'}>
+                        {text}
+                    </input>
                     <button onClick={confbuttonEdit}>Confirm</button>
                 </div>
             </div>
