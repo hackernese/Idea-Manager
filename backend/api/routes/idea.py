@@ -21,9 +21,9 @@ def set_doc_for_idea(idea_id):
             # Save the file to disk and get the filename
             if data:
                 file = data['doc_file']
-                file_name = secure_filename(file.filename)
+                file_name = f"Idea-{idea.id}.{secure_filename(file.filename)}"
                 file.save(os.path.join(basedir, "uploads",
-                          f"Idea-{idea.id}.{file_name}"))
+                          file_name))
                 # add filename into DB
                 idea.doc_file = file_name
                 db.session.commit()

@@ -63,6 +63,11 @@ function Submission() {
                                                 <FontAwesomeIcon
                                                     title="Download Zipped documents"
                                                     icon={faFileZipper}
+                                                    onClick={() => {
+                                                        axios.get(`submission/download_zip/${e.id}`).then((resp) => {
+                                                            console.log(resp);
+                                                        });
+                                                    }}
                                                 />
                                                 <FontAwesomeIcon title="Download CSV informaton" icon={faFileCsv} />
                                             </>
