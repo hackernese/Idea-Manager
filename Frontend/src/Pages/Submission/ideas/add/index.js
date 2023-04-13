@@ -26,6 +26,7 @@ function AddNewIdea() {
     const content = createRef();
     const [cat, setcat] = useState(null);
     const [chosencat, setchosencat] = useState(null);
+    const [isanon, setanon] = useState(false);
     const { id } = useParams();
 
     console.log(file);
@@ -93,6 +94,14 @@ function AddNewIdea() {
                             value={cat}
                         ></DropDown>
                     </div>
+                    <div className={style.anon}>
+                        <h2>Anonymous</h2>
+                        <TickBox
+                            click={(e) => {
+                                setanon(e);
+                            }}
+                        ></TickBox>
+                    </div>
                     <div>
                         <h2>Upload documents</h2>
                         <div className={style.updoc}>
@@ -131,8 +140,6 @@ function AddNewIdea() {
 
                                 if (!title_ || !brief || !content_) return;
 
-                                console.log(agreetermandcondition);
-
                                 if (!agreetermandcondition) {
                                     error('Please agree to term and condition');
                                     return;
@@ -144,7 +151,7 @@ function AddNewIdea() {
                                         title: title_,
                                         brief: brief_,
                                         content: content_,
-                                        is_anonymous: false,
+                                        is_anonymous: isanon,
                                         category_id: chosencat,
                                     });
                                 } catch {

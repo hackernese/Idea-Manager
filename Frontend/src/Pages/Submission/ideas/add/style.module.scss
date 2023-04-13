@@ -10,6 +10,26 @@
 
 }
 
+.anon {
+     display: flex;
+
+     * {
+          margin: auto;
+          margin-left: 0;
+          margin-right: 0.7em;
+     }
+
+     h2 {
+          height: auto;
+          margin-bottom: 0 !important;
+     }
+
+     >h2::after {
+          display: none;
+          content: ":";
+     }
+}
+
 .load {
      @include waiting_circle;
 }

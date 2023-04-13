@@ -1,7 +1,9 @@
-import { Navigate, useNavigate, useOutlet, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useOutlet, useParams, useSearchParams } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import classNames from 'classnames/bind';
-import { faCircleInfo, faPlus, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faFile } from '@fortawesome/free-regular-svg-icons';
+
 import { faThumbsDown as ReThumbDown, faThumbsUp as ReThumbUp } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './subid.module.scss';
@@ -103,17 +105,18 @@ function SubmissionID() {
                     p: page - 1,
                 })
                 .then((resp) => {
+                    console.log();
+
                     if (resp.data.status === 'OK') {
                         setidea(resp.data.msg.data);
                         settotal(resp.data.msg.page);
-                        console.log(page, trigger_re_request);
-
-                        console.log(resp.data.msg.data);
-
-                        setparams({ p: page });
                     } else {
                         // Could be error or end of page
+                        setidea([]);
+                        settotal(0);
                     }
+
+                    setparams({ p: page });
                 });
     }, [page, trigger_re_request]);
 
@@ -154,20 +157,28 @@ function SubmissionID() {
                         </div>
                     </div>
                     <div>
-                        {idea.map((e, index) => (
-                            <Record
-                                key={e.id}
-                                username={e.user_name}
-                                id={e.id}
-                                title={e.title}
-                                brief={e.brief}
-                                views={e.views}
-                                like={e.like}
-                                dislike={e.dislike}
-                                react={e.react}
-                                trigger={() => trigger(trigger_re_request + 1)}
-                            ></Record>
-                        ))}
+                        {idea.length > 0 &&
+                            idea.map((e) => (
+                                <Record
+                                    key={e.id}
+                                    username={e.user_name}
+                                    id={e.id}
+                                    title={e.title}
+                                    brief={e.brief}
+                                    views={e.views}
+                                    like={e.like}
+                                    dislike={e.dislike}
+                                    react={e.react}
+                                    trigger={() => trigger(trigger_re_request + 1)}
+                                ></Record>
+                            ))}
+
+                        {idea.length === 0 && (
+                            <section className={cx('notfound')}>
+                                <FontAwesomeIcon icon={faFile} />
+                                <label>No ideas found.</label>
+                            </section>
+                        )}
                     </div>
                 </div>
                 <section className={cx('paginate')}>
