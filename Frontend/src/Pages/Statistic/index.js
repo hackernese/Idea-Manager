@@ -1,10 +1,19 @@
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import style from './style.module.scss';
 import { loginContext } from '../../App';
-import { useContext, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
 function Statistic() {
+    const context = useContext(loginContext);
+    const [data, setdata] = useState([]);
+
+    useEffect(() => {
+        axios.get('system/statistics').then((resp) => {
+            setdata(resp.data.data);
+        });
+    }, []);
+
     return (
         <AnimatedOutlet>
             <div className={style.main}>
@@ -17,38 +26,12 @@ function Statistic() {
                         </div>
                     </div>
                     <div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
-                        <div>
-                            <label>Department 1</label>
-                            <label>Department 1</label>
-                        </div>
+                        {Object.entries(data).map((e) => (
+                            <div key={e[0]}>
+                                <label>{e[0]}</label>
+                                <label>{e[1]}</label>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

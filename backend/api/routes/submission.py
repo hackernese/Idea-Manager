@@ -248,7 +248,7 @@ def download_csv_info(submission_id):
                 'Author': str(i.user.username),
                 'like': i.react_ref.filter_by(react=True).count(),
                 'dislike': i.react_ref.filter_by(react=False).count(),
-                'Total views': len(i.view_ref)
+                'Total views': i.view_ref.count()
             }
 
             writer.writerow(data)

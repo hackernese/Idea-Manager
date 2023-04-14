@@ -85,6 +85,7 @@ function SubmissionID() {
     const [page, setpage] = useState(!p ? 1 : parseInt(p));
     const [total_page, settotal] = useState(null);
     const [trigger_re_request, trigger] = useState(0);
+    const [filter, setfilter] = useState(null);
 
     useEffect(() => {
         if (outlet) return;
@@ -103,6 +104,7 @@ function SubmissionID() {
             axios
                 .post(`submission/${id}/idea/list`, {
                     p: page - 1,
+                    filter: filter,
                 })
                 .then((resp) => {
                     console.log();
@@ -118,7 +120,7 @@ function SubmissionID() {
 
                     setparams({ p: page });
                 });
-    }, [page, trigger_re_request]);
+    }, [page, trigger_re_request, filter]);
 
     if (outlet) {
         return outlet;
@@ -215,9 +217,13 @@ function SubmissionID() {
                                     v: 'Least popular',
                                     ret: 1,
                                 },
+                                {
+                                    v: 'Most viewed',
+                                    ret: 2,
+                                },
                             ]}
-                            onChange={(e) => {
-                                console.log(e);
+                            onChange={({ code }) => {
+                                setfilter(code);
                             }}
                         ></DropDown>
                     </section>

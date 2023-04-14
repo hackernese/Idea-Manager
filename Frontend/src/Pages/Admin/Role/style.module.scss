@@ -1,48 +1,51 @@
 @import '../../../Components/globalMixins.scss';
 
-section {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -90%);
 
-    button {
-        @include btn;
-        vertical-align: middle;
-        font-size: 18px;
-    }
-
-    > .header {
-        background-color: var(--secondarycolor2);
-        padding: px;
-        height: 57px;
-        padding-top: 16px;
-        margin-right: 5em;
-        width: 10em;
-        display: inline-block;
-        text-align: center;
-        align-items: center;
-        vertical-align: middle;
-        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-        @include SquareRoundBorder;
-
-        > p {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            @include boldfont;
-            height: auto;
-            color: var(--backgroundcolor); // Change to desired text color
-            font-size: 18px; // Change to desired text size
-            font-weight: bold; // Change to desired text weight
-            text-align: center; // Center the text horizontally
-        }
-    }
-}
 
 .base {
+
+    section {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -90%);
+
+        button {
+            @include btn;
+            vertical-align: middle;
+            font-size: 18px;
+        }
+
+        >.header {
+            background-color: var(--secondarycolor2);
+            padding: px;
+            height: 57px;
+            padding-top: 16px;
+            margin-right: 5em;
+            width: 10em;
+            display: inline-block;
+            text-align: center;
+            align-items: center;
+            vertical-align: middle;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            @include SquareRoundBorder;
+
+            >p {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                @include boldfont;
+                height: auto;
+                color: var(--backgroundcolor); // Change to desired text color
+                font-size: 18px; // Change to desired text size
+                font-weight: bold; // Change to desired text weight
+                text-align: center; // Center the text horizontally
+            }
+        }
+    }
+
     padding: 3em;
 
-    > button {
+    >button {
         @include btn;
         display: inline-block;
         text-align: center;
@@ -51,7 +54,7 @@ section {
         float: right;
     }
 
-    > section {
+    >section {
         margin-top: 3em;
     }
 
@@ -64,7 +67,7 @@ section {
             color: #d64646;
         }
 
-        > div {
+        >div {
             @include table_style_vertical;
             border: 2px solid var(--blurborder);
             box-shadow: 2px 6px 6px 0px (var(--blurcolor2));
@@ -84,6 +87,7 @@ section {
                 filter: invert(1);
             }
         }
+
         .action {
             margin-inline: 1px;
             font-size: 10px;

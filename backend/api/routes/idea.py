@@ -6,7 +6,7 @@ from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
-from flask_mail import Message
+from sqlalchemy import desc, func, asc
 import math
 
 
@@ -137,18 +137,49 @@ def list_all_ideas(submission_id):
 
     submission = Submission.query.get(submission_id)
 
+    filter = None
+
+    if 'filter' in data:
+        filter = data['filter']
+
     if submission:
         # get ideas from submission
 
         total_page = math.ceil(submission.reference.count() / 5)
 
-        ideas = submission.reference.order_by(
-            Idea.created_on.desc()).offset(page*5).limit(5).all()
+        query = submission.reference.add_columns(None).order_by(
+            Idea.created_on.desc())
+
+        if filter == 0:
+            # Most popular
+            query = submission.reference \
+                .outerjoin(Reaction, Idea.id == Reaction.idea_id) \
+                .add_columns(Idea.id, func.sum(Reaction.react).label('react_count')) \
+                .group_by(Idea.id) \
+                .order_by(desc('react_count'))
+
+        elif filter == 1:
+            # LEaset popular
+            query = submission.reference \
+                .outerjoin(Reaction, Idea.id == Reaction.idea_id) \
+                .add_columns(Idea.id, func.sum(Reaction.react).label('react_count')) \
+                .group_by(Idea.id) \
+                .order_by(asc('react_count'))
+        elif filter == 2:
+            # Most viewed
+            query = submission.reference \
+                .outerjoin(Views, Idea.id == Views.idea_id) \
+                .add_columns(Idea.id, func.count(Views.idea_id).label('view_count')) \
+                .group_by(Idea.id) \
+                .order_by(desc('view_count'))
+
+        ideas = query.offset(page*5).limit(5).all()
 
         if ideas:
             result = []
             for idea in ideas:
 
+                idea = idea[0]
                 like = idea.react_ref.filter_by(react=True)
                 dislike = idea.react_ref.filter_by(react=False)
 
@@ -160,7 +191,7 @@ def list_all_ideas(submission_id):
                     'dislike': dislike.count(),
                     # True = Like, False = Dislike, None = not yet
                     'react': (None if not reactobj else reactobj.react),
-                    'views': len(idea.view_ref),
+                    'views': idea.view_ref.count(),
                     'id': idea.id,
                     'title': idea.title,
                     'brief': idea.brief,
@@ -199,8 +230,8 @@ def list_all_ideas(submission_id):
         })
 
 
-@app.route('/api/idea/delete/<idea_id>', methods=['DELETE'])
-@login_required(role_allow=['manager', 'administrator'])
+@ app.route('/api/idea/delete/<idea_id>', methods=['DELETE'])
+@ login_required(role_allow=['manager', 'administrator'])
 def delete_idea(idea_id):
     # check if idea existed?
     idea = Idea.query.get(idea_id)
@@ -226,8 +257,8 @@ def delete_idea(idea_id):
         })
 
 
-@app.route('/api/idea/get/<idea_id>', methods=['GET', 'POST'])
-@login_required()
+@ app.route('/api/idea/get/<idea_id>', methods=['GET', 'POST'])
+@ login_required()
 def get_idea_info(idea_id):
     # check if Idea existed?
     idea = Idea.query.get(idea_id)
@@ -257,7 +288,7 @@ def get_idea_info(idea_id):
             db.session.commit()
 
         # Update the current view
-        data['views'] = len(idea.view_ref)
+        data['views'] = idea.view_ref.count()
 
         return jsonify({
             'status': "OK",
@@ -270,8 +301,8 @@ def get_idea_info(idea_id):
     })
 
 
-@app.route('/api/idea/like/<idea_id>', methods=['POST'])
-@login_required()
+@ app.route('/api/idea/like/<idea_id>', methods=['POST'])
+@ login_required()
 def like_idea(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
@@ -302,8 +333,8 @@ def like_idea(idea_id):
         })
 
 
-@app.route('/api/idea/dislike/<idea_id>', methods=['POST'])
-@login_required()
+@ app.route('/api/idea/dislike/<idea_id>', methods=['POST'])
+@ login_required()
 def dislike_idea(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
@@ -332,8 +363,8 @@ def dislike_idea(idea_id):
         })
 
 
-@app.route('/api/idea/comment/<idea_id>', methods=['POST'])
-@login_required()
+@ app.route('/api/idea/comment/<idea_id>', methods=['POST'])
+@ login_required()
 def comment_on_idea(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
@@ -381,8 +412,8 @@ def comment_on_idea(idea_id):
         })
 
 
-@app.route('/api/idea/<idea_id>/comment/list', methods=['GET', 'POST'])
-@login_required()
+@ app.route('/api/idea/<idea_id>/comment/list', methods=['GET', 'POST'])
+@ login_required()
 def list_all_comment(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:
@@ -422,8 +453,8 @@ def list_all_comment(idea_id):
             })
 
 
-@app.route('/api/comment/<comment_id>/delete', methods=['DELETE'])
-@login_required()
+@ app.route('/api/comment/<comment_id>/delete', methods=['DELETE'])
+@ login_required()
 def delete_comment(comment_id):
     comment = Comments.query.get(comment_id)
     if comment:
@@ -457,8 +488,8 @@ def delete_comment(comment_id):
         })
 
 
-@app.route('/api/idea/doc/<idea_id>', methods=['GET', 'POST'])
-@login_required()
+@ app.route('/api/idea/doc/<idea_id>', methods=['GET', 'POST'])
+@ login_required()
 def download_idea_doc(idea_id):
     idea = Idea.query.get(idea_id)
     if idea:

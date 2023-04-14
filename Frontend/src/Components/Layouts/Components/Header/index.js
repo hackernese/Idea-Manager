@@ -1,6 +1,5 @@
 import styles from './Header.module.scss';
 import classNames from 'classnames/bind';
-import logo from '../../../../Images/logo.png';
 import icon from '../../../../Images/icon.png';
 // import user_setting from '../../../../Images/user.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -46,10 +45,13 @@ function Header() {
             <div className={cx('wrapper', 'd-flex', 'f-wrap')}>
                 <div className={cx('col-2')}>
                     <div className={cx('logo', 't-right')}>
-                        <img src={icon} onClick={()=>{
-                            navigate('/');
-                        }}></img>
-                        <Link to='/'>IdeaManager</Link>
+                        <img
+                            src={icon}
+                            onClick={() => {
+                                navigate('/');
+                            }}
+                        ></img>
+                        <Link to="/">IdeaManager</Link>
                     </div>
                 </div>
                 <div className={cx('responsive-btn')}>
@@ -72,16 +74,6 @@ function Header() {
                             <div className={cx('tab')}>
                                 <ul className={cx('d-flex', 'j-center')}>
                                     {/* Checking to see if the current user has access to which tab */}
-
-                                    {/* <li>
-                                        <NavLink
-                                            to="/home"
-                                            className={({ isActive }) => (isActive ? cx('selected') : '')}
-                                        >
-                                            home
-                                        </NavLink>
-                                    </li> */}
-
                                     {(isAdmin || isManager) && (
                                         <>
                                             <li>
@@ -181,7 +173,8 @@ function Header() {
                                             axios.post('auth/logout').then((resp) => {
                                                 if (resp.data.status === 'OK') {
                                                     localStorage.clear(); // Optional
-                                                    window.location.reload();
+                                                    window.location.assign('/login');
+                                                    // window.location.reload();
                                                 }
                                             });
                                         }}

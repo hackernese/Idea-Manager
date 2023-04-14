@@ -224,7 +224,7 @@ class Idea(AbstractBase):
     comment_ref = db.relationship(
         'Comments', backref='idea', lazy='dynamic', cascade='all, delete')
     view_ref = db.relationship(
-        'Views', backref="idea", lazy=True, cascade='all, delete'
+        'Views', backref="idea", lazy='dynamic', cascade='all, delete'
     )
 
 
@@ -338,11 +338,11 @@ def insert_default_record(*args, **kwargs):
         db.session.commit()
 
 
-@event.listens_for(Logins.__table__,  "after_create")
-def insert_default_record(*args, **kwargs):
-    db.session.add_all([Logins(os="iOS", ip="127.0.0.1", location="Ha Noi",
-                       userid=3, browser='Chrome') for i in range(25)])
-    db.session.commit()
+# @event.listens_for(Logins.__table__,  "after_create")
+# def insert_default_record(*args, **kwargs):
+#     db.session.add_all([Logins(os="iOS", ip="127.0.0.1", location="Ha Noi",
+#                        userid=3, browser='Chrome') for i in range(25)])
+#     db.session.commit()
 
 
 with app.app_context():
