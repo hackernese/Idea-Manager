@@ -1,7 +1,7 @@
 import os
-from app import app, mail
+from app import app
 from . import login_required, send_mail
-from db import Submission, db, Idea, User, Reaction, Comments, Views
+from db import Submission, db, Idea, User, Reaction, Comments, Views, Role
 from flask import jsonify, request, send_file
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
@@ -93,6 +93,15 @@ def add_idea(submission_id):
             id_ = idea.id
 
             db.session.commit()
+            
+            #Auto send mail to Coordinator when having new idea
+            role = Role.query.filter(Role.name == "coordinator").first()
+            cor_users = User.query.filter(User.userrole_ref.roleid == role.id).all()
+            email = []
+            for cor_user in cor_users:
+                email.append(cor_user.email)
+            #do func send_mail
+            send_mail("New Idea Was Uploaded!",f"{user.name} Has Created New Idea!", email)
 
             return jsonify({
                 'status': 'OK',
