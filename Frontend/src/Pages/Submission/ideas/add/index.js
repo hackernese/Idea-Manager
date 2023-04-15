@@ -29,9 +29,7 @@ function AddNewIdea() {
     const [isanon, setanon] = useState(false);
     const { id } = useParams();
 
-    console.log(file);
-
-    useEffect(() => {
+    const grab_category = () => {
         axios.post('category/list').then((resp) => {
             let temp = resp.data.msg.map((e, index) => {
                 return {
@@ -46,6 +44,13 @@ function AddNewIdea() {
             });
 
             setcat(temp);
+        });
+    };
+
+    useEffect(() => {
+        axios.post(`submission/get/${id}`).then((resp) => {
+            if (resp.data.deadline1_end) navigate(`/submission/${id}`);
+            else grab_category();
         });
     }, []);
 

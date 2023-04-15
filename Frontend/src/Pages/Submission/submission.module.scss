@@ -1,5 +1,13 @@
 @import '../../Components/globalMixins.scss';
 
+.end {
+     @include boldfont;
+     text-decoration: line-through;
+     // font-weight: bold;
+     font-style: italic;
+     color: red;
+}
+
 .doc {
      @include transition;
      @include SlightRoundBorder;

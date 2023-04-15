@@ -9,7 +9,9 @@ from dateutil import parser as TimeParser
 from secrets import token_urlsafe
 from flask_mail import Message
 from flask import render_template
-import json, phonenumbers, smtplib
+import json
+import phonenumbers
+import smtplib
 
 
 @app.route('/api/user/email/verify', methods=["POST"])
@@ -25,8 +27,8 @@ def email_verify():
 
     if user.email_token != data['token']:
         return jsonify({
-            'status' : "FAIL",
-            'err' : "INVALID_CODE"
+            'status': "FAIL",
+            'err': "INVALID_CODE"
         })
     try:
         user.email = user.new_email
@@ -36,18 +38,18 @@ def email_verify():
     except IntegrityError:
         db.session.rollback()
         return jsonify({
-            'status' : "FAIL",
-            'err' : "EXIST_ERR"
+            'status': "FAIL",
+            'err': "EXIST_ERR"
         })
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
+
 
 @app.route('/api/user/add', methods=['POST'])
 @login_required(role_allow=['manager', 'administrator'])
 def add_user() -> jsonify:
-
     """
 
         This route is dedicated to adding new user to the system
@@ -63,15 +65,16 @@ def add_user() -> jsonify:
         "passwd" not in data or \
         "department" not in data or \
         "name" not in data or \
-        "role" not in data:
+            "role" not in data:
         return bad_request('Missing parameter')
 
-    if ( type(data['role'])==str and not data['role'].isdigit() ) or \
-        ( type(data['department'])==str and not data['department'].isdigit() ):
-        return  bad_request('Invalid argument')
+    if (type(data['role']) == str and not data['role'].isdigit()) or \
+            (type(data['department']) == str and not data['department'].isdigit()):
+        return bad_request('Invalid argument')
 
-    department = db.session.query(Department).filter(Department.id==int(data['department'])).first()
-    role = db.session.query(Role).filter(Role.id==int(data['role'])).first()
+    department = db.session.query(Department).filter(
+        Department.id == int(data['department'])).first()
+    role = db.session.query(Role).filter(Role.id == int(data['role'])).first()
 
     if not department:
         return bad_request('Invalid department id')
@@ -98,13 +101,13 @@ def add_user() -> jsonify:
     db.session.commit()
 
     return jsonify({
-        'status' :"OK"
+        'status': "OK"
     })
+
 
 @app.route('/api/user/delete/<user_id>', methods=['DELETE'])
 @login_required(role_allow=['manager', 'administrator'])
-def delete_user(user_id : str) -> jsonify:
-
+def delete_user(user_id: str) -> jsonify:
     """
         This route is dedicated to deleting existing user out of the system
 
@@ -114,29 +117,29 @@ def delete_user(user_id : str) -> jsonify:
 
     if not user_id.isdigit():
         return jsonify({
-            'status' : "FAIL",
-            'err' : "Invalid user id."
+            'status': "FAIL",
+            'err': "Invalid user id."
         })
 
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     if not user:
         return jsonify({
-            'status' : "FAIL",
-            'err' : "User doesn't exist."
+            'status': "FAIL",
+            'err': "User doesn't exist."
         })
 
     db.session.delete(user)
     db.session.commit()
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
+
 
 @app.route('/api/user/list', methods=['POST', "GET"])
 @login_required(role_allow=['manager', 'administrator'])
 def list_all_users() -> jsonify:
-
     """
         This route is dedicated to listing all existing users inside the system
 
@@ -149,20 +152,22 @@ def list_all_users() -> jsonify:
     if 'page' not in data:
         return bad_request('Missing argument')
 
-    if type(data['page'])!=int:
+    if type(data['page']) != int:
         return bad_request('Invalid page number')
 
-    ret = db.session.query(User).offset(data['page']*MAX_USER_PER_PAGE).limit(MAX_USER_PER_PAGE).all()
+    ret = db.session.query(User).offset(
+        data['page']*MAX_USER_PER_PAGE).limit(MAX_USER_PER_PAGE).all()
 
     return jsonify([
         {
-            'id' : user.id,
-            'name' : user.username,
-            'did' : user.department_id, # Department id
-            'email' : user.email,
-            'created' : user.created_on
+            'id': user.id,
+            'name': user.username,
+            'did': user.department_id,  # Department id
+            'email': user.email,
+            'created': user.created_on
         } for user in ret
     ]), 200
+
 
 @app.route('/api/user/get/<user_id>', methods=['POST', "GET"])
 @login_required(allow_personal_user=True)
@@ -170,33 +175,32 @@ def get_user_info(user_id):
 
     if not user_id.isdigit():
         return jsonify({
-            'status' : "FAIL",
-            'err' : "Invalid user id"
+            'status': "FAIL",
+            'err': "Invalid user id"
         })
 
-
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     if not user:
         return jsonify({
-            'status' : "FAIL",
-            'err' : "User doesn't exist"
+            'status': "FAIL",
+            'err': "User doesn't exist"
         })
 
     return jsonify({
-        'status' : "OK",
-        'data' : {
-            'id' : user.id,
+        'status': "OK",
+        'data': {
+            'id': user.id,
             'name': user.username,
             'did': user.department_id,
-            'email' : user.email,
-            'created' : user.created_on,
-            'phone' : user.phone,
-            'address' : user.address,
-            'theme' : user.theme,
-            'language' : user.language,
-            'gender' : user.gender,
-            'birthday' : user.birthday
+            'email': user.email,
+            'created': user.created_on,
+            'phone': user.phone,
+            'address': user.address,
+            'theme': user.theme,
+            'language': user.language,
+            'gender': user.gender,
+            'birthday': user.birthday
         }
     })
 
@@ -217,12 +221,13 @@ def change_user_info(user, data):
     if "email" in data:
         # Updating the email only
         email = data['email'].strip()
-        check = db.session.query(User.email).filter(User.email==email).first()
+        check = db.session.query(User.email).filter(
+            User.email == email).first()
 
         if check:
             return jsonify({
-                'status' : "FAIL",
-                'err' : "This email has already been used"
+                'status': "FAIL",
+                'err': "This email has already been used"
             })
 
         code = token_urlsafe(100)
@@ -232,9 +237,10 @@ def change_user_info(user, data):
         # Creating a message which send to the user email later
 
         msg = Message('Verify your email',
-            sender=app.config.get("MAIL_USERNAME"),
-            recipients=[email])
-        msg.html = render_template('email_verify.html', username=user.username, url=user.craft_verify_url(code))
+                      sender=app.config.get("MAIL_USERNAME"),
+                      recipients=[email])
+        msg.html = render_template(
+            'email_verify.html', username=user.username, url=user.craft_verify_url(code))
         try:
             mail.send(msg)
         except smtplib.SMTPRecipientsRefused:
@@ -248,18 +254,17 @@ def change_user_info(user, data):
             if not phonenumbers.is_possible_number(number):
                 db.session.rollback()
                 return jsonify({
-                    'status' : "FAIL",
-                    'err' : "Invalid phone number"
+                    'status': "FAIL",
+                    'err': "Invalid phone number"
                 })
-
 
             user.phone = data['phone'].strip()
             db.session.flush()
         except phonenumbers.phonenumberutil.NumberParseException:
-            db.session.rollback();
+            db.session.rollback()
             return jsonify({
-                'status' : "FAIL",
-                'err' : "Missing or invalid region code."
+                'status': "FAIL",
+                'err': "Missing or invalid region code."
             })
         except IntegrityError:
             db.session.rollback()
@@ -273,8 +278,8 @@ def change_user_info(user, data):
         except:
             db.session.rollback()
             return jsonify({
-                'status' : "FAIL",
-                'err' : "Unexpected error occurred while setting birthday."
+                'status': "FAIL",
+                'err': "Unexpected error occurred while setting birthday."
             }), 500
 
     if "gender" in data:
@@ -285,8 +290,8 @@ def change_user_info(user, data):
         except IntegrityError:
             db.session.rollback()
             return jsonify({
-                'status' : "FAIL",
-                'err' : "Invalid gender."
+                'status': "FAIL",
+                'err': "Invalid gender."
             }), 500
 
     if "address" in data:
@@ -297,8 +302,8 @@ def change_user_info(user, data):
         except:
             db.session.rollback()
             return jsonify({
-                'status' : "FAIL",
-                'err' : "Unexpected error occurred while setting address."
+                'status': "FAIL",
+                'err': "Unexpected error occurred while setting address."
             }), 500
 
     if "passwd" in data:
@@ -310,18 +315,18 @@ def change_user_info(user, data):
 
         if not user.check_password(data['cpass']):
             return jsonify({
-                'status' : "FAIL",
-                'err' : "INVALID_PASS"
+                'status': "FAIL",
+                'err': "INVALID_PASS"
             })
 
         try:
-            user.set_new_password( data['passwd'].strip())
+            user.set_new_password(data['passwd'].strip())
             db.session.flush()
         except:
             db.session.rollback()
             return jsonify({
-                'status' : "FAIL",
-                'err' : "Unexpected error occurred while setting new password."
+                'status': "FAIL",
+                'err': "Unexpected error occurred while setting new password."
             }), 500
 
     if "theme" in data:
@@ -342,6 +347,7 @@ def change_user_info(user, data):
 
     db.session.commit()
 
+
 @app.route('/api/user/update/<user_id>', methods=['POST'])
 @login_required(allow_personal_user=True)
 def update_user_info(user_id):
@@ -350,19 +356,20 @@ def update_user_info(user_id):
 
     if not user_id.isdigit():
         return jsonify({
-            'status' : "FAIL",
-            'err' : "Invalid user id."
+            'status': "FAIL",
+            'err': "Invalid user id."
         })
 
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     ret = change_user_info(user, data)
     if ret:
         return ret
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
+
 
 @app.route('/api/user/update', methods=["POST"])
 @login_required()
@@ -372,11 +379,12 @@ def update_self_info():
 
     ret = change_user_info(request.session.user, data)
     if ret:
-        return ret;
+        return ret
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
+
 
 @app.route('/api/user/<user_id>/role/update', methods=['POST'])
 @login_required(allow_personal_user=True)
@@ -390,10 +398,9 @@ def update_user_role(user_id):
     if "new_role" not in data:
         return bad_request('Missing argument')
 
-
     role_list = set(data['new_role'])
 
-    ret = db.session.query(UserRoles).filter(UserRoles.userid==int(user_id)).filter(UserRoles.roleid.in_(
+    ret = db.session.query(UserRoles).filter(UserRoles.userid == int(user_id)).filter(UserRoles.roleid.in_(
         role_list
     )).all()
 
@@ -410,31 +417,33 @@ def update_user_role(user_id):
         return bad_request('Invalid role id detected')
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
 
-@app.route('/api/user/<user_id>/export', methods=["GET",'POST'])
+
+@app.route('/api/user/<user_id>/export', methods=["GET", 'POST'])
 @login_required(allow_personal_user=True)
 def export_user_config(user_id):
     if not user_id.isdigit():
         return bad_request('Invalid user id')
 
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     if not user:
         return bad_request('User doesn\'t exist')
 
     return jsonify({
-        "username" : f"{user.username}",
-        "email" : f"{user.email}",
-        "phone" : f"{user.phone}",
-        "theme" : f"{user.theme}",
-        "language" : f"{user.language}",
-        "birthday" : f"{user.birthday}",
-        "gender" : f"{user.gender}",
-        "address" : f"{user.address}",
-        "oauth" : f"{user.oauth}"
+        "username": f"{user.username}",
+        "email": f"{user.email}",
+        "phone": f"{user.phone}",
+        "theme": f"{user.theme}",
+        "language": f"{user.language}",
+        "birthday": f"{user.birthday}",
+        "gender": f"{user.gender}",
+        "address": f"{user.address}",
+        "oauth": f"{user.oauth}"
     })
+
 
 @app.route('/api/user/<user_id>/import', methods=['POST'])
 @login_required(allow_personal_user=True)
@@ -446,38 +455,30 @@ def import_user_config(user_id):
     if 'file' not in request.files:
         return bad_request('Missing file')
 
-    user = db.session.query(User).filter(User.id==int(user_id)).first()
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     if not user:
         return bad_request('User doesn\'t exist')
 
-
     config_file = request.files['file']
 
     try:
-        content =config_file.read().decode()
+        content = config_file.read().decode()
         json_content = json.loads(content)
 
         for (key, value) in json_content.items():
             # Some of this can be null, so i have to write a if clause first
             # before executing
-            (setattr(user, key, TimeParser.parse(value.strip()) if key=="birthday" else value) if value else None)
+            (setattr(user, key, TimeParser.parse(value.strip())
+             if key == "birthday" else value) if value else None)
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
-        return  bad_request('Unable to import, either the name or email may have already existed, or the file is malformed')
+        return bad_request('Unable to import, either the name or email may have already existed, or the file is malformed')
 
     except:
-        return  bad_request('Invalid configuration')
+        return bad_request('Invalid configuration')
 
     return jsonify({
-        'status' : "OK"
+        'status': "OK"
     })
-
-@app.route('/api/user/<user_id>/email', methods=["GET",'POST'])
-@login_required(allow_personal_user=True)
-def grab_user_emails(user_id):
-    return ""
-
-
-
