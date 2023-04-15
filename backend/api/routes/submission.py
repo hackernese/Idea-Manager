@@ -92,7 +92,8 @@ def list_all_submissions():
     result = []
     # add each submission to list
     for submission in submissions:
-        submissions_data = {'id': submission.id, 'name': submission.name, 'deadline1': submission.deadline1,
+        current = datetime.now()
+        submissions_data = {'id': submission.id, 'deadline1_end': current > submission.deadline1, 'deadline2_end': current > submission.deadline2, 'name': submission.name, 'deadline1': submission.deadline1,
                             'deadline2': submission.deadline2, 'created_on': submission.created_on}
         result.append(submissions_data)
     return jsonify({
