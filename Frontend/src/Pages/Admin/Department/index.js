@@ -8,6 +8,7 @@ import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
+import DropDown from '../../../Components/DropDown';
 
 const cx = classNames.bind(styles);
 
@@ -18,10 +19,27 @@ function Department() {
     const refinput = createRef();
     const [current_dep, setcurrentdep] = useState(null);
 
+    const [partment, setpartment] = useState([]);
+
     useEffect(() => {
         // Created
         axios.post('department/list').then((resp) => {
+            const temp = [];
+            const data = resp.data.msg;
+
+            for (const f of data) {
+                temp.push({
+                    v: f.name,
+                });
+            }
+            temp.push({
+                v: 'Unknown',
+                ret: 2022,
+                s: true,
+            });
+
             setDep(resp.data.msg);
+            setpartment(temp);
         });
     }, []);
 
@@ -73,6 +91,13 @@ function Department() {
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
+                <DropDown
+                    value={partment}
+                    onChange={(e) => {
+                        console.log(e);
+                    }}
+                ></DropDown>
+
                 <div className={styles.header}>
                     <p>List of Department</p>
                 </div>

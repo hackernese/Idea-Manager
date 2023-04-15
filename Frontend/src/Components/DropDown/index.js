@@ -39,7 +39,7 @@ function DropDown({ value, onChange = async () => {} }) {
             // When unmount, remove the event listener as well
             document.removeEventListener('click', detect_click);
         };
-    }, []);
+    }, [value]);
 
     if (value)
         return (
