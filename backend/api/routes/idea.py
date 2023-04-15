@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
 from sqlalchemy import desc, func, asc
+from datetime import datetime
 import math
 
 
@@ -55,6 +56,16 @@ def add_idea(submission_id):
     # Check if the submission existed
     submission = Submission.query.get(submission_id)
     if submission:
+
+        # Checking if deadline1 is over
+        current = datetime.now()
+        if current > submission.deadline1:
+
+            return jsonify({
+                'status': "FAIL",
+                'err': "Deadline 1 is over, unable to add new idea."
+            })
+
         # get current user
         user = request.session.user
 
@@ -93,15 +104,17 @@ def add_idea(submission_id):
             id_ = idea.id
 
             db.session.commit()
-            
-            #Auto send mail to Coordinator when having new idea
+
+            # Auto send mail to Coordinator when having new idea
             role = Role.query.filter(Role.name == "coordinator").first()
-            cor_users = User.query.filter(User.userrole_ref.roleid == role.id).all()
+            cor_users = User.query.filter(
+                User.userrole_ref.roleid == role.id).all()
             email = []
             for cor_user in cor_users:
                 email.append(cor_user.email)
-            #do func send_mail
-            send_mail("New Idea Was Uploaded!",f"{user.name} Has Created New Idea!", email)
+            # do func send_mail
+            send_mail("New Idea Was Uploaded!",
+                      f"{user.name} Has Created New Idea!", email)
 
             return jsonify({
                 'status': 'OK',
