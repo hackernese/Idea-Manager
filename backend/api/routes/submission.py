@@ -108,9 +108,12 @@ def get_submission_info(submission_id):
     # check if submission existed?
     submission = Submission.query.get(submission_id)
     if submission:
+        current = datetime.now()
         return jsonify({
             'id': submission.id,
             'name': submission.name,
+            'deadline1_end': current > submission.deadline1,
+            'deadline2_end': current > submission.deadline2,
             'deadline1': submission.deadline1,
             'deadline2': submission.deadline2,
             'created_on': submission.created_on
