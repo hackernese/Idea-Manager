@@ -48,8 +48,12 @@ function Submission() {
                             return (
                                 <div className={cx('doc')} key={e.id}>
                                     <label>{e.name}</label>
-                                    <label>{new Date(e.deadline1).toDateString()}</label>
-                                    <label>{new Date(e.deadline2).toDateString()}</label>
+                                    <label className={e.deadline1_end ? cx('end') : ''}>
+                                        {new Date(e.deadline1).toDateString()}
+                                    </label>
+                                    <label className={e.deadline2_end ? cx('end') : ''}>
+                                        {new Date(e.deadline2).toDateString()}
+                                    </label>
                                     <div>
                                         <FontAwesomeIcon
                                             title="View Ideas"

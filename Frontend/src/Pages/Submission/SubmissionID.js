@@ -79,6 +79,7 @@ function SubmissionID() {
     const [d1, setd1] = useState('');
     const [d2, setd2] = useState('');
     const [name, setname] = useState('');
+    const [isdeadline1, setdeadline] = useState(false);
 
     // Ideas states
     const [idea, setidea] = useState([]);
@@ -94,6 +95,7 @@ function SubmissionID() {
             setd1(new Date(resp.data.deadline1).toDateString());
             setd2(new Date(resp.data.deadline2).toDateString());
             setname(resp.data.name);
+            setdeadline(resp.data.deadline1_end);
         });
     }, []);
     // Grabbing the current idea here
@@ -192,6 +194,7 @@ function SubmissionID() {
                         }}
                     />
                 </section>
+                {/* {!isdeadline1 && ( */}
                 <div
                     className={cx('addbtn')}
                     title="Add new ideas."
@@ -201,6 +204,7 @@ function SubmissionID() {
                 >
                     <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                 </div>
+                {/* )} */}
                 <div className={cx('filter')}>
                     <section>
                         <DropDown

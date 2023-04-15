@@ -7,7 +7,6 @@ import ProfilePage from './Pages/Profile';
 // Importing submission page here
 import SubmissionPage from './Pages/Submission';
 import SubmissionID from './Pages/Submission/SubmissionID';
-import SubmissionDetails from './Pages/Submission/details';
 import AddNewIdea from './Pages/Submission/ideas/add';
 import IdeaDetails from './Pages/Submission/ideas/details';
 
@@ -240,7 +239,6 @@ function App() {
                             }
                         >
                             <Route path=":id" element={<SubmissionID></SubmissionID>}>
-                                {/* <Route path="details" element={<SubmissionDetails></SubmissionDetails>} /> */}
                                 <Route path="idea/add" element={<AddNewIdea></AddNewIdea>} />
                                 <Route path="idea/:idea_id" element={<IdeaDetails></IdeaDetails>} />
                             </Route>
