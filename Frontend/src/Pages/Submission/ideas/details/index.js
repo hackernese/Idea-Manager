@@ -13,13 +13,21 @@ import axios from 'axios';
 
 function IdeaDetails() {
     const navigate = useNavigate();
-    const { idea_id } = useParams();
+    const { idea_id, id } = useParams();
     const [data, setdata] = useState(null);
     const [comments, setcomment] = useState([]);
+    const [isdeadline2, setdeadline] = useState(false);
     const [isanon, setanon] = useState(false);
     const [trigger, settrigger] = useState(0);
     const btnref = createRef();
     const commentref = createRef();
+
+    useEffect(() => {
+        axios.post(`submission/get/${id}`).then((resp) => {
+            if (resp.data.deadline2_end) setdeadline(true);
+            else setdeadline(false);
+        });
+    }, []);
 
     useEffect(() => {
         axios.post(`idea/get/${idea_id}`).then((resp) => {
@@ -33,7 +41,7 @@ function IdeaDetails() {
         });
     }, [trigger]);
 
-    if (data === null) return <section className={style.loader}></section>;
+    if (data === null || isdeadline2 === null) return <section className={style.loader}></section>;
 
     return (
         <AnimatedOutlet>
@@ -73,6 +81,7 @@ function IdeaDetails() {
                         <label>{data.category}</label>
                     </div>
                 </div>
+
                 <div className={style.comments}>
                     <div>
                         {comments.map((e) => {
@@ -94,46 +103,48 @@ function IdeaDetails() {
                             }}
                         ></LoadinngCirlce>
                     </div>
-                    <section className={style.inputclass}>
-                        <div>
-                            <CustomInput
-                                custom_ref={commentref}
-                                placeholder="Write comment here..."
-                                type="text"
-                                onKeyDown={({ key }) => {
-                                    if (key === 'Enter') {
-                                        btnref.current.click();
-                                    }
-                                }}
-                            ></CustomInput>
-                            <LoadingButton
-                                custom_ref={btnref}
-                                onClick={async () => {
-                                    axios
-                                        .post(`idea/comment/${idea_id}`, {
-                                            comment: commentref.current.value.trim(),
-                                            is_anonymous: isanon,
-                                        })
-                                        .then((resp) => {
-                                            if (resp.data.status === 'OK') {
-                                                settrigger(trigger + 1);
-                                                success(resp.data.msg);
-                                            }
-                                        });
-                                }}
-                                text="Post"
-                            ></LoadingButton>
-                        </div>
+                    {!isdeadline2 && (
+                        <section className={style.inputclass}>
+                            <div>
+                                <CustomInput
+                                    custom_ref={commentref}
+                                    placeholder="Write comment here..."
+                                    type="text"
+                                    onKeyDown={({ key }) => {
+                                        if (key === 'Enter') {
+                                            btnref.current.click();
+                                        }
+                                    }}
+                                ></CustomInput>
+                                <LoadingButton
+                                    custom_ref={btnref}
+                                    onClick={async () => {
+                                        axios
+                                            .post(`idea/comment/${idea_id}`, {
+                                                comment: commentref.current.value.trim(),
+                                                is_anonymous: isanon,
+                                            })
+                                            .then((resp) => {
+                                                if (resp.data.status === 'OK') {
+                                                    settrigger(trigger + 1);
+                                                    success(resp.data.msg);
+                                                }
+                                            });
+                                    }}
+                                    text="Post"
+                                ></LoadingButton>
+                            </div>
 
-                        <section>
-                            <TickBox
-                                click={(e) => {
-                                    setanon(e);
-                                }}
-                            ></TickBox>
-                            <label>Anonymous</label>
+                            <section>
+                                <TickBox
+                                    click={(e) => {
+                                        setanon(e);
+                                    }}
+                                ></TickBox>
+                                <label>Anonymous</label>
+                            </section>
                         </section>
-                    </section>
+                    )}
                 </div>
             </div>
         </AnimatedOutlet>

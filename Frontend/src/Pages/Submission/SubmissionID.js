@@ -194,17 +194,17 @@ function SubmissionID() {
                         }}
                     />
                 </section>
-                {/* {!isdeadline1 && ( */}
-                <div
-                    className={cx('addbtn')}
-                    title="Add new ideas."
-                    onClick={() => {
-                        navigate('idea/add');
-                    }}
-                >
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                </div>
-                {/* )} */}
+                {!isdeadline1 && (
+                    <div
+                        className={cx('addbtn')}
+                        title="Add new ideas."
+                        onClick={() => {
+                            navigate('idea/add');
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    </div>
+                )}
                 <div className={cx('filter')}>
                     <section>
                         <DropDown

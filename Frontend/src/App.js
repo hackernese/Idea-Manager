@@ -220,12 +220,12 @@ function App() {
                                 <Route path=":id/setting" element={<UserSetting></UserSetting>} />
                             </Route>
                             <Route path="role" element={<Role></Role>}>
-                                <Route path="add" element={<AddRole></AddRole>}></Route>
-                                <Route path="edit" element={<EditRole></EditRole>}></Route>
+                                {/* <Route path="add" element={<AddRole></AddRole>}></Route>
+                                <Route path="edit" element={<EditRole></EditRole>}></Route> */}
                             </Route>
                             <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
-                                <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
-                                <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
+                                {/* <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
+                                <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route> */}
                             </Route>
                         </Route>
                         <Route

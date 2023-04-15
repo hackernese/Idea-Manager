@@ -1,0 +1,35 @@
+@import '../../Components/globalMixins.scss';
+
+
+.main {
+     @include boldfont;
+     @include gradientBackground;
+     position: fixed;
+     height: 100%;
+     width: 100%;
+     top: 0;
+     left: 0;
+     display: flex;
+     justify-content: center;
+     flex-direction: column;
+
+     h1,
+     label {
+          margin: auto;
+     }
+
+     h1 {
+          @include dropdown_animation;
+
+          margin-bottom: 0;
+          font-size: 3em;
+     }
+
+     label {
+          @include dropup_animation;
+          margin-top: 1em;
+          font-size: 1.5em;
+     }
+
+
+}
