@@ -2,7 +2,7 @@
 from app import app, mail
 from . import login_required, bad_request, created_request
 from flask import jsonify, request
-from db import db, Sessions, User, Department, Role, UserRoles
+from db import db, User, Department, Role, UserRoles
 from sqlalchemy.exc import IntegrityError
 from setting import MAX_USER_PER_PAGE
 from dateutil import parser as TimeParser
@@ -346,6 +346,78 @@ def change_user_info(user, data):
             return bad_request('Invalid language')
 
     db.session.commit()
+
+
+@app.route('/api/user/<user_id>/role/update', methods=["POST"])
+@login_required(role_allow=["manager", "administrator"])
+def add_new_role(user_id):
+
+    # There has to be {
+    #    "role" : ID_HERE,
+    #    "action" : False = Delete, True =
+    # }
+
+    data = request.get_json()
+
+    if "action" not in data or "role" not in data:
+        return jsonify({
+            'status': "FAIL",
+            'err': "Missing parameters."
+        })
+
+    if not user_id.isdigit():
+        return jsonify({
+            'status': "FAIL",
+            'err': "Invalid user id."
+        })
+
+    user = db.session.query(User).filter(User.id == int(user_id)).first()
+    check_role = user.userrole_ref.filter(
+        UserRoles.roleid == data['role']).first()
+
+    if data['action']:
+
+        # Adding a new role
+
+        if check_role:
+            # Checking if this role has already been added to this user
+            return jsonify({
+                'status': "FAIL",
+                'err': "This role has already been added."
+            })
+
+        try:
+
+            new_role = UserRoles(userid=user.id, roleid=data['role'])
+            db.session.add(new_role)
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            return jsonify({
+                'status': "FAIL",
+                'err': 'Invalid role id'
+            })
+    else:
+        if check_role:
+
+            if user.userrole_ref.count() <= 1:
+                return jsonify({
+                    'status': "FAIL",
+                    'err': "Unable to delete the last role of this user."
+                })
+
+            db.session.delete(check_role)
+            db.session.commit()
+
+        else:
+            return jsonify({
+                'status': "FAIL",
+                'err': "Role doesn't exist"
+            })
+
+    return jsonify({
+        'status': "OK"
+    })
 
 
 @app.route('/api/user/update/<user_id>', methods=['POST'])
