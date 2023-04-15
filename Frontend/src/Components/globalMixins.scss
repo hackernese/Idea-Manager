@@ -420,8 +420,8 @@
     overflow: hidden;
     border: 2px solid var(--blurborder);
     position: absolute;
-    width: 50em;
-    height: 40em;
+    width: 45em;
+    height: 45em;
     left: 50%;
     transform: translate(-50%);
 
@@ -465,7 +465,7 @@
 
         > div {
             @include boldfont;
-            font-size: 1em;
+            font-size: 1.4em;
             text-align: center;
             @include SlightRoundBorder;
             background-color: var(--backgroundcolor2);
@@ -485,8 +485,8 @@
 
         > div {
             @include lightfont;
-            font-size: 1em;
-            @include SlightRoundBorder;
+            font-size: 1.2em;
+            @include SquareRoundBorder();
             background-color: var(--backgroundcolor);
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.438);
             color: var(--textcolor);

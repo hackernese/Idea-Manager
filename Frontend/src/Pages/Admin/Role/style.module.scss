@@ -1,9 +1,6 @@
 @import '../../../Components/globalMixins.scss';
 
-
-
 .base {
-
     section {
         position: absolute;
         left: 50%;
@@ -15,7 +12,7 @@
             font-size: 18px;
         }
 
-        >.header {
+        > .header {
             background-color: var(--secondarycolor2);
             padding: px;
             height: 57px;
@@ -29,7 +26,7 @@
             box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
             @include SquareRoundBorder;
 
-            >p {
+            > p {
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -45,7 +42,7 @@
 
     padding: 3em;
 
-    >button {
+    > button {
         @include btn;
         display: inline-block;
         text-align: center;
@@ -54,7 +51,7 @@
         float: right;
     }
 
-    >section {
+    > section {
         margin-top: 3em;
     }
 
@@ -67,14 +64,14 @@
             color: #d64646;
         }
 
-        >div {
+        > div {
             @include table_style_vertical;
             border: 2px solid var(--blurborder);
             box-shadow: 2px 6px 6px 0px (var(--blurcolor2));
         }
 
         svg {
-            font-size: 20px;
+            font-size: 25px;
             padding-inline: 3px;
             cursor: pointer;
             color: var(--textcolor);

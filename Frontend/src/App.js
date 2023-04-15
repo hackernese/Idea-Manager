@@ -42,9 +42,6 @@ import Admin from './Pages/Admin';
 import AddNewUser from './Pages/Admin/User/Add';
 import UserSetting from './Pages/Admin/User/setting';
 import EmailVerify from './Pages/Profile/EmailVerify';
-// Role sub-components for admin
-import EditRole from './Pages/Admin/Role/Edit';
-import AddRole from './Pages/Admin/Role/Add';
 // Submission sub-components for admin
 import AddNewSubmission from './Pages/Admin/Submission/Add';
 import EditSubmission from './Pages/Admin/Submission/Edit';
@@ -220,10 +217,7 @@ function App() {
                                 <Route path="add" element={<AddNewUser></AddNewUser>} />
                                 <Route path=":id/setting" element={<UserSetting></UserSetting>} />
                             </Route>
-                            <Route path="role" element={<Role></Role>}>
-                                <Route path="add" element={<AddRole></AddRole>}></Route>
-                                <Route path="edit" element={<EditRole></EditRole>}></Route>
-                            </Route>
+                            <Route path="role" element={<Role></Role>}></Route>
                             <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
                                 <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
                                 <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
