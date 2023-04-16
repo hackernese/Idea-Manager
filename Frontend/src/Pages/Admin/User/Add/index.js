@@ -9,9 +9,8 @@ import axios from 'axios';
 const cx = classNames.bind(styles);
 
 function AddNewUser() {
-    const [dep, setDep] = useState([]);
-
     const [partment, setpartment] = useState([]);
+    const [rolement, setrolement] = useState([]);
 
     useEffect(() => {
         // Created
@@ -32,6 +31,25 @@ function AddNewUser() {
 
             setpartment(temp);
         });
+
+        axios.post('role/list').then((resp) => {
+            const temp = [];
+            const data = resp.data.msg;
+
+            for (const f of data) {
+                temp.push({
+                    v: f.name,
+                });
+            }
+            temp.push({
+                v: 'Unknown',
+                ret: 2022,
+                s: true,
+            });
+
+            setrolement(temp);
+        });
+
     }, []);
 
     return (
@@ -58,7 +76,12 @@ function AddNewUser() {
                             }}
                         ></DropDown>
                         <label>Role</label>
-                        <DropDown></DropDown>
+                        <DropDown>
+                        value={rolement}
+                            onChange={(e) => {
+                                console.log(e);
+                            }}
+                        </DropDown>
                         <button>Confirm</button>
                     </section>
                 </div>
