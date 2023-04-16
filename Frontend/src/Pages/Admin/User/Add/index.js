@@ -5,12 +5,13 @@ import classNames from 'classnames/bind';
 import CustomInput from '../../../../Components/CustomInput';
 import DropDown from '../../../../Components/DropDown';
 import axios from 'axios';
+import { error } from '../../../../lib/toast';
 
 const cx = classNames.bind(styles);
 
 function AddNewUser() {
     const [partment, setpartment] = useState([]);
-    const [rolement, setrolement] = useState([]);
+    const [value, setvalue] = useState(null);
 
     useEffect(() => {
         // Created
@@ -52,6 +53,10 @@ function AddNewUser() {
 
     }, []);
 
+    useEffect(() => {
+        console.log(value);
+    }, [value]);
+
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
@@ -72,16 +77,11 @@ function AddNewUser() {
                         <DropDown
                             value={partment}
                             onChange={(e) => {
-                                console.log(e);
+                                setvalue(e.value);
                             }}
                         ></DropDown>
                         <label>Role</label>
-                        <DropDown>
-                        value={rolement}
-                            onChange={(e) => {
-                                console.log(e);
-                            }}
-                        </DropDown>
+                        {/* <DropDown></DropDown> */}
                         <button>Confirm</button>
                     </section>
                 </div>
