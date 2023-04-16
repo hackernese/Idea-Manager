@@ -6,6 +6,7 @@ import { createRef, useEffect, useState } from 'react';
 import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
+import LoadingCircle from '../../../Components/LoadingCircle';
 
 const cx = classNames.bind(styles);
 
@@ -13,13 +14,18 @@ function User() {
     const navigate = useNavigate();
     const outlet = useOutlet();
     const [user, setUser] = useState([]);
+    const [page, setpage] = useState(0);
 
-    useEffect(() => {
-        // Created
-        axios.post('user/list').then((resp) => {
-            setUser(resp.data.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     // Created
+    //     axios
+    //         .post('user/list', {
+    //             page: 0,
+    //         })
+    //         .then((resp) => {
+    //             setUser(resp.data);
+    //         });
+    // }, []);
 
     if (outlet) {
         return outlet;
@@ -66,6 +72,23 @@ function User() {
                                     </div>
                                 );
                             })}
+
+                            <LoadingCircle
+                                tag="footer"
+                                onIntersect={(t) => {
+                                    console.log('hello world');
+
+                                    axios
+                                        .post('user/list', {
+                                            page: page,
+                                        })
+                                        .then((resp) => {
+                                            const temp = user.concat(resp.data);
+                                            setUser(temp);
+                                            setpage(page + 1);
+                                        });
+                                }}
+                            ></LoadingCircle>
                         </div>
                     </div>
                 </div>

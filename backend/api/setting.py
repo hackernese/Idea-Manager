@@ -44,7 +44,7 @@ RECOVERY_URL_BASE = "localhost"
 
 # --------- Pagination setting -------------------
 
-MAX_USER_PER_PAGE = 10
+MAX_USER_PER_PAGE = 2
 # Maximum amount of users per page
 MAX_IDEA_PER_PAGE = 5
 # Maximum amount of ideas per page
