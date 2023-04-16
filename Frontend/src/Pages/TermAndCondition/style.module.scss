@@ -1,17 +1,213 @@
 @import "../../Components/globalMixins.scss";
 
+//grid system
+.container-fluid {
+	width: 100%;
+}
+.col-1 {
+	width: 8.33%;
+}
+.col-2 {
+	width: 16.66%;
+}
+.col-3 {
+	width: 25%;
+}
+.col-4 {
+	width: 33.33%;
+}
+.col-5 {
+	width: 41.66%;
+}
+.col-6 {
+	width: 50%;
+}
+.col-7 {
+	width: 58.33%;
+}
+.col-8 {
+	width: 66.66%;
+}
+.col-9 {
+	width: 75%;
+}
+.col-10 {
+	width: 83.33%;
+}
+.col-11 {
+	width: 91.66%;
+}
+.col-12 {
+	width: 100%;
+}
+[class*="col-"] {
+	padding: 0 12px;
+}
+
+.d-flex {
+	display: flex;
+}
+
+.f-wrap {
+	flex-wrap: wrap;
+}
+
+.text-center {
+	text-align: center;
+}
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
+
+.j-center {
+	justify-content: center;
+}
+.j-right {
+	justify-content: flex-end;
+}
+.w-100 {
+	width: 100%;
+}
+
+
 .tandc {
     @include gradientBackground;
     position: fixed;
     height: 100%;
     width: 100%;
     display: flex;
+    overflow: hidden;
+    // .title{
+    //     position: fixed;
+    //     background-color: crimson;
+    //     left: 0;
+    //     top: 1rem;
+    // }
+    *{
+        color : var(--textcolor);
+    }
 
     > div {
         @include SlightRoundBorder;
-        height: 60%;
+        height: 90%;
         width: 70%;
         background-color: var(--backgroundcolor);
         margin : auto;
+        overflow: auto;
+    }
+
+    .container{
+        padding: 3.5rem 6rem 6rem 6rem;
+        .title{
+            margin-bottom:3rem;
+            margin-top: 3rem;
+        }
+        .icon{
+            svg{
+                height: 2rem;
+                margin-top: 1rem;
+            }
+        }
+        .line{
+            height: 1px;
+            background-color: var(--textcolor);
+            width: 40%;
+            margin: 0 auto;
+        }
+
+        .line-footer{
+            height: 1px;
+            background-color: black;
+            background-color: var(--textcolor);
+            width: 50%;
+            margin: 0 auto;
+            margin-top: 5rem;
+            margin-bottom: 5rem;
+        }
+        .content{
+            margin-top: 2.5rem;
+            h4{
+                margin-top: 2rem;
+                text-align: justify ;
+                font-size: 1.7rem;
+                line-height: 2.5rem;
+                font-weight: 400;
+            }
+            h3{
+                margin-top: 3rem;
+                text-align: justify ;
+                font-size: 1.7rem;
+                line-height: 3rem;
+                font-weight: 400;
+            }
+          
+            .content-title{
+                margin-top: 2rem; 
+                padding: 0 2rem;
+
+               span{
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+                margin-top: 1rem;
+                font-size: 1.5rem;
+                letter-spacing: 0.5px;
+               }
+               p{
+                margin-top: 1rem;
+                padding: 0 1.9rem;
+                text-align: justify;
+                line-height: 2.5rem;
+            }
+            }
+
+        }
     }
 }
+
+
+
+@media screen and (max-width: 1100px) {
+
+    .tandc {
+        > div {
+            @include SlightRoundBorder;
+            height: 90%;
+            width: 80%;
+            background-color: var(--backgroundcolor);
+            margin : auto;
+        }
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+
+    .tandc {
+        > div {
+            @include SlightRoundBorder;
+            height: 90%;
+            width: 90%;
+            background-color: var(--backgroundcolor);
+            margin : auto;
+        }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+
+    .tandc {
+        > div {
+            border-radius: 0;
+            height: 100%;
+            width: 100%;
+            background-color: var(--backgroundcolor);
+            margin : auto;
+
+            .container{
+                padding: 3.5rem;
+            }
+        }
+    }
+  }
