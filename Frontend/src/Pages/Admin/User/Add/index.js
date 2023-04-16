@@ -1,5 +1,5 @@
 import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, createRef } from 'react';
 import styles from './style.module.scss';
 import classNames from 'classnames/bind';
 import CustomInput from '../../../../Components/CustomInput';
@@ -12,9 +12,29 @@ const cx = classNames.bind(styles);
 function AddNewUser() {
     const [partment, setpartment] = useState([]);
     const [value, setvalue] = useState(null);
+    const [rolement, setrolement] = useState([]);
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const nameRef = createRef;
+
+    const handlePasswordChange = (event) => {
+      setPassword(event.target.value);
+    };
+  
+    const handleConfirmPasswordChange = (event) => {
+      setConfirmPassword(event.target.value);
+    };
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    }
+    function setIsValid(email){
+        return /\S+@\S+\.\S+/.test(email);
+    }
+
 
     useEffect(() => {
-        // Created
         axios.post('department/list').then((resp) => {
             const temp = [];
             const data = resp.data.msg;
@@ -34,21 +54,21 @@ function AddNewUser() {
         });
 
         axios.post('role/list').then((resp) => {
-            const temp = [];
-            const data = resp.data.msg;
+            const temprole = [];
+            const data = resp.data.data;
 
             for (const f of data) {
-                temp.push({
+                temprole.push({
                     v: f.name,
                 });
             }
-            temp.push({
+            temprole.push({
                 v: 'Unknown',
                 ret: 2022,
                 s: true,
             });
 
-            setrolement(temp);
+            setrolement(temprole);
         });
 
     }, []);
@@ -66,13 +86,13 @@ function AddNewUser() {
                     </div>
                     <section>
                         <label>Email</label>
-                        <CustomInput type="text" placeholder={'user@gmail.com'}></CustomInput>
+                        <CustomInput type="text" value={email} onChange={handleEmailChange} placeholder={'user@gmail.com'}></CustomInput>
                         <label>Password</label>
-                        <CustomInput type="password" placeholder={'password'}></CustomInput>
+                        <CustomInput type="password" value={password} onChange={handlePasswordChange} placeholder={'password'}></CustomInput>
                         <label>Confirm password</label>
-                        <CustomInput type="password" placeholder={'password'}></CustomInput>
+                        <CustomInput type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} placeholder={'password'}></CustomInput>
                         <label>Name</label>
-                        <CustomInput type="text" placeholder={'John'}></CustomInput>
+                        <CustomInput custom_ref={nameRef} type="text" placeholder={'John'}></CustomInput>
                         <label>Department</label>
                         <DropDown
                             value={partment}
@@ -81,8 +101,32 @@ function AddNewUser() {
                             }}
                         ></DropDown>
                         <label>Role</label>
-                        {/* <DropDown></DropDown> */}
-                        <button>Confirm</button>
+                        <DropDown                            
+                         value={rolement}
+                            onChange={(e) => {
+                                setvalue(e.value);
+                                console.log(rolement);
+                            }}></DropDown>
+                        <button onClick={() => {
+                            if (password !== confirmPassword){
+                                error('Password do not match')
+                            }
+                            if (!setIsValid(email)) {
+                                error('Email is invalid');
+                              } else {
+                                const temp = nameRef.current.value;
+
+                                axios
+                                    .post('user/add', {
+                                        username:nameRef,
+                                        password:password,
+                                        department:partment,
+                                        email:email,
+                                        role:rolement,
+                                    })
+                              }
+
+                        }}>Confirm</button>
                     </section>
                 </div>
             </div>
