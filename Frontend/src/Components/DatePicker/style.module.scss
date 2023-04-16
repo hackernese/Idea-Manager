@@ -7,9 +7,8 @@
         border-color: var(--blurborder);
     }
 
-    > div:hover {
+    >div:hover {
         fieldset {
-            pointer-events: all;
             border-color: var(--textcolor) !important;
         }
     }
@@ -26,7 +25,7 @@
         font-size: 1.3em !important;
     }
 
-    > div > div > button:hover {
+    >div>div>button:hover {
         background-color: var(--blurborder);
     }
 
