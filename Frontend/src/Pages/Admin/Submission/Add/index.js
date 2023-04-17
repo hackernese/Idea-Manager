@@ -49,18 +49,12 @@ function AddNewSubmission() {
                                     deadline2: deadline2,
                                 })
                                 .then((resp) => {
-                                    console.log(resp.data);
-                                    axios.post('submission/list').then((resp) => {
-                                        console.log(resp.data);
-                                        setSub(resp.data);
-                                    });
+                                    if ((resp.data.status = 'FAIL')) {
+                                        error('Name is already in the database');
+                                    } else {
+                                        navigate('/admin/submission');
+                                    }
                                 });
-
-                            if ((sub.status = 'FAIL')) {
-                                error('Name is already in the database');
-                            } else {
-                                navigate('/admin/submission');
-                            }
                         }}
                     >
                         Confirm
