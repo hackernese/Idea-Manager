@@ -1,8 +1,4 @@
-@import "../../../Components/globalMixins.scss";
-
-
-
-
+@import '../../../Components/globalMixins.scss';
 
 .base {
     padding: 3em;
@@ -11,10 +7,10 @@
         @include btn;
     }
 
-    >.header {
+    > .header {
         background-color: var(--secondarycolor);
         padding: 2px;
-        height: 3em;
+        height: 4em;
         padding-top: 13px;
         width: 10em;
         display: inline-block;
@@ -24,7 +20,7 @@
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         @include SlightRoundBorder;
 
-        >p {
+        > p {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -37,7 +33,7 @@
         }
     }
 
-    >button {
+    > button {
         @include btn;
         display: inline-block;
         text-align: center;
@@ -46,7 +42,7 @@
         float: right;
     }
 
-    >section {
+    > section {
         margin-top: 3em;
     }
 
@@ -55,7 +51,7 @@
         padding: 2em;
         padding-top: 5em;
 
-        >div {
+        > div {
             @include table_style;
         }
 
@@ -78,7 +74,7 @@
             margin-inline: 1px;
             font-size: 10px;
 
-            @include boldfont
+            @include boldfont;
         }
     }
 }

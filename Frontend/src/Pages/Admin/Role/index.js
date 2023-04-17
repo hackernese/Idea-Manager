@@ -8,6 +8,7 @@ import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +17,7 @@ function Role() {
     const [rolex, setRole] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
     const refinput = createRef();
+    const { t } = useTranslation();
     const [current_role, setcurrentrole] = useState(null);
 
     useEffect(() => {
@@ -75,18 +77,26 @@ function Role() {
             <div className={styles.base}>
                 <section>
                     <div className={styles.header}>
-                        <p>Role</p>
+                        <p>{t('role.role')}</p>
                     </div>
-                    <button onClick={handleButtonClick}>Create a new role</button>
+                    <button onClick={handleButtonClick}>{t('role.create')}</button>
                 </section>
 
-                {showPopup && <Popup handleClose={handleClosePopup} refinput={refinput} confbutton={confbutton} />}
+                {showPopup && (
+                    <Popup
+                        handleClose={handleClosePopup}
+                        refinput={refinput}
+                        confbutton={confbutton}
+                        add={t('role.add')}
+                        confirm={t('submission_admin.confirm')}
+                    />
+                )}
                 <div className={styles.main}>
                     <div>
                         <div>
                             <div>
-                                <label>Name</label>
-                                <label>Actions</label>
+                                <label>{t('submission_admin.name')}</label>
+                                <label>{t('submission_admin.actions')}</label>
                             </div>
                         </div>
                         <div>

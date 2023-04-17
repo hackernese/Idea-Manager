@@ -1,8 +1,8 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 import React from 'react';
-import styles from './popup.module.scss'
+import styles from './popup.module.scss';
 
-function Popup({handleClose,refinput,confbutton}) {
+function Popup({ handleClose, create, refinput, confbutton, confirm }) {
     return (
         <div className={styles.popupcontainer}>
             <div className={styles.popup}>
@@ -10,13 +10,13 @@ function Popup({handleClose,refinput,confbutton}) {
                     X
                 </button>
                 <div>
-                    <div>Add a new category name:</div>
-                    <input ref={refinput} type="text" placeholder={"New name"}></input>
-                    <button onClick={confbutton}>Confirm</button>
+                    <div>{create}</div>
+                    <input ref={refinput} type="text" placeholder={'New name'}></input>
+                    <button onClick={confbutton}>{confirm}</button>
                 </div>
             </div>
         </div>
     );
 }
-  
-  export default Popup;
+
+export default Popup;

@@ -2,17 +2,18 @@ import { useNavigate, useOutlet } from 'react-router-dom';
 import AnimatedOutlet from '../../Components/AnimatedOutlet';
 import styles from './submission.module.scss';
 import classNames from 'classnames/bind';
-import LoadingCircle from '../../Components/LoadingCircle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolderOpen } from '@fortawesome/free-regular-svg-icons';
 import { faFileZipper, faFileCsv } from '@fortawesome/free-solid-svg-icons';
 import { loginContext } from '../../App';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function Submission() {
+    const { t } = useTranslation();
     const context = useContext(loginContext);
     const navigate = useNavigate();
     const [submission, setsubmission] = useState([]);
@@ -33,14 +34,14 @@ function Submission() {
     return (
         <AnimatedOutlet>
             <div className={cx('submission')}>
-                <h1>Submissions :</h1>
+                <h1>{t('submission_admin.heading_1')}</h1>
                 <div>
                     <div>
                         <div>
-                            <label>Name</label>
-                            <label>Deadline 1</label>
-                            <label>Deadline 2</label>
-                            <label>Actions</label>
+                            <label>{t('submission_admin.name')}</label>
+                            <label>{t('submission_admin.deadline_1')}</label>
+                            <label>{t('submission_admin.deadline_2')}</label>
+                            <label>{t('submission_admin.actions')}</label>
                         </div>
                     </div>
                     <div>

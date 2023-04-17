@@ -7,11 +7,13 @@ import { createRef, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { error } from '../../../../lib/toast';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function AddNewSubmission() {
     const nameRef = createRef();
+    const { t } = useTranslation();
     const [deadline1, setDeadline1] = useState(new Date());
     const [deadline2, setDeadline2] = useState(new Date());
 
@@ -29,7 +31,7 @@ function AddNewSubmission() {
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
-                <label>Name</label>
+                <label>{t('submission_admin.name')}</label>
                 <CustomInput type="text" custom_ref={nameRef} placeholder="Submission name"></CustomInput>
                 <label>Deadline 1</label>
                 <DatePicker onChange={handleDeadline1} default_day={deadline1}></DatePicker>
@@ -38,6 +40,10 @@ function AddNewSubmission() {
                 <div className={styles.wrapbutton}>
                     <button
                         onClick={() => {
+                            if (deadline1 > deadline2) {
+                                error('Deadline 2 cannot be smaller than deadline 1');
+                                return;
+                            }
                             axios
                                 .post('submission/add', {
                                     name: nameRef.current.value,
@@ -53,7 +59,7 @@ function AddNewSubmission() {
                                 });
                         }}
                     >
-                        Confirm
+                        {t('submission_admin.confirm')}
                     </button>
                 </div>
             </div>

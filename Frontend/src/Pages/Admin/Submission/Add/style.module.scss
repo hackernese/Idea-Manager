@@ -3,6 +3,11 @@
 .base {
     padding: 3em;
 
+    > label {
+        @include boldfont;
+        color: var(--textcolor);
+    }
+
     .wrapbutton {
         display: flex;
         > button {

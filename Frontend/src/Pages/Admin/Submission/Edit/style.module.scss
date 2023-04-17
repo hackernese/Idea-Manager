@@ -1,0 +1,33 @@
+@import '../../../../Components/globalMixins.scss';
+
+.base {
+    padding: 4em;
+    > div {
+        display: flex;
+        > h1 {
+            margin: auto;
+        }
+    }
+
+    > section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        > label {
+            @include boldfont;
+            color: var(--textcolor);
+        }
+    }
+
+    .wrapbutton {
+        display: flex;
+        > button {
+            @include btn;
+            margin: auto;
+            font-size: large;
+            width: 10em;
+            margin-top: 3em;
+        }
+    }
+}

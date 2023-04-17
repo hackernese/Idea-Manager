@@ -6,7 +6,41 @@
         "success": "Cập nhật email mới thành công."
     },
     "home": {
-        "title": "Chào mừng tới Idea Manager"
+        "title": "Chào mừng đến với Quản lý ý tưởng",
+        "description_title": "Trang web này được tạo ra để giúp nhân viên đóng góp ý tưởng của họ về các chủ đề khác nhau thông qua một trang web tùy chỉnh sử dụng ReactJS và SCSS",
+        "benefit_1": "Chúng tôi tin rằng việc tạo ra trang web này sẽ giúp bạn cải thiện mối quan hệ với đồng nghiệp của mình, giúp bạn hiểu họ hơn. Ngoài ra, đây còn là một nơi để bạn và đồng nghiệp của mình giao tiếp, thảo luận về các chủ đề liên quan đến công việc của mình",
+        "benefit_2": "Lợi ích khác của trang web này là giúp chúng tôi cải thiện công ty bằng cách cho phép bạn sử dụng quyền tự do ngôn luận của mình mỗi khi có ý tưởng mới được đăng trên trang web này. Bạn sẽ là một nhà đóng góp tuyệt vời"
+    },
+    "submission_admin": {
+        "heading_1": "Danh sách nộp đơn:",
+        "create": "Tạo một đơn mới",
+        "name": "Tên",
+        "deadline_1": "Hạn nộp 1",
+        "deadline_2": "Hạn nộp 2",
+        "actions": "Hành động",
+        "delete": "Xóa",
+        "edit": "Chỉnh sửa",
+        "confirm": "Chấp nhận"
+    },
+    "category": {
+        "list": "Danh sách các danh mục",
+        "create": "Tạo danh mục mới",
+        "date": "Ngày tạo",
+        "add": "Thêm một danh mục mới:"
+    },
+    "department": {
+        "list": "Danh sách các phòng ban",
+        "create": "Tạo phòng ban mới",
+        "add": "Thêm một phòng ban mới:"
+    },
+    "role": {
+        "role": "Chức vụ",
+        "create": "Tạo chức vụ mới",
+        "add": "Thêm một chức vụ mới:"
+    },
+    "user": {
+        "user": "Người dùng",
+        "create": "Tạo người dùng mới"
     },
     "header": {
         "navbar": {
@@ -49,10 +83,10 @@
             "light": "Chế độ sáng"
         },
         "account": {
-            "immsg" : "Đã nhập cấu hình mới của bạn thành công. Vui lòng làm mới để áp dụng.",
+            "immsg": "Đã nhập cấu hình mới của bạn thành công. Vui lòng làm mới để áp dụng.",
             "imexport": "Nhập / Xuất",
-            "export" : "Xuất",
-            "import" : "Nhập",
+            "export": "Xuất",
+            "import": "Nhập",
             "imexport_title": "Bạn có thể xuất hoặc nhập cài đặt của mình ở đây.",
             "title": "Tài khoản",
             "email_t": "Email",

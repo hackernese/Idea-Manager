@@ -16,27 +16,16 @@ function Home() {
         <AnimatedOutlet>
             <div className={styles.welcomebox}>
                 <h2>{t('home.title')}</h2>
-                <p>
-                    This website is made to help employees add their ideas about different topics through a custom made
-                    website using html pla pla
-                </p>
+                <p>{t('home.description_title')}</p>
             </div>
             <div className={styles.description}>
                 <div>
                     <img src={friends}></img>
-                    <p>
-                        We believe making this website will help you improve your relationship with your co-workers as
-                        you will be able to understand them more. Also, this will play the role of a platform for you
-                        all to communicate as well as discuss various topics about your work
-                    </p>
+                    <p>{t('home.benefit_1')}</p>
                 </div>
                 <div>
                     <img src={professional}></img>
-                    <p>
-                        Another great benefit of this website is for you to help us improve as a company since you can
-                        you your right of free-speech whenever there is a new submission posted on this website. You
-                        will be a great contributor
-                    </p>
+                    <p>{t('home.benefit_2')}</p>
                 </div>
             </div>
         </AnimatedOutlet>

@@ -49,6 +49,9 @@
                 @include boldfont;
                 color: var(--textcolor);
             }
+            > button {
+                @include btn;
+            }
         }
     }
 }

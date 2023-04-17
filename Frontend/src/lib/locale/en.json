@@ -6,7 +6,41 @@
         "success": "Successfully updated to new email"
     },
     "home": {
-        "title": "Welcome to Idea Manager"
+        "title": "Welcome to Idea Manager",
+        "description_title": " This website is made to help employees add their ideas about different submission of various categories through a custom made website using ReactJS and SCSS",
+        "benefit_1": "We believe making this website will help you improve your relationship with your co-workers as you will be able to understand them more. Also, this will play the role of a platform for you all to communicate as well as discuss various topics about your work",
+        "benefit_2": "Another great benefit of this website is for you to help us improve as a company since you can you your right of free-speech whenever there is a new submission posted on this website. You will be a great contributor"
+    },
+    "submission_admin": {
+        "heading_1": "Submissions :",
+        "create": "Create a new submission",
+        "name": "Name",
+        "deadline_1": "Deadline 1",
+        "deadline_2": "Deadline 2",
+        "actions": "Actions",
+        "delete": "Delete",
+        "edit": "Edit",
+        "confirm": "Confirm"
+    },
+    "category": {
+        "list": "List of category",
+        "create": "Create a new category",
+        "date": "Date created",
+        "add": "Add a new category name:"
+    },
+    "department": {
+        "list": "List of department",
+        "create": "Create a new department",
+        "add": "Add a new department name:"
+    },
+    "role": {
+        "role": "Role",
+        "create": "Create a new role",
+        "add": "Add a new role:"
+    },
+    "user": {
+        "user": "User",
+        "create": "Create a new user"
     },
     "header": {
         "navbar": {
@@ -49,11 +83,11 @@
             "light": "Light mode"
         },
         "account": {
-            "immsg" : "Successfully imported your new configuration. Please refresh to apply.",
-            "imexport" : "Import / Export",
-            "export" : "Export",
-            "import" : "Import",
-            "imexport_title" : "You can export or import your setting here.",
+            "immsg": "Successfully imported your new configuration. Please refresh to apply.",
+            "imexport": "Import / Export",
+            "export": "Export",
+            "import": "Import",
+            "imexport_title": "You can export or import your setting here.",
             "title": "Account",
             "email_t": "Email",
             "email_text": "The following form is used to update your current email",

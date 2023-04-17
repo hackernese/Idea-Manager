@@ -4,6 +4,7 @@ import { useOutlet, useNavigate } from 'react-router-dom';
 import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
@@ -11,6 +12,7 @@ function AdminSubmission() {
     const outlet = useOutlet();
     const [submission, setSubmission] = useState([]);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         axios.post('submission/list').then((resp) => {
@@ -27,15 +29,15 @@ function AdminSubmission() {
     return (
         <AnimatedOutlet>
             <div className={cx('submission')}>
-                <h1>Submissions :</h1>
-                <button onClick={() => navigate('/admin/submission/add')}>Create a new submission</button>
+                <h1>{t('submission_admin.heading_1')}</h1>
+                <button onClick={() => navigate('/admin/submission/add')}>{t('submission_admin.create')}</button>
                 <div>
                     <div>
-                        <div>
-                            <label>Name</label>
-                            <label>Deadline 1</label>
-                            <label>Deadline 2</label>
-                            <label>Actions</label>
+                        <div style={{ overflow: 'hidden' }}>
+                            <label>{t('submission_admin.name')}</label>
+                            <label>{t('submission_admin.deadline_1')}</label>
+                            <label>{t('submission_admin.deadline_2')}</label>
+                            <label>{t('submission_admin.actions')}</label>
                         </div>
                     </div>
                     <div>
@@ -46,7 +48,9 @@ function AdminSubmission() {
                                     <label>{new Date(e.deadline1).toDateString()}</label>
                                     <label>{new Date(e.deadline2).toDateString()}</label>
                                     <div>
-                                        <label onClick={() => navigate(`/admin/submission/${e.id}/edit`)}>Edit</label>
+                                        <label onClick={() => navigate(`/admin/submission/${e.id}/edit`)}>
+                                            {t('submission_admin.edit')}
+                                        </label>
                                         <label
                                             className={cx('deletebtn')}
                                             onClick={() => {
@@ -58,7 +62,7 @@ function AdminSubmission() {
                                                 });
                                             }}
                                         >
-                                            Delete
+                                            {t('submission_admin.delete')}
                                         </label>
                                     </div>
                                 </div>

@@ -8,7 +8,7 @@ import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
-import DropDown from '../../../Components/DropDown';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,7 @@ function Department() {
     const [showPopup, setShowPopup] = useState(false);
     const refinput = createRef();
     const [current_dep, setcurrentdep] = useState(null);
-
+    const { t } = useTranslation();
     const [partment, setpartment] = useState([]);
 
     useEffect(() => {
@@ -91,25 +91,26 @@ function Department() {
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
-                <DropDown
-                    value={partment}
-                    onChange={(e) => {
-                        console.log(e);
-                    }}
-                ></DropDown>
-
                 <div className={styles.header}>
-                    <p>List of Department</p>
+                    <p>{t('department.list')}</p>
                 </div>
-                <button onClick={handleButtonClick}>Create a new department</button>
-                {showPopup && <Popup handleClose={handleClosePopup} refinput={refinput} confbutton={confbutton} />}
+                <button onClick={handleButtonClick}>{t('department.create')}</button>
+                {showPopup && (
+                    <Popup
+                        handleClose={handleClosePopup}
+                        add={t('department.add')}
+                        confirm={t('submission_admin.confirm')}
+                        refinput={refinput}
+                        confbutton={confbutton}
+                    />
+                )}
                 <div className={styles.main}>
                     <div>
                         <div>
                             <div>
-                                <label>Name</label>
-                                <label>Date created</label>
-                                <label>Actions</label>
+                                <label>{t('submission_admin.name')}</label>
+                                <label>{t('category.date')}</label>
+                                <label>{t('submission_admin.actions')}</label>
                             </div>
                         </div>
                         <div>

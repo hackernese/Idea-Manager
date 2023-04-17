@@ -7,11 +7,13 @@ import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import LoadingCircle from '../../../Components/LoadingCircle';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
 function User() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const outlet = useOutlet();
     const [user, setUser] = useState([]);
     const [page, setpage] = useState(0);
@@ -35,16 +37,16 @@ function User() {
             <div className={styles.base}>
                 <section>
                     <div className={styles.header}>
-                        <p>User</p>
+                        <p>{t('user.user')}</p>
                     </div>
-                    <button onClick={() => navigate('/admin/user/add')}>Create a new user</button>
+                    <button onClick={() => navigate('/admin/user/add')}>{t('user.create')}</button>
                 </section>
                 <div className={styles.main}>
                     <div>
                         <div>
                             <div>
-                                <label>Name</label>
-                                <label>Actions</label>
+                                <label>{t('submission_admin.name')}</label>
+                                <label>{t('submission_admin.actions')}</label>
                             </div>
                         </div>
                         <div>

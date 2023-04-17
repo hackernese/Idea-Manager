@@ -3,7 +3,6 @@
 .end {
     @include boldfont;
     text-decoration: line-through;
-    // font-weight: bold;
     font-style: italic;
     color: red;
 }
@@ -46,6 +45,9 @@
         @include table_style;
         height: 45em;
         margin-top: 1em;
+        //     :nth-child(1) {
+        //         overflow: hidden;
+        //     }
     }
 }
 

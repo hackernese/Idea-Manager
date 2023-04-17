@@ -8,6 +8,7 @@ import Popup from './popup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
+import { useTranslation } from 'react-i18next';
 
 function Category() {
     const outlet = useOutlet();
@@ -15,6 +16,7 @@ function Category() {
     const [showPopup, setShowPopup] = useState(false);
     const refinput = createRef();
     const [current_cat, setcurrentcat] = useState(null);
+    const { t } = useTranslation();
 
     useEffect(() => {
         // Created
@@ -72,17 +74,25 @@ function Category() {
         <AnimatedOutlet>
             <div className={styles.base}>
                 <div className={styles.header}>
-                    <p>List of category</p>
+                    <p>{t('category.list')}</p>
                 </div>
-                <button onClick={handleButtonClick}>Create a new category</button>
-                {showPopup && <Popup handleClose={handleClosePopup} refinput={refinput} confbutton={confbutton} />}
+                <button onClick={handleButtonClick}>{t('category.create')}</button>
+                {showPopup && (
+                    <Popup
+                        handleClose={handleClosePopup}
+                        create={t('category.add')}
+                        confirm={t('submission_admin.confirm')}
+                        refinput={refinput}
+                        confbutton={confbutton}
+                    />
+                )}
                 <div className={styles.main}>
                     <div>
                         <div>
                             <div>
-                                <label>Name</label>
-                                <label>Date created</label>
-                                <label>Actions</label>
+                                <label>{t('submission_admin.name')}</label>
+                                <label>{t('category.date')}</label>
+                                <label>{t('submission_admin.actions')}</label>
                             </div>
                         </div>
                         <div>
