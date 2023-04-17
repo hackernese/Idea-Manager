@@ -348,7 +348,8 @@ with app.app_context():
     db.create_all()
     # Creating the database IF NOT EXISTS
 
-    db.session.execute(text("PRAGMA foreign_keys = ON"))
+    if DATABASE_URI.startswith("sqlite"):
+        db.session.execute(text("PRAGMA foreign_keys = ON"))
     # Enable foreign key support in SQLite3 ( Either remove or ignore once deployed to MySQL )
 
     # Caching and storing the role id in memory for faster access

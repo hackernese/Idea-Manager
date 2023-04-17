@@ -22,7 +22,6 @@ TOKEN_EXPIRY_DAYS: int = 30
 RECOVERY_TOKEN_EXPIRY_MINUTES: int = 15
 # Indicates how many minutes will a recovery token record be valid before it's expired
 
-
 DATABASE_URI = f'sqlite:///{basedir}/storage.db'
 # Database URI string, change this to another one when being deployed in production
 

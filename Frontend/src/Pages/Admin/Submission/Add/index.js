@@ -32,16 +32,12 @@ function AddNewSubmission() {
                 <label>Name</label>
                 <CustomInput type="text" custom_ref={nameRef} placeholder="Submission name"></CustomInput>
                 <label>Deadline 1</label>
-                <DatePicker onChange={handleDeadline1} default_day={deadline1}></DatePicker>
+                <DatePicker onChange={handleDeadline1}></DatePicker>
                 <label>Deadline 2</label>
-                <DatePicker onChange={handleDeadline2} default_day={deadline2}></DatePicker>
+                <DatePicker onChange={handleDeadline2} value></DatePicker>
                 <div className={styles.wrapbutton}>
                     <button
                         onClick={() => {
-                            if (deadline1 > deadline2) {
-                                error('Deadline 2 cannot be bigger than deadline 1');
-                                return;
-                            }
                             axios
                                 .post('submission/add', {
                                     name: nameRef.current.value,
@@ -55,10 +51,10 @@ function AddNewSubmission() {
                                         setSub(resp.data);
                                     });
                                 });
-
                             if ((sub.status = 'FAIL')) {
                                 error('Name is already in the database');
-                            } else {
+                            }
+                            if ((sub.status = 'OK')) {
                                 navigate('/admin/submission');
                             }
                         }}
