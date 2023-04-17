@@ -10,8 +10,10 @@ def get_statistic():
 
     query = Department.query.all()
     ret = {
-        department.name: sum([user.idea_ref.count()
-                              for user in department.reference]) for department in query
+        f"{department.name}": {
+            "sum": sum([user.idea_ref.count()for user in department.reference]),
+            "users": len(department.reference)
+        } for department in query
     }
 
     return jsonify({

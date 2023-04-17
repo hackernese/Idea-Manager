@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 
 function Statistic() {
-    const context = useContext(loginContext);
+    // const context = useContext(loginContext);
     const [data, setdata] = useState([]);
 
     useEffect(() => {
@@ -22,6 +22,7 @@ function Statistic() {
                     <div>
                         <div>
                             <label>Department</label>
+                            <label>Users</label>
                             <label>Ideas (vol)</label>
                         </div>
                     </div>
@@ -29,7 +30,9 @@ function Statistic() {
                         {Object.entries(data).map((e) => (
                             <div key={e[0]}>
                                 <label>{e[0]}</label>
-                                <label>{e[1]}</label>
+                                <label>{e[1].users}</label>
+
+                                <label>{e[1].sum}</label>
                             </div>
                         ))}
                     </div>
