@@ -7,6 +7,7 @@ from . import login_required
 from flask import jsonify, request, send_file
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
+from dateutil import parser as TimeParser
 import csv
 
 
@@ -40,8 +41,11 @@ def add_submission():
     # add submission into database
     try:
         # convert deadline1 & deadline2 into DateTime
-        new_submission = Submission(name=name, deadline1=datetime.fromisoformat(
-            deadline1), deadline2=datetime.fromisoformat(deadline2))
+
+        # print()
+
+        new_submission = Submission(name=name, deadline1=TimeParser.parse(
+            deadline1), deadline2=TimeParser.parse(deadline2))
         db.session.add(new_submission)
         db.session.commit()
         return jsonify({
