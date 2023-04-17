@@ -14,11 +14,11 @@ function AddNewSubmission() {
     const nameRef = createRef();
     const [deadline1, setDeadline1] = useState(new Date());
     const [deadline2, setDeadline2] = useState(new Date());
+
     const navigate = useNavigate();
     const [sub, setSub] = useState([]);
 
     const handleDeadline1 = (event) => {
-        console.log(event);
         setDeadline1(event.$d);
     };
 
@@ -45,8 +45,7 @@ function AddNewSubmission() {
                                     deadline2: deadline2,
                                 })
                                 .then((resp) => {
-                                    console.log(resp.data);
-                                    if ((resp.data.status = 'FAIL')) {
+                                    if (resp.data.status === 'FAIL') {
                                         error('Name is already in the database');
                                     } else {
                                         navigate('/admin/submission');
