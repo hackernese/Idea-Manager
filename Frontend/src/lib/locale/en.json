@@ -49,6 +49,11 @@
             "light": "Light mode"
         },
         "account": {
+            "immsg" : "Successfully imported your new configuration. Please refresh to apply.",
+            "imexport" : "Import / Export",
+            "export" : "Export",
+            "import" : "Import",
+            "imexport_title" : "You can export or import your setting here.",
             "title": "Account",
             "email_t": "Email",
             "email_text": "The following form is used to update your current email",

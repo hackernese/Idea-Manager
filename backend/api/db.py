@@ -96,7 +96,6 @@ class User(AbstractBase):
         'Reaction', backref='user', lazy='dynamic', cascade='all, delete')
     logins_ref = db.relationship(
         'Logins', backref='use', lazy=True, cascade='all, delete')
-
     view_ref = db.relationship(
         'Views', backref='user', lazy=True, cascade='all, delete')
 

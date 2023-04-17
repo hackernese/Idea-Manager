@@ -9,7 +9,7 @@ import AnimatedOutlet from '../../../../Components/AnimatedOutlet';
 import LoadingButton from '../../../../Components/LoadingButton';
 import { loginContext } from '../../../../App';
 import axios from 'axios';
-import { create } from '@mui/material/styles/createTransitions';
+import Popup from '../../../../Components/Popup';
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +30,8 @@ function Password() {
     const [cpass, setcpass] = useState('');
     const [currentpass, setcurrentpass] = useState('');
     const [email, setemail] = useState('');
+    const [isimport, setimport] = useState(false);
+    const getfile = createRef();
 
     useLayoutEffect(() => context.settext('setting.account.title'), []);
 
@@ -184,7 +186,82 @@ function Password() {
                         }}
                     ></LoadingButton>
                 </div>
+
+                <div>
+                    <h1>{t('setting.account.imexport')}</h1>
+                    <p>{t('setting.account.pass_text')}</p>
+                    <div className={cx('imexport')}>
+                        <input
+                            ref={getfile}
+                            type="file"
+                            style={{ display: 'none' }}
+                            onChange={async (e) => {
+                                let formData = new FormData();
+                                formData.append('file', e.target.files[0]);
+
+                                let resp;
+                                try {
+                                    resp = await axios.post(`user/${authContext.userinfo.id}/import`, formData, {
+                                        headers: {
+                                            'Content-Type': 'multipart/form-data',
+                                        },
+                                    });
+                                } catch {
+                                    return;
+                                }
+
+                                if (resp.data.status === 'FAIL') {
+                                    error(resp.data.msg);
+                                } else {
+                                    setimport(true);
+                                }
+                            }}
+                        ></input>
+                        <LoadingButton
+                            text={t('setting.account.import')}
+                            onClick={() => {
+                                getfile.current.click();
+                            }}
+                        ></LoadingButton>
+                        <LoadingButton
+                            text={t('setting.account.export')}
+                            onClick={async () => {
+                                const resp = await axios.post(`user/${authContext.userinfo.id}/export`);
+
+                                // Virtual link to the object in memory
+                                const blob = new Blob([JSON.stringify(resp.data)], { type: 'text/plain' });
+                                const href = URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = href;
+                                link.setAttribute('download', `config.json`);
+
+                                // Silently append to the body then click it
+                                document.body.appendChild(link);
+                                link.click();
+
+                                // AFter clicking it, remove it since it's no longer needed
+                                document.body.removeChild(link);
+                                URL.revokeObjectURL(href);
+                            }}
+                        ></LoadingButton>
+                    </div>
+                </div>
             </div>
+            {isimport && (
+                <Popup
+                    title={t('setting.account.import')}
+                    buttons={[
+                        {
+                            text: 'OK',
+                            callback: () => {
+                                window.location.reload();
+                            },
+                            color: 'error',
+                        },
+                    ]}
+                    text={t('setting.account.immsg')}
+                ></Popup>
+            )}
         </AnimatedOutlet>
     );
 }

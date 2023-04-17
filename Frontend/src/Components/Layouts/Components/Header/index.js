@@ -22,10 +22,8 @@ function Header() {
 
     const context = useContext(loginContext);
 
-    // const isStaff = context.userinfo.role === 'staff';
-    // const isCoordinator = context.userinfo.role === 'coordinator';
-    const isManager = context.userinfo.role === 'manager';
-    const isAdmin = context.userinfo.role === 'administrator';
+    const isManager = context.userinfo.role.includes('manager');
+    const isAdmin = context.userinfo.role.includes('administrator');
 
     const IsMobile = useMediaQuery({ maxWidth: 1100 }); // false
     // const role = useState('')
@@ -141,7 +139,8 @@ function Header() {
                                 </ul>
                             </div>
                         </div>
-                        <div className={cx('col-3')}>
+                        <div className={cx('col-3', 'logo_')}>
+                            <label>{context.userinfo.name}</label>
                             <div className={cx('user-logo', 'd-flex', 'j-right')}>
                                 {IsMobile && (
                                     <FontAwesomeIcon
@@ -164,6 +163,7 @@ function Header() {
                         </div>
                         {toggleUserState && (
                             <div className={cx('dropdown-menu', 'd-flex')}>
+                                <label>{context.userinfo.name}</label>
                                 <ul>
                                     <Link to="/setting">{t('header.navbar.setting')}</Link>
                                     {/* eslint-disable-next-line */}

@@ -49,6 +49,11 @@
             "light": "Chế độ sáng"
         },
         "account": {
+            "immsg" : "Đã nhập cấu hình mới của bạn thành công. Vui lòng làm mới để áp dụng.",
+            "imexport": "Nhập / Xuất",
+            "export" : "Xuất",
+            "import" : "Nhập",
+            "imexport_title": "Bạn có thể xuất hoặc nhập cài đặt của mình ở đây.",
             "title": "Tài khoản",
             "email_t": "Email",
             "email_text": "Biểu mẫu sau được sử dụng để cập nhật email hiện tại của bạn",

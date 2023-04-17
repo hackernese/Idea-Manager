@@ -62,7 +62,7 @@ function Submission() {
                                                 navigate(`${e.id}`);
                                             }}
                                         />
-                                        {context.userinfo.role === 'manager' && (
+                                        {context.userinfo.role.includes('manager') && (
                                             <>
                                                 <FontAwesomeIcon
                                                     title="Download Zipped documents"

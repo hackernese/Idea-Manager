@@ -1,4 +1,6 @@
 //grid
+@import '../../../globalMixins.scss';
+
 .container-fluid {
     width: 100%;
 }
@@ -13,7 +15,18 @@
 }
 
 .col-3 {
+    justify-content: flex-end;
     width: 25%;
+
+    >label {
+        @include boldfont;
+        font-size: 0.9em;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding-right: 0.6em;
+    }
+
 }
 
 .col-4 {
@@ -88,7 +101,6 @@
     width: 100%;
 }
 
-//Header
 .wrapper {
     height: 100%;
     width: 100%;
@@ -201,6 +213,8 @@
 .user-logo {
     margin: auto;
     margin-right: 1em;
+    margin-left: 0;
+
     align-items: center;
 
     >svg {
@@ -254,6 +268,16 @@ div.Toggle-responsive>div:nth-child(1)>div>ul {
     display: flex;
 }
 
+// .logo_ {
+//     >label {
+//         margin: auto;
+//         height: auto;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//     }
+// }
+
 .dropdown-menu {
     @include dropdown_animation;
     z-index: 2;
@@ -264,6 +288,17 @@ div.Toggle-responsive>div:nth-child(1)>div>ul {
     border-radius: 8px;
     box-shadow: 2px 1px 4px 0 #9f9898ef;
     background-color: var(--backgroundcolor);
+    display: flex;
+    flex-direction: column;
+
+    >label {
+        @include boldfont;
+        opacity: 0.6;
+        font-size: 0.8em;
+        padding: 0.5em;
+        text-align: center;
+        display: none;
+    }
 
     ul a {
         color: var(--textcolor);
@@ -291,6 +326,14 @@ div.Toggle-responsive>div:nth-child(1)>div>ul {
 }
 
 @media screen and (max-width: 1100px) {
+
+    .col-3 {
+        >label {
+            display: none;
+        }
+
+    }
+
     .container {
         background-color: var(--backgroundcolor);
         position: fixed;
@@ -419,6 +462,10 @@ div.Toggle-responsive>div:nth-child(1)>div>ul {
         bottom: 4em;
         top: auto;
         z-index: 100;
+
+        >label {
+            display: block;
+        }
 
         ul li {
             width: 100%;

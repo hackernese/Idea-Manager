@@ -127,10 +127,10 @@ function App() {
 
                     // CHecking the role;
                     const data = resp.data.data;
-                    setisadmin(data.role === 'administrator');
-                    setismanager(data.role === 'manager');
-                    setisstaff(data.role == 'staff');
-                    setiscoordinator(data.role === 'coordinator');
+                    setisadmin(data.role.includes('administrator'));
+                    setismanager(data.role.includes('manager'));
+                    setisstaff(data.role.includes('staff'));
+                    setiscoordinator(data.role.includes('coordinator'));
                 } else {
                     setuserinfo(null);
                 }

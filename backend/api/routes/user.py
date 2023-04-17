@@ -507,13 +507,12 @@ def export_user_config(user_id):
     return jsonify({
         "username": f"{user.username}",
         "email": f"{user.email}",
-        "phone": f"{user.phone}",
+        "phone": user.phone,
         "theme": f"{user.theme}",
         "language": f"{user.language}",
-        "birthday": f"{user.birthday}",
+        "birthday": user.birthday,
         "gender": f"{user.gender}",
-        "address": f"{user.address}",
-        "oauth": f"{user.oauth}"
+        "address": f"{user.address}"
     })
 
 
@@ -524,13 +523,16 @@ def import_user_config(user_id):
     if not user_id.isdigit():
         return bad_request('Invalid user id')
 
-    if 'file' not in request.files:
+    if not request.files.get('file'):
         return bad_request('Missing file')
 
     user = db.session.query(User).filter(User.id == int(user_id)).first()
 
     if not user:
-        return bad_request('User doesn\'t exist')
+        return jsonify({
+            'status': "FAIL",
+            'msg': 'User doesn\'t exist'
+        })
 
     config_file = request.files['file']
 
@@ -546,10 +548,15 @@ def import_user_config(user_id):
         db.session.commit()
     except IntegrityError:
         db.session.rollback()
-        return bad_request('Unable to import, either the name or email may have already existed, or the file is malformed')
-
+        return jsonify({
+            'status': "FAIL",
+            'msg': 'Unable to import, either the name or email may have already existed, or the file is malformed'
+        })
     except:
-        return bad_request('Invalid configuration')
+        return jsonify({
+            'status': "FAIL",
+            'msg': 'Invalid configuration'
+        })
 
     return jsonify({
         'status': "OK"

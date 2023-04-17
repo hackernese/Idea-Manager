@@ -1,13 +1,15 @@
 @import '../../../Components/globalMixins.scss';
 
-button {
-    @include btn;
-}
+
 
 .base {
+    button {
+        @include btn;
+    }
+
     padding: 3em;
 
-    > .header {
+    >.header {
         background-color: var(--secondarycolor);
         padding: 2px;
         height: 5em;
@@ -20,7 +22,7 @@ button {
         box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
         @include SlightRoundBorder;
 
-        > p {
+        >p {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,7 +35,7 @@ button {
         }
     }
 
-    > button {
+    >button {
         @include btn;
         display: inline-block;
         text-align: center;
@@ -42,7 +44,7 @@ button {
         float: right;
     }
 
-    > section {
+    >section {
         margin-top: 3em;
     }
 
@@ -51,7 +53,7 @@ button {
         padding: 2em;
         padding-top: 5em;
 
-        > div {
+        >div {
             @include table_style;
             border: 15px solid var(--blurborder);
         }
@@ -70,6 +72,7 @@ button {
                 filter: invert(1);
             }
         }
+
         .action {
             margin-inline: 1px;
             font-size: 10px;
