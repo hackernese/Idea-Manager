@@ -16,16 +16,15 @@ function User() {
     const [user, setUser] = useState([]);
     const [page, setpage] = useState(0);
 
-    // useEffect(() => {
-    //     // Created
-    //     axios
-    //         .post('user/list', {
-    //             page: 0,
-    //         })
-    //         .then((resp) => {
-    //             setUser(resp.data);
-    //         });
-    // }, []);
+    useEffect(() => {
+        axios
+            .post('user/list', {
+                page: 0,
+            })
+            .then((resp) => {
+                setUser(resp.data);
+            });
+    }, []);
 
     if (outlet) {
         return outlet;

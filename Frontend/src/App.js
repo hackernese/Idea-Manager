@@ -218,8 +218,8 @@ function App() {
                             </Route>
                             <Route path="role" element={<Role></Role>}></Route>
                             <Route path="submission" element={<AdminSubmission></AdminSubmission>}>
-                                {/* <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
-                                <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route> */}
+                                <Route path="add" element={<AddNewSubmission></AddNewSubmission>}></Route>
+                                <Route path=":id/edit" element={<EditSubmission></EditSubmission>}></Route>
                             </Route>
                         </Route>
                         <Route

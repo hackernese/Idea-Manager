@@ -1,0 +1,16 @@
+@import '../../../../Components/globalMixins.scss';
+
+.base {
+    padding: 3em;
+
+    .wrapbutton {
+        display: flex;
+        > button {
+            @include btn;
+            margin: auto;
+            font-size: large;
+            width: 10em;
+            margin-top: 3em;
+        }
+    }
+}
