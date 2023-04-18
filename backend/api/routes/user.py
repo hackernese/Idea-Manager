@@ -164,7 +164,12 @@ def list_all_users() -> jsonify:
     if type(data['page']) != int:
         return bad_request('Invalid page number')
 
-    ret = db.session.query(User).offset(
+    if 'exclude' in data and data['exclude']:
+        temp = db.session.query(User).filter(
+            User.id != request.session.user.id)
+    else:
+        temp = db.session.query(User)
+    ret = temp.offset(
         data['page']*MAX_USER_PER_PAGE).limit(MAX_USER_PER_PAGE).all()
 
     return jsonify([
@@ -409,6 +414,19 @@ def add_new_role(user_id):
         })
 
     user = db.session.query(User).filter(User.id == int(user_id)).first()
+
+    if (not user):
+        return jsonify({
+            'status': "FAIL",
+            'err': "Invalid user id."
+        })
+    else:
+        if user.id == request.session.user.id:
+            return jsonify({
+                'status': "FAIL",
+                'err': "It's not recommended to change your own roles."
+            })
+
     check_role = user.userrole_ref.filter(
         UserRoles.roleid == data['role']).first()
 
