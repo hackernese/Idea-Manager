@@ -12,7 +12,7 @@
     @include transition;
     @include SlightRoundBorder;
 
-    > div {
+    >div {
         display: flex;
         flex-direction: row;
         gap: 1em;
@@ -46,13 +46,13 @@
 
     padding-bottom: 2em;
 
-    > h1 {
+    >h1 {
         @include boldfont;
         @include slide_left_animation;
         color: var(--textcolor);
     }
 
-    > div {
+    >div {
         @include table_style;
         height: 45em;
         margin-top: 1em;
@@ -85,11 +85,11 @@
             flex-direction: column;
         }
 
-        > div {
+        >div {
             @include responsive_table;
             flex: auto;
 
-            > div:nth-child(1) {
+            >div:nth-child(1) {
                 height: 12em;
             }
         }

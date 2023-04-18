@@ -19,16 +19,19 @@ function User() {
     const [user, setUser] = useState([]);
     const [page, setpage] = useState(0);
 
-    useEffect(() => {
-        console.log(1);
-        axios
-            .post('user/list', {
-                page: 0,
-            })
-            .then((resp) => {
-                setUser(resp.data);
-            });
-    }, []);
+    // useEffect(() => {
+    //     console.log(1);
+    //     axios
+    //         .post('user/list', {
+    //             page: 0,
+    //             exclude: true,
+    //         })
+    //         .then((resp) => {
+    //             console.log('WTF', resp.data);
+
+    //             setUser(resp.data);
+    //         });
+    // }, []);
 
     console.log(user);
 
@@ -97,6 +100,7 @@ function User() {
                                     axios
                                         .post('user/list', {
                                             page: page,
+                                            exclude: true,
                                         })
                                         .then((resp) => {
                                             const temp = user.concat(resp.data);

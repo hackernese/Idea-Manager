@@ -6,12 +6,14 @@ import styles from './style.module.scss';
 import DropDown from '../../../../Components/DropDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faX, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { createRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { error, success } from '../../../../lib/toast';
 import { create } from '@mui/material/styles/createTransitions';
 import { useTranslation } from 'react-i18next';
+import { loginContext } from '../../../../App';
+import { useContext } from 'react';
 
 function Setting() {
     const { t } = useTranslation();
@@ -21,6 +23,7 @@ function Setting() {
     const [role, setrole] = useState([]);
     const [availrole, setavailrole] = useState([]);
     const [userinfo, setuserinfo] = useState(null);
+    const context = useContext(loginContext);
 
     // references and states related to new data
     const passref = createRef();
@@ -98,6 +101,10 @@ function Setting() {
                 settrigger(trigger + 1);
             });
     };
+
+    if (context.userinfo.id === parseInt(id)) {
+        return <Navigate to="/admin/user"></Navigate>;
+    }
 
     if (userinfo === null) {
         return 'Loading...';

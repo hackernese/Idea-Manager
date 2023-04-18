@@ -113,9 +113,8 @@ def add_idea(submission_id):
 
             email = []
             for cor_user in query_users:
-                email.append(cor_user.email)
+                email.append(cor_user.user.email)
 
-            print(email)
             # do func send_mail
             if email:
                 send_mail("New Idea Was Uploaded!",
