@@ -1,7 +1,7 @@
 // Component 1 : Authentication / Authorization
 describe("Authentication / Authorization", () => {
   // Testcase 1: Checking if fake credentials output any error
-  it("passes", () => {
+  it("Fake credentials", () => {
     cy.visit("http://localhost:3000/");
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
       .click()
@@ -15,7 +15,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Invalid credentials");
   });
   // Test case 2: Checking if the prompt shows "Empty username."
-  it("passes", () => {
+  it("Empty username error", () => {
     cy.visit("http://localhost:3000/");
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
       .click()
@@ -24,7 +24,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Empty password.");
   });
   // Test case 4: Check for "empty password" quote
-  it("passes", () => {
+  it("Empty password error", () => {
     cy.visit("http://localhost:3000/");
     cy.get(
       "#root > div.Login_content__0Pfph > input.Login_input-password__0xWJj"
@@ -35,7 +35,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Empty username.");
   });
   // Test case 5: CHeck for valid credentials
-  it("passes", () => {
+  it("Valid credentials", () => {
     cy.visit("http://localhost:3000/");
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
       .click()
@@ -49,7 +49,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Welcome to Idea Manager");
   });
   // Test case 5: Checking to see if the application authorize users as staff
-  it("passes", () => {
+  it("Authorization", () => {
     cy.visit("http://localhost:3000/");
     cy.viewport(1920, 1080); // Set viewport to 550px x 750px
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
@@ -82,7 +82,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Welcome to Idea Manager");
   });
   // Test case 6: Checking to see if the application authorize users as manager
-  it("passes", () => {
+  it("Authorized as manager", () => {
     cy.visit("http://localhost:3000/");
     cy.viewport(1920, 1080); // Set viewport to 550px x 750px
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
@@ -103,7 +103,7 @@ describe("Authentication / Authorization", () => {
     cy.contains("Welcome to Idea Manager");
   });
   // Test case 7 : Checking if the application authorize users as administrator
-  it("passes", () => {
+  it("Authorized as administrator", () => {
     cy.visit("http://localhost:3000/");
     cy.viewport(1920, 1080); // Set viewport to 550px x 750px
     cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
@@ -1171,7 +1171,7 @@ describe("Manager Statistics", () => {
       "#root > div.container > div.Header_container__Rp4A9 > div > div.Header_Toggle-responsive__djCJm.Header_col-10__OwENv.Header_d-flex__DVmD5.Header_f-wrap__KCqHF > div.Header_col-9__CCygv > div > ul > li:nth-child(6)"
     ).click();
     cy.get(
-      "#root > div.wrapper > div.Container > div > div > div > div > div:nth-child(2) > div:nth-child(4) > label:nth-child(3)"
+      "#root > div.wrapper > div.Container > div > div > div > div > div:nth-child(2) > div:nth-child(3) > label:nth-child(3)"
     ).contains(3);
   });
   it("Create a new idea and recheck the statistic", () => {});

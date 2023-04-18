@@ -190,7 +190,7 @@ class Submission(AbstractBase):
 
 class Department(AbstractBase):
 
-    name = db.Column(db.String(200), nullable=False)
+    name = db.Column(db.String(200), nullable=False, unique=True)
 
     # Reference to the user table
     reference = db.relationship(
