@@ -59,7 +59,13 @@ function User() {
                                     <div key={i}>
                                         <label>{e.name}</label>
                                         <div className={styles.smallbuttons}>
-                                            <FontAwesomeIcon title="Edit User" icon={faFilePen} onClick={() => {}} />
+                                            <FontAwesomeIcon
+                                                title="Edit User"
+                                                icon={faFilePen}
+                                                onClick={() => {
+                                                    navigate(`${e.id}/setting`);
+                                                }}
+                                            />
 
                                             <FontAwesomeIcon
                                                 title="Delete User"
@@ -74,6 +80,8 @@ function User() {
                                                                 1,
                                                             );
                                                             setUser(_);
+                                                        } else {
+                                                            error(resp.data.err);
                                                         }
                                                     });
                                                 }}

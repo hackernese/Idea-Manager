@@ -132,6 +132,12 @@ def delete_user(user_id: str) -> jsonify:
             'err': "User doesn't exist."
         })
 
+    if user.id == request.session.user.id:
+        return jsonify({
+            'status': "FAIL",
+            'err': "It's not recommended to delete your own account."
+        })
+
     db.session.delete(user)
     db.session.commit()
 
