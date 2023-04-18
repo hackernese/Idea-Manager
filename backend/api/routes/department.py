@@ -111,7 +111,7 @@ def update_department_info(department_id):
             try:
                 department.name = new_name
                 db.session.commit()
-                return jsonify({'message': 'Department Updated Successfully'})
+                return jsonify({'status': "OK", 'message': 'Department Updated Successfully'})
 
             except IntegrityError:
                 db.session.rollback()

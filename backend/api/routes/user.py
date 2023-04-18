@@ -59,6 +59,7 @@ def add_user() -> jsonify:
     """
 
     data = request.get_json()
+    print(data)
 
     # Validate the incoming request
     if "email" not in data or \
@@ -66,6 +67,7 @@ def add_user() -> jsonify:
         "department" not in data or \
         "name" not in data or \
             "role" not in data:
+        print("WTF")
         return bad_request('Missing parameter')
 
     if (type(data['role']) == str and not data['role'].isdigit()) or \
