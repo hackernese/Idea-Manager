@@ -21,7 +21,7 @@
         "delete": "Xóa",
         "edit": "Chỉnh sửa",
         "confirm": "Chấp nhận",
-        "notfound" : "Danh sách đơn bị trống."
+        "notfound": "Danh sách đơn bị trống."
     },
     "category": {
         "list": "Danh sách các danh mục",
@@ -41,7 +41,24 @@
     },
     "user": {
         "user": "Người dùng",
-        "create": "Tạo người dùng mới"
+        "create": "Tạo người dùng mới",
+        "edit": {
+            "title": "Chỉnh sửa người dùng",
+            "subtitle": "Thông tin hồ sơ",
+            "email": "Email",
+            "name": "Tên người dùng",
+            "phone": "Số điện thoại",
+            "address": "Địa chỉ",
+            "birthday": "Ngày sinh",
+            "cred": "Thông tin đăng nhập",
+            "passwd": "Mật khẩu",
+            "cpasswd": "Xác nhận mật khẩu",
+            "depart": "Phòng ban",
+            "roles": "Vai trò",
+            "update": "Cập nhật",
+            "assigned": "Vai trò được phân công",
+            "avail": "Vai trò có sẵn"
+        }
     },
     "header": {
         "navbar": {

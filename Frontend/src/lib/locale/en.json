@@ -21,7 +21,7 @@
         "delete": "Delete",
         "edit": "Edit",
         "confirm": "Confirm",
-        "notfound" : "No submissions found."
+        "notfound": "No submissions found."
     },
     "category": {
         "list": "List of category",
@@ -41,7 +41,24 @@
     },
     "user": {
         "user": "User",
-        "create": "Create a new user"
+        "create": "Create a new user",
+        "edit": {
+            "title": "Edit user",
+            "subtitle": "Profile information",
+            "email": "Email",
+            "name": "Username",
+            "phone": "Phone",
+            "address": "Address",
+            "birthday": "Birthday",
+            "cred": "Credentials",
+            "passwd": "Password",
+            "cpasswd": "Confirm password.",
+            "depart": "Department",
+            "roles": "Roles",
+            "update": "Update",
+            "assigned": "Assigned roles",
+            "avail": "Available roles"
+        }
     },
     "header": {
         "navbar": {

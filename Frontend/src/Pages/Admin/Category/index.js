@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
 import { useTranslation } from 'react-i18next';
+import { success, error } from '../../../lib/toast';
 
 function Category() {
     const outlet = useOutlet();
@@ -40,10 +41,14 @@ function Category() {
                 name: temp,
             })
             .then((resp) => {
-                console.log(resp.data);
-                axios.post('category/list').then((resp) => {
-                    setcat(resp.data.msg);
-                });
+                if (resp.data.status === 'OK') {
+                    success('Successfully added new category');
+                    axios.post('category/list').then((resp) => {
+                        setcat(resp.data.msg);
+                    });
+                } else {
+                    error(resp.data.err);
+                }
             });
         setShowPopup(false);
     };
@@ -58,10 +63,14 @@ function Category() {
                 name: refinputEdit.current.value,
             })
             .then((resp) => {
-                console.log(resp.data);
-                axios.post('category/list').then((resp) => {
-                    setcat(resp.data.msg);
-                });
+                if (resp.data.status === 'OK') {
+                    success('Successfully updated category');
+                    axios.post('category/list').then((resp) => {
+                        setcat(resp.data.msg);
+                    });
+                } else {
+                    error(resp.data.err);
+                }
             });
         setShowPopupEdit(false);
     };
@@ -116,10 +125,14 @@ function Category() {
                                                 icon={faTrash}
                                                 onClick={() => {
                                                     axios.delete(`category/delete/${e.id}`).then((resp) => {
-                                                        console.log(resp.data);
-                                                        axios.post('category/list').then((resp) => {
-                                                            setcat(resp.data.msg);
-                                                        });
+                                                        if (resp.data.status === 'OK') {
+                                                            success('Successfully deleted category');
+                                                            axios.post('category/list').then((resp) => {
+                                                                setcat(resp.data.msg);
+                                                            });
+                                                        } else {
+                                                            error(resp.data.err);
+                                                        }
                                                     });
                                                 }}
                                             />

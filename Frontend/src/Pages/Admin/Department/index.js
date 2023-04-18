@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
 import { useTranslation } from 'react-i18next';
+import { success, error } from '../../../lib/toast';
 
 const cx = classNames.bind(styles);
 
@@ -58,10 +59,14 @@ function Department() {
                 name: temp,
             })
             .then((resp) => {
-                console.log(resp.data);
-                axios.post('department/list').then((resp) => {
-                    setDep(resp.data.msg);
-                });
+                if (resp.data.status === 'OK') {
+                    success('Successfully added new department');
+                    axios.post('department/list').then((resp) => {
+                        setDep(resp.data.msg);
+                    });
+                } else {
+                    error(resp.data.err);
+                }
             });
         setShowPopup(false);
     };
@@ -76,10 +81,14 @@ function Department() {
                 name: refinputEdit.current.value,
             })
             .then((resp) => {
-                console.log(resp.data);
-                axios.post('department/list').then((resp) => {
-                    setDep(resp.data.msg);
-                });
+                if (resp.data.status === 'OK') {
+                    success('Successfully updated department');
+                    axios.post('department/list').then((resp) => {
+                        setDep(resp.data.msg);
+                    });
+                } else {
+                    error(resp.data.err);
+                }
             });
         setShowPopupEdit(false);
     };
@@ -134,10 +143,14 @@ function Department() {
                                                 icon={faTrash}
                                                 onClick={() => {
                                                     axios.delete(`department/delete/${e.id}`).then((resp) => {
-                                                        console.log(resp.data);
-                                                        axios.post('department/list').then((resp) => {
-                                                            setDep(resp.data.msg);
-                                                        });
+                                                        if (resp.data.status === 'OK') {
+                                                            success('Successfully deleted department');
+                                                            axios.post('department/list').then((resp) => {
+                                                                setDep(resp.data.msg);
+                                                            });
+                                                        } else {
+                                                            error(resp.data.err);
+                                                        }
                                                     });
                                                 }}
                                             />

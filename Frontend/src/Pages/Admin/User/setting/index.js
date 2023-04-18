@@ -11,8 +11,10 @@ import { createRef, useEffect, useState } from 'react';
 import axios from 'axios';
 import { error, success } from '../../../../lib/toast';
 import { create } from '@mui/material/styles/createTransitions';
+import { useTranslation } from 'react-i18next';
 
 function Setting() {
+    const { t } = useTranslation();
     const { id } = useParams();
     const navigate = useNavigate();
     const [depart, setdepart] = useState([]);
@@ -114,43 +116,43 @@ function Setting() {
                         >
                             <FontAwesomeIcon icon={faChevronLeft} />
                         </div>
-                        <h1>Edit user</h1>
+                        <h1>{t('user.edit.title')}</h1>
                     </div>
                     <div>
-                        <h2>Profile information :</h2>
+                        <h2>{t('user.edit.subtitle')} :</h2>
                         <CustomInput
                             custom_ref={nameref}
                             default_value={userinfo.name}
                             type="text"
-                            placeholder="Username"
+                            placeholder={t('user.edit.name')}
                         ></CustomInput>
                         <CustomInput
                             custom_ref={emailref}
                             default_value={userinfo.email}
                             type="text"
-                            placeholder="Email"
+                            placeholder={t('user.edit.email')}
                         ></CustomInput>
                         <CustomInput
                             custom_ref={addressref}
                             default_value={userinfo.address}
                             type="text"
-                            placeholder="address"
+                            placeholder={t('user.edit.address')}
                         ></CustomInput>
                         <CustomInput
                             custom_ref={phoneref}
                             default_value={userinfo.phone}
                             type="text"
-                            placeholder="phone"
+                            placeholder={t('user.edit.phone')}
                         ></CustomInput>
                         <DatePicker
                             default_day={birthday}
-                            label="Birthday"
+                            label={t('user.edit.birthday')}
                             onChange={(e) => {
                                 setbirthday(new Date(e.$d));
                             }}
                         ></DatePicker>
                         <LoadingButton
-                            text="Update"
+                            text={t('user.edit.update')}
                             onClick={() => {
                                 const username = nameref.current.value.trim();
                                 const email = emailref.current.value.trim();
@@ -176,10 +178,10 @@ function Setting() {
                     </div>
                     <div>
                         <h2>Credentials :</h2>
-                        <CustomInput custom_ref={passref} placeholder="Password"></CustomInput>
-                        <CustomInput custom_ref={cpassref} placeholder="Cofirm password."></CustomInput>
+                        <CustomInput custom_ref={passref} placeholder={t('user.edit.passwd')}></CustomInput>
+                        <CustomInput custom_ref={cpassref} placeholder={t('user.edit.cpasswd')}></CustomInput>
                         <LoadingButton
-                            text="Update"
+                            text={t('user.edit.update')}
                             onClick={async () => {
                                 const password = passref.current.value.trim();
                                 const cpassword = cpassref.current.value.trim();
@@ -210,7 +212,7 @@ function Setting() {
                             }}
                         ></DropDown>
                         <LoadingButton
-                            text="Update"
+                            text={t('user.edit.update')}
                             onClick={async () => {
                                 if (newdepart === null) {
                                     error('Please choose a new department if you wish to change.');
@@ -228,8 +230,8 @@ function Setting() {
                         ></LoadingButton>
                     </div>
                     <div>
-                        <h2>Roles :</h2>
-                        <h3>Assigned roles :</h3>
+                        <h2>{t('user.edit.roles')} :</h2>
+                        <h3>{t('user.edit.assigned')} :</h3>
                         <div className={styles.roles}>
                             {role.map((e) => {
                                 return (
@@ -246,7 +248,7 @@ function Setting() {
                                 );
                             })}
                         </div>
-                        <h3>Available roles:</h3>
+                        <h3>{t('user.edit.avail')}:</h3>
                         <div className={styles.roles}>
                             {availrole.map((e) => {
                                 return (
