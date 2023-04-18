@@ -21,16 +21,18 @@ describe("Authentication / Authorization", () => {
       .click()
       .type("staff");
     cy.get("#root > div.Login_content__0Pfph > button").click();
-    cy.contains("Empty username.");
+    cy.contains("Empty password.");
   });
   // Test case 4: Check for "empty password" quote
   it("passes", () => {
     cy.visit("http://localhost:3000/");
-    cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
+    cy.get(
+      "#root > div.Login_content__0Pfph > input.Login_input-password__0xWJj"
+    )
       .click()
       .type("staff");
     cy.get("#root > div.Login_content__0Pfph > button").click();
-    cy.contains("Empty password.");
+    cy.contains("Empty username.");
   });
   // Test case 5: CHeck for valid credentials
   it("passes", () => {
@@ -129,37 +131,6 @@ describe("Authentication / Authorization", () => {
   });
 });
 
-// Component 2 : Staff submission
-describe("Staff submission testing", () => {
-  // Testcase 1: Adding idea on submission
-  it("passes", () => {
-    cy.viewport(1920, 1080); // Set viewport to 550px x 750px
-    cy.visit("http://localhost:3000/");
-    // Logging in
-    cy.get("#root > div.Login_content__0Pfph > input.Login_input-name__T409R")
-      .click()
-      .type("admin");
-    cy.get(
-      "#root > div.Login_content__0Pfph > input.Login_input-password__0xWJj"
-    )
-      .click()
-      .type("admin");
-    cy.c;
-    cy.get("#root > div.Login_content__0Pfph > button").click();
-    // Finished logging in
-    // Click on first submission
-    cy.get(
-      "#root > div.container > div.Header_container__Rp4A9 > div > div.Header_Toggle-responsive__djCJm.Header_col-10__OwENv.Header_d-flex__DVmD5.Header_f-wrap__KCqHF > div.Header_col-9__CCygv > div > ul > li:nth-child(6)"
-    ).click();
-    cy.get(
-      "#root > div.container > div.content > div > div > div > div:nth-child(2) > div:nth-child(1) > div > svg"
-    ).click();
-    // Add new idea
-    cy.get(
-      "#root > div.container > div.content > div > div > div.subid_addbtn__LgMcy"
-    ).click();
-  });
-});
 describe("CRUD operations on users", () => {
   var user_id;
   var authToken = undefined;

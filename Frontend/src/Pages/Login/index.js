@@ -97,6 +97,16 @@ function Login() {
                 onClick={() => {
                     const passwd = passwdref.current.value.trim();
                     const username = usernameref.current.value.trim();
+
+                    if (!username) {
+                        seterrtext('Empty username.');
+                        return;
+                    }
+                    if (!passwd) {
+                        seterrtext('Empty password.');
+                        return;
+                    }
+
                     axios
                         .post('auth/login', {
                             name: username,
