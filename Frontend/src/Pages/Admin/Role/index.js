@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import Popupedit from './popupedit';
 import { useTranslation } from 'react-i18next';
+import { error, success } from '../../../lib/toast';
 
 const cx = classNames.bind(styles);
 
@@ -39,14 +40,22 @@ function Role() {
 
         axios
             .post('role/add', {
-                name: temp,
+                role: temp,
             })
             .then((resp) => {
-                console.log(resp.data);
+                if (resp.data.status === 'OK') {
+                    success('Successfully added new role.');
+                    return;
+                } else {
+                    error(resp.data.err);
+                    return;
+                }
+
                 axios.post('role/list').then((resp) => {
                     setRole(resp.data.data);
                 });
             });
+
         setShowPopup(false);
     };
 
@@ -61,6 +70,11 @@ function Role() {
             })
             .then((resp) => {
                 console.log(resp.data);
+                if (resp.data.status === 'FAIL') {
+                    error(resp.data.err);
+                    return;
+                }
+
                 axios.post('role/list').then((resp) => {
                     setRole(resp.data.data);
                 });
@@ -118,12 +132,19 @@ function Role() {
                                                 title="Delete Role"
                                                 icon={faTrashCan}
                                                 onClick={() => {
-                                                    axios.delete(`role/delete/${e.id}`).then((resp) => {
-                                                        console.log(resp.data);
-                                                        axios.post('role/list').then((resp) => {
-                                                            setRole(resp.data.data);
+                                                    axios
+                                                        .delete(`role/delete/${e.id}`)
+                                                        .then((resp) => {
+                                                            if (resp.data.status === 'OK')
+                                                                success('Successfully deleted role');
+
+                                                            axios.post('role/list').then((resp) => {
+                                                                setRole(resp.data.data);
+                                                            });
+                                                        })
+                                                        .catch((err) => {
+                                                            error(err.response.data.err);
                                                         });
-                                                    });
                                                 }}
                                             />
                                         </div>

@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import CustomInput from '../../../../Components/CustomInput';
 import DropDown from '../../../../Components/DropDown';
 import axios from 'axios';
-import { error } from '../../../../lib/toast';
+import { error, success } from '../../../../lib/toast';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -13,11 +13,11 @@ const cx = classNames.bind(styles);
 
 function AddNewUser() {
     const { t } = useTranslation();
-    const [partment, setpartment] = useState([]);
+    const [partment, setpartment] = useState(null);
     const [value, setvalue] = useState(null);
-    const [rolement, setrolement] = useState([]);
-    const [dep, setDep] = useState('');
-    const [role, setRole] = useState('');
+    const [rolement, setrolement] = useState(null);
+    const [dep, setDep] = useState(null);
+    const [role, setRole] = useState(null);
     const navigate = useNavigate();
     // const [password, setPassword] = useState('');
     // const [confirmPassword, setConfirmPassword] = useState('');
@@ -47,14 +47,17 @@ function AddNewUser() {
             const temp = [];
             const data = resp.data.msg;
 
+            console.log(resp.data.msg);
+
             for (const f of data) {
                 temp.push({
                     v: f.name,
+                    ret: f.id,
                 });
             }
             temp.push({
                 v: 'Unknown',
-                ret: 2022,
+                ret: -1,
                 s: true,
             });
 
@@ -68,11 +71,12 @@ function AddNewUser() {
             for (const f of data) {
                 temprole.push({
                     v: f.name,
+                    ret: f.id,
                 });
             }
             temprole.push({
                 v: 'Unknown',
-                ret: 2022,
+                ret: -1,
                 s: true,
             });
 
@@ -81,6 +85,10 @@ function AddNewUser() {
     }, []);
 
     useEffect(() => {}, [value]);
+
+    if (rolement === null || partment === null) {
+        return <div>Loadng...</div>;
+    }
 
     return (
         <AnimatedOutlet>
@@ -118,44 +126,56 @@ function AddNewUser() {
                         <label>Department</label>
                         <DropDown
                             value={partment}
-                            onChange={(e) => {
-                                setvalue(e.value);
-                                console.log(value);
-                                setDep(value);
+                            onChange={({ code }) => {
+                                setDep(code);
                             }}
                         ></DropDown>
                         <label>Role</label>
                         <DropDown
                             value={rolement}
-                            onChange={(e) => {
-                                setvalue(e.value);
-                                console.log(value);
-                                setRole(value);
+                            onChange={({ code }) => {
+                                setRole(code);
                             }}
                         ></DropDown>
                         <button
                             onClick={() => {
-                                console.log(role);
-                                console.log(nameRef.current.value);
+                                console.log(dep, role);
+
                                 if (passwordRef.current.value !== passwordConfirmRef.current.value) {
                                     error('Password do not match');
                                     return;
                                 }
                                 if (!setIsValid(emailRef.current.value)) {
                                     error('Email is invalid');
-                                } else {
-                                    const temp = nameRef.current.value;
-
-                                    axios
-                                        .post('user/add', {
-                                            email: emailRef.current.value,
-                                            password: passwordRef.current.value,
-                                            department: dep,
-                                            username: temp,
-                                            role: role,
-                                        })
-                                        .then(navigate('/admin/user'));
+                                    return;
                                 }
+                                if (dep === null) {
+                                    error('Please choose a department');
+                                    return;
+                                }
+                                if (role === null) {
+                                    error('Please choose a role for this user.');
+                                    return;
+                                }
+
+                                const temp = nameRef.current.value;
+
+                                axios
+                                    .post('user/add', {
+                                        email: emailRef.current.value,
+                                        passwd: passwordRef.current.value,
+                                        department: dep,
+                                        name: temp,
+                                        role: role,
+                                    })
+                                    .then((resp) => {
+                                        if (resp.data.status === 'OK') {
+                                            success('Successfully added new user');
+                                            navigate('/admin/user');
+                                        } else {
+                                            error(resp.data.err);
+                                        }
+                                    });
                             }}
                         >
                             Confirm

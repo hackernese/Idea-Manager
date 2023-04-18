@@ -20,7 +20,8 @@
         "actions": "Actions",
         "delete": "Delete",
         "edit": "Edit",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "notfound" : "No submissions found."
     },
     "category": {
         "list": "List of category",

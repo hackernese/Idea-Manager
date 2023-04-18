@@ -9,6 +9,7 @@ import { loginContext } from '../../App';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import NotFoundLabel from '../../Components/NotFound';
 
 const cx = classNames.bind(styles);
 
@@ -123,6 +124,9 @@ function Submission() {
                                 </div>
                             );
                         })}
+                        {submission.length === 0 && (
+                            <NotFoundLabel text={t('submission_admin.notfound')}></NotFoundLabel>
+                        )}
                     </div>
                 </div>
             </div>

@@ -77,8 +77,6 @@ function User() {
                             <LoadingCircle
                                 tag="footer"
                                 onIntersect={(t) => {
-                                    console.log('hello world');
-
                                     axios
                                         .post('user/list', {
                                             page: page,
@@ -87,6 +85,9 @@ function User() {
                                             const temp = user.concat(resp.data);
                                             setUser(temp);
                                             setpage(page + 1);
+                                            if (resp.data.length < 10) {
+                                                t(true);
+                                            }
                                         });
                                 }}
                             ></LoadingCircle>

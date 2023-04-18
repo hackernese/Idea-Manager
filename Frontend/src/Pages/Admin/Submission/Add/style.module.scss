@@ -1,6 +1,11 @@
 @import '../../../../Components/globalMixins.scss';
 
 .base {
+
+    h1 {
+        text-align: right;
+    }
+
     padding: 3em;
 
     >label {
@@ -30,6 +35,8 @@
 
 @media screen and (max-width : 1100px) {
     .base {
+
+
         padding-top: 9em;
     }
 

@@ -20,7 +20,8 @@
         "actions": "Hành động",
         "delete": "Xóa",
         "edit": "Chỉnh sửa",
-        "confirm": "Chấp nhận"
+        "confirm": "Chấp nhận",
+        "notfound" : "Danh sách đơn bị trống."
     },
     "category": {
         "list": "Danh sách các danh mục",

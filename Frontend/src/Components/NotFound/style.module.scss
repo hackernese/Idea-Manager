@@ -1,0 +1,32 @@
+@import '../globalMixins.scss';
+
+
+.notfound {
+     @include dropup_animation;
+     position: absolute;
+     left: 0;
+     right: 0;
+     top: 0;
+     bottom: 0;
+     justify-content: center;
+     margin: auto;
+     display: flex;
+     flex-direction: column;
+     height: 4em;
+
+     svg {
+          font-size: 1.5em;
+     }
+
+     label {
+          font-size: 0.8em;
+     }
+
+     * {
+          @include boldfont;
+          color: var(--textcolor);
+          opacity: 0.5;
+          margin: auto;
+     }
+
+}

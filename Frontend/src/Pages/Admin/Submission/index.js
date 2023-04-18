@@ -5,6 +5,7 @@ import AnimatedOutlet from '../../../Components/AnimatedOutlet';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import NotFoundLabel from '../../../Components/NotFound';
 
 const cx = classNames.bind(styles);
 
@@ -68,6 +69,7 @@ function AdminSubmission() {
                                 </div>
                             );
                         })}
+                        {submission.length === 0 && <NotFoundLabel text="No submission found."></NotFoundLabel>}
                     </div>
                 </div>
             </div>
