@@ -66,6 +66,7 @@ def add_submission():
 def delete_submission(submission_id):
     # check if submission existed?
     submission = Submission.query.get(submission_id)
+    print(submission, submission_id)
     if submission:
         # delete submission
         try:
