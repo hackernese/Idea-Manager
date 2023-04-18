@@ -155,6 +155,12 @@ def update_role_info(role_id: int) -> jsonify:
             'status': "FAIL"
         }), 404
 
+    if role.mandatory:
+        return jsonify({
+            'err': "This role is mandatory, can't update it.",
+            'status': "FAIL"
+        })
+
     try:
 
         role.name = data['name'].strip()
