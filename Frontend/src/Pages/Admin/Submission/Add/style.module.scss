@@ -1,14 +1,13 @@
 @import '../../../../Components/globalMixins.scss';
 
 .base {
-
     h1 {
         text-align: right;
     }
 
     padding: 3em;
 
-    >label {
+    > label {
         @include boldfont;
         color: var(--textcolor);
     }
@@ -16,7 +15,7 @@
     .wrapbutton {
         display: flex;
 
-        >button {
+        > button {
             @include btn;
             margin: auto;
             font-size: large;
@@ -28,15 +27,13 @@
     .backbtn {
         @include backbtn;
     }
-
 }
 
-
-
-@media screen and (max-width : 1100px) {
+@media screen and (max-width: 1100px) {
     .base {
-
-
+        h1 {
+            text-align: center;
+        }
         padding-top: 9em;
     }
 

@@ -24,7 +24,6 @@
     }
 
     &:hover {
-
         filter: invert(1);
     }
 }
@@ -297,7 +296,7 @@
     display: flex;
     flex-direction: column;
 
-    >div {
+    > div {
         padding: 1em;
         padding-top: 2em;
         padding-bottom: 2em;
@@ -306,8 +305,8 @@
         gap: 1em;
         overflow-x: hidden;
 
-        >div {
-            >* {
+        > div {
+            > * {
                 flex: 1;
             }
 
@@ -323,7 +322,7 @@
         flex-direction: column;
     }
 
-    >div:nth-child(1) {
+    > div:nth-child(1) {
         @include boldfont;
         padding-top: 0;
         padding-bottom: 0;
@@ -331,7 +330,7 @@
         box-shadow: 0 0 5px black;
         z-index: 1;
 
-        >div {
+        > div {
             @include boldfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -344,10 +343,10 @@
         }
     }
 
-    >div:nth-child(2) {
+    > div:nth-child(2) {
         overflow-y: auto;
 
-        >div {
+        > div {
             @include lightfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -364,7 +363,7 @@
 @mixin responsive_table {
     border-radius: 0;
 
-    >div:nth-child(1)>div {
+    > div:nth-child(1) > div {
         overflow: hidden;
 
         * {
@@ -372,7 +371,7 @@
         }
     }
 
-    >div>div {
+    > div > div {
         flex-direction: column;
         justify-content: center;
 
@@ -450,7 +449,7 @@
     display: flex;
     flex-direction: column;
 
-    >div {
+    > div {
         padding: 1em;
         padding-top: 2em;
         padding-bottom: 2em;
@@ -459,8 +458,8 @@
         gap: 1em;
         overflow-x: hidden;
 
-        >div {
-            >* {
+        > div {
+            > * {
                 flex: 1;
             }
 
@@ -476,7 +475,7 @@
         flex-direction: column;
     }
 
-    >div:nth-child(1) {
+    > div:nth-child(1) {
         @include boldfont;
         padding-top: 0;
         padding-bottom: 0;
@@ -485,7 +484,7 @@
         box-shadow: 0 0 5px black;
         z-index: 1;
 
-        >div {
+        > div {
             @include boldfont;
             font-size: 1.4em;
             text-align: center;
@@ -497,16 +496,16 @@
             display: flex;
             justify-content: space-around;
 
-            >label {
+            > label {
                 background-color: var(--backgroundcolor2);
             }
         }
     }
 
-    >div:nth-child(2) {
+    > div:nth-child(2) {
         overflow-y: auto;
 
-        >div {
+        > div {
             @include lightfont;
             font-size: 1.2em;
             @include SquareRoundBorder();
@@ -517,6 +516,64 @@
             display: flex;
             text-align: center;
             justify-content: space-around;
+        }
+    }
+}
+
+@mixin responsive_table_vertical_400px {
+    border-radius: 0;
+    width: unset;
+    height: unset;
+
+    > div:nth-child(1) > div {
+        overflow: hidden;
+
+        * {
+            padding: 0;
+        }
+    }
+
+    > div > div {
+        flex-direction: column;
+        justify-content: center;
+
+        > :nth-child(1) {
+            padding: 0;
+        }
+
+        * {
+            padding: 0;
+            text-align: center;
+            margin: auto;
+        }
+    }
+}
+
+@mixin responsive_table_vertical_1100x {
+    border-radius: 0;
+    width: 25em;
+    height: unset;
+
+    > div:nth-child(1) > div {
+        overflow: hidden;
+
+        * {
+            padding: 0;
+        }
+    }
+
+    > div > div {
+        flex-direction: column;
+        justify-content: center;
+
+        > :nth-child(1) {
+            padding: 0;
+        }
+
+        * {
+            padding: 0;
+            text-align: center;
+            margin: auto;
         }
     }
 }

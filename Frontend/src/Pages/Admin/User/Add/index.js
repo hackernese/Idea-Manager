@@ -8,6 +8,8 @@ import axios from 'axios';
 import { error, success } from '../../../../lib/toast';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 
@@ -19,25 +21,12 @@ function AddNewUser() {
     const [dep, setDep] = useState(null);
     const [role, setRole] = useState(null);
     const navigate = useNavigate();
-    // const [password, setPassword] = useState('');
-    // const [confirmPassword, setConfirmPassword] = useState('');
-    // const [email, setEmail] = useState('');
+
     const nameRef = createRef();
     const passwordRef = createRef();
     const passwordConfirmRef = createRef();
     const emailRef = createRef();
 
-    // const handlePasswordChange = (event) => {
-    //     setPassword(event.target.value);
-    // };
-
-    // const handleConfirmPasswordChange = (event) => {
-    //     setConfirmPassword(event.target.value);
-    // };
-
-    // const handleEmailChange = (event) => {
-    //     setEmail(event.target.value);
-    // };
     function setIsValid(emailRef) {
         return /\S+@\S+\.\S+/.test(emailRef);
     }
@@ -94,6 +83,14 @@ function AddNewUser() {
         <AnimatedOutlet>
             <div className={styles.base}>
                 <div>
+                    <div
+                        className={styles.backbtn}
+                        onClick={() => {
+                            navigate(-1);
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </div>
                     <div className={styles.header}>
                         <p>Make a new account</p>
                     </div>

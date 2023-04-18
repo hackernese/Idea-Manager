@@ -1,9 +1,6 @@
 @import '../../../../Components/globalMixins.scss';
 
 .base {
-    background-color: rgba(70, 70, 70, 0.792);
-    width: 100%;
-    height: 100%;
     > div {
         background-color: var(--backgroundcolor);
         position: absolute;
@@ -13,6 +10,26 @@
         width: 45em;
         height: 55em;
         padding: 5em;
+
+        .backbtn {
+            svg {
+                @include RoundBorder;
+                @include transition;
+                margin-right: 1.5em;
+                padding: 10px;
+            }
+
+            svg:hover {
+                cursor: pointer;
+                color: white;
+                background-color: tomato;
+            }
+
+            svg:active {
+                transform: scale(0.95);
+            }
+        }
+
         .header {
             background-color: var(--secondarycolor2);
             height: 70px;
@@ -52,6 +69,28 @@
             > button {
                 @include btn;
             }
+        }
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    .base {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: calc(100% - 66.5312px);
+        overflow: auto;
+
+        > div {
+            width: 100%;
+            height: unset;
+            padding: 5em;
+        }
+
+        > section {
+            height: 100%;
+            margin: 0;
+            width: 100%;
         }
     }
 }

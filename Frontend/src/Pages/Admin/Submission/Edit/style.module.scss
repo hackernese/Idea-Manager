@@ -17,7 +17,6 @@
     }
 
     &:hover {
-
         filter: invert(1);
     }
 }
@@ -25,20 +24,20 @@
 .base {
     padding: 4em;
 
-    >div {
+    > div {
         display: flex;
 
-        >h1 {
+        > h1 {
             margin: auto;
         }
     }
 
-    >section {
+    > section {
         display: flex;
         flex-direction: column;
         gap: 10px;
 
-        >label {
+        > label {
             @include boldfont;
             color: var(--textcolor);
         }
@@ -47,7 +46,7 @@
     .wrapbutton {
         display: flex;
 
-        >button {
+        > button {
             @include btn;
             margin: auto;
             font-size: large;
@@ -57,20 +56,13 @@
     }
 }
 
-
-
-@media screen and (max-width : 1100px) {
-
-
+@media screen and (max-width: 1100px) {
     .base {
-
-
         padding-top: 9em;
     }
 
     .backbtn {
         position: absolute;
-        top: 10em;
+        top: 7em;
     }
-
 }
