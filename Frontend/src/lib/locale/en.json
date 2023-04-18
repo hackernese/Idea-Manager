@@ -21,7 +21,8 @@
         "delete": "Delete",
         "edit": "Edit",
         "confirm": "Confirm",
-        "notfound": "No submissions found."
+        "notfound": "No submissions found.",
+        "edit_title": "Edit the Submission"
     },
     "category": {
         "list": "List of category",
@@ -42,6 +43,10 @@
     "user": {
         "user": "User",
         "create": "Create a new user",
+        "add": {
+            "make": "Make a new account"
+        },
+
         "edit": {
             "title": "Edit user",
             "subtitle": "Profile information",

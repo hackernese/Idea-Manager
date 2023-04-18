@@ -92,10 +92,10 @@ function AddNewUser() {
                         <FontAwesomeIcon icon={faChevronLeft} />
                     </div>
                     <div className={styles.header}>
-                        <p>Make a new account</p>
+                        <p>{t('user.add.make')}</p>
                     </div>
                     <section>
-                        <label>Email</label>
+                        <label>{t('user.edit.email')}</label>
                         <CustomInput
                             type="text"
                             // value={email}
@@ -103,14 +103,14 @@ function AddNewUser() {
                             custom_ref={emailRef}
                             placeholder={'user@gmail.com'}
                         ></CustomInput>
-                        <label>Password</label>
+                        <label>{t('user.edit.passwd')}</label>
                         <CustomInput
                             type="password"
                             custom_ref={passwordRef}
                             // onChange={handlePasswordChange}
                             placeholder={'password'}
                         ></CustomInput>
-                        <label>Confirm password</label>
+                        <label>{t('user.edit.cpasswd')}</label>
                         <CustomInput
                             type="password"
                             // value={confirmPassword}
@@ -118,16 +118,16 @@ function AddNewUser() {
                             custom_ref={passwordConfirmRef}
                             placeholder={'password'}
                         ></CustomInput>
-                        <label>Name</label>
+                        <label>{t('user.edit.name')}</label>
                         <CustomInput custom_ref={nameRef} type="text" placeholder={'John'}></CustomInput>
-                        <label>Department</label>
+                        <label>{t('user.edit.depart')}</label>
                         <DropDown
                             value={partment}
                             onChange={({ code }) => {
                                 setDep(code);
                             }}
                         ></DropDown>
-                        <label>Role</label>
+                        <label>{t('user.edit.roles')}</label>
                         <DropDown
                             value={rolement}
                             onChange={({ code }) => {
@@ -178,7 +178,7 @@ function AddNewUser() {
                                     });
                             }}
                         >
-                            Confirm
+                            {t('submission_admin.confirm')}
                         </button>
                     </section>
                 </div>

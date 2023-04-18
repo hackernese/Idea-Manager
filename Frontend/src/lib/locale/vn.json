@@ -21,7 +21,8 @@
         "delete": "Xóa",
         "edit": "Chỉnh sửa",
         "confirm": "Chấp nhận",
-        "notfound": "Danh sách đơn bị trống."
+        "notfound": "Danh sách đơn bị trống.",
+        "edit_title": "Chỉnh sửa đơn"
     },
     "category": {
         "list": "Danh sách các danh mục",
@@ -42,6 +43,9 @@
     "user": {
         "user": "Người dùng",
         "create": "Tạo người dùng mới",
+        "add": {
+            "make": "Tạo một tài khoản mới"
+        },
         "edit": {
             "title": "Chỉnh sửa người dùng",
             "subtitle": "Thông tin hồ sơ",

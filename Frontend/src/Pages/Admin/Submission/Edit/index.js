@@ -49,14 +49,14 @@ function EditSubmission() {
                     <FontAwesomeIcon icon={faChevronLeft} />
                 </div>
                 <div>
-                    <h1>Edit the Submission</h1>
+                    <h1>{t('submission_admin.edit_title')}</h1>
                 </div>
                 <section>
-                    <label>Name</label>
+                    <label>{t('submission_admin.name')}</label>
                     <CustomInput type="text" custom_ref={nameRef} default_value={editSub.name}></CustomInput>
-                    <label>Deadline 1</label>
+                    <label>{t('submission_admin.deadline_1')}</label>
                     <DatePicker label="Deadline1" onChange={handleDeadline1} default_day={deadline1}></DatePicker>
-                    <label>Deadline 2</label>
+                    <label>{t('submission_admin.deadline_2')}</label>
                     <DatePicker label="Deadline2" onChange={handleDeadline2} default_day={deadline2}></DatePicker>
                 </section>
                 <div className={styles.wrapbutton}>
@@ -77,7 +77,7 @@ function EditSubmission() {
                                 });
                         }}
                     >
-                        Update
+                        {t('user.edit.update')}
                     </button>
                 </div>
             </div>
