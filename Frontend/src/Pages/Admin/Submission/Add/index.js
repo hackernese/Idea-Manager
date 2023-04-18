@@ -7,6 +7,8 @@ import { createRef, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { error } from '../../../../lib/toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
@@ -31,6 +33,17 @@ function AddNewSubmission() {
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
+                <div>
+                    <div
+                        className={styles.backbtn}
+                        onClick={() => {
+                            navigate(-1);
+                        }}
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </div>
+                    <h1>Add new submission</h1>
+                </div>
                 <label>{t('submission_admin.name')}</label>
                 <CustomInput type="text" custom_ref={nameRef} placeholder="Submission name"></CustomInput>
                 <label>Deadline 1</label>

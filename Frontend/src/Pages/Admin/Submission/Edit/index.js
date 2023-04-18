@@ -8,8 +8,9 @@ import { createRef } from 'react';
 import CustomInput from '../../../../Components/CustomInput';
 import DatePicker from '../../../../Components/DatePicker';
 import { error } from '../../../../lib/toast';
-
-const cx = classNames.bind(styles);
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 function EditSubmission() {
     const nameRef = createRef();
@@ -17,6 +18,7 @@ function EditSubmission() {
     const [deadline2, setDeadline2] = useState(new Date());
     const navigate = useNavigate();
     const [editSub, setEditSub] = useState([]);
+    const { t } = useTranslation();
 
     const { id } = useParams();
 
@@ -27,18 +29,25 @@ function EditSubmission() {
         });
     }, []);
 
-    const handleDeadline1 = () => {
-        setDeadline1(editSub.deadline1);
+    const handleDeadline1 = (e) => {
+        setDeadline1(e.$d);
     };
 
-    const handleDeadline2 = () => {
-        setDeadline2(editSub.deadline2);
+    const handleDeadline2 = (e) => {
+        setDeadline2(e.$d);
     };
 
     return (
         <AnimatedOutlet>
             <div className={styles.base}>
-                <div>go back honey</div>
+                <div
+                    className={styles.backbtn}
+                    onClick={() => {
+                        navigate(-1);
+                    }}
+                >
+                    <FontAwesomeIcon icon={faChevronLeft} />
+                </div>
                 <div>
                     <h1>Edit the Submission</h1>
                 </div>
@@ -46,13 +55,17 @@ function EditSubmission() {
                     <label>Name</label>
                     <CustomInput type="text" custom_ref={nameRef} default_value={editSub.name}></CustomInput>
                     <label>Deadline 1</label>
-                    <DatePicker onChange={handleDeadline1} default_day={deadline1}></DatePicker>
+                    <DatePicker label="Deadline1" onChange={handleDeadline1} default_day={deadline1}></DatePicker>
                     <label>Deadline 2</label>
-                    <DatePicker onChange={handleDeadline2} default_day={deadline2}></DatePicker>
+                    <DatePicker label="Deadline2" onChange={handleDeadline2} default_day={deadline2}></DatePicker>
                 </section>
                 <div className={styles.wrapbutton}>
                     <button
                         onClick={() => {
+                            console.log(nameRef.current.value);
+                            console.log(deadline1);
+                            console.log(deadline2);
+
                             axios
                                 .post(`submission/update/${id}`, {
                                     name: nameRef.current.value,
@@ -60,7 +73,6 @@ function EditSubmission() {
                                     deadline2: deadline2,
                                 })
                                 .then((resp) => {
-                                    console.log(resp.data);
                                     if (resp.data.status === 'FAIL') {
                                         error('Name is already in the database');
                                     } else {

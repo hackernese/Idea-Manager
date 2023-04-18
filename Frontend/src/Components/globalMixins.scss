@@ -7,6 +7,28 @@
     /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
+@mixin backbtn {
+    @include RoundBorder;
+    @include transition;
+    color: var(--textcolor);
+    background-color: var(--backgroundcolor);
+    width: 2em;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+
+    svg {
+        cursor: pointer;
+        margin: auto;
+    }
+
+    &:hover {
+
+        filter: invert(1);
+    }
+}
+
 @mixin RoundBorder {
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -275,7 +297,7 @@
     display: flex;
     flex-direction: column;
 
-    > div {
+    >div {
         padding: 1em;
         padding-top: 2em;
         padding-bottom: 2em;
@@ -284,8 +306,8 @@
         gap: 1em;
         overflow-x: hidden;
 
-        > div {
-            > * {
+        >div {
+            >* {
                 flex: 1;
             }
 
@@ -301,7 +323,7 @@
         flex-direction: column;
     }
 
-    > div:nth-child(1) {
+    >div:nth-child(1) {
         @include boldfont;
         padding-top: 0;
         padding-bottom: 0;
@@ -309,7 +331,7 @@
         box-shadow: 0 0 5px black;
         z-index: 1;
 
-        > div {
+        >div {
             @include boldfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -322,10 +344,10 @@
         }
     }
 
-    > div:nth-child(2) {
+    >div:nth-child(2) {
         overflow-y: auto;
 
-        > div {
+        >div {
             @include lightfont;
             font-size: 1em;
             @include SlightRoundBorder;
@@ -342,7 +364,7 @@
 @mixin responsive_table {
     border-radius: 0;
 
-    > div:nth-child(1) > div {
+    >div:nth-child(1)>div {
         overflow: hidden;
 
         * {
@@ -350,7 +372,7 @@
         }
     }
 
-    > div > div {
+    >div>div {
         flex-direction: column;
         justify-content: center;
 
@@ -428,7 +450,7 @@
     display: flex;
     flex-direction: column;
 
-    > div {
+    >div {
         padding: 1em;
         padding-top: 2em;
         padding-bottom: 2em;
@@ -437,8 +459,8 @@
         gap: 1em;
         overflow-x: hidden;
 
-        > div {
-            > * {
+        >div {
+            >* {
                 flex: 1;
             }
 
@@ -454,7 +476,7 @@
         flex-direction: column;
     }
 
-    > div:nth-child(1) {
+    >div:nth-child(1) {
         @include boldfont;
         padding-top: 0;
         padding-bottom: 0;
@@ -463,7 +485,7 @@
         box-shadow: 0 0 5px black;
         z-index: 1;
 
-        > div {
+        >div {
             @include boldfont;
             font-size: 1.4em;
             text-align: center;
@@ -475,15 +497,16 @@
             display: flex;
             justify-content: space-around;
 
-            > label {
+            >label {
                 background-color: var(--backgroundcolor2);
             }
         }
     }
-    > div:nth-child(2) {
+
+    >div:nth-child(2) {
         overflow-y: auto;
 
-        > div {
+        >div {
             @include lightfont;
             font-size: 1.2em;
             @include SquareRoundBorder();

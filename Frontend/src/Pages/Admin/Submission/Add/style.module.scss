@@ -3,19 +3,38 @@
 .base {
     padding: 3em;
 
-    > label {
+    >label {
         @include boldfont;
         color: var(--textcolor);
     }
 
     .wrapbutton {
         display: flex;
-        > button {
+
+        >button {
             @include btn;
             margin: auto;
             font-size: large;
             width: 10em;
             margin-top: 3em;
         }
+    }
+
+    .backbtn {
+        @include backbtn;
+    }
+
+}
+
+
+
+@media screen and (max-width : 1100px) {
+    .base {
+        padding-top: 9em;
+    }
+
+    .backbtn {
+        position: absolute;
+        top: 9em;
     }
 }
