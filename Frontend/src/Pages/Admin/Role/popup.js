@@ -1,13 +1,15 @@
 import classNames from 'classnames';
 import React from 'react';
 import styles from './popup.module.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 
 function Popup({ handleClose, refinput, confbutton, add, confirm }) {
     return (
         <div className={styles.popupcontainer}>
             <div className={styles.popup}>
                 <button className={styles.closebutton} onClick={handleClose}>
-                    X
+                    <FontAwesomeIcon icon={faX} />
                 </button>
                 <div>
                     <div>{add}</div>
