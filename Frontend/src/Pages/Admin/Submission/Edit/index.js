@@ -62,10 +62,6 @@ function EditSubmission() {
                 <div className={styles.wrapbutton}>
                     <button
                         onClick={() => {
-                            console.log(nameRef.current.value);
-                            console.log(deadline1);
-                            console.log(deadline2);
-
                             axios
                                 .post(`submission/update/${id}`, {
                                     name: nameRef.current.value,

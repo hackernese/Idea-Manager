@@ -142,10 +142,10 @@ def update_submission_info(submission_id):
                 if 'name' in data:
                     submission.name = data['name'].strip()
                 if 'deadline1' in data:
-                    submission.deadline1 = datetime.fromisoformat(
+                    submission.deadline1 = TimeParser.parse(
                         data['deadline1'])
                 if 'deadline2' in data:
-                    submission.deadline2 = datetime.fromisoformat(
+                    submission.deadline2 = TimeParser.parse(
                         data['deadline2'])
 
                 db.session.commit()
