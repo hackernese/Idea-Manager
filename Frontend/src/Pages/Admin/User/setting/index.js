@@ -9,7 +9,8 @@ import { faChevronLeft, faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useParams } from 'react-router-dom';
 import { createRef, useEffect, useState } from 'react';
 import axios from 'axios';
-import { error } from '../../../../lib/toast';
+import { error, success } from '../../../../lib/toast';
+import { create } from '@mui/material/styles/createTransitions';
 
 function Setting() {
     const { id } = useParams();
@@ -18,15 +19,25 @@ function Setting() {
     const [role, setrole] = useState([]);
     const [availrole, setavailrole] = useState([]);
     const [userinfo, setuserinfo] = useState(null);
-    const [trigger, settrigger] = useState(0);
+
+    // references and states related to new data
     const passref = createRef();
     const cpassref = createRef();
+    const addressref = createRef();
+    const phoneref = createRef();
+    const emailref = createRef();
+    const nameref = createRef();
+    const [newdepart, setnewdepart] = useState(null);
+    const [birthday, setbirthday] = useState(new Date());
+    const [trigger, settrigger] = useState(0);
 
     useEffect(() => {
         axios.get(`user/get/${id}`).then((resp) => {
             setuserinfo(resp.data.data);
+
+            if (resp.data.data.birthday) setbirthday(new Date(resp.data.data.birthday));
         });
-    }, []);
+    }, [trigger]);
 
     useEffect(() => {
         if (!userinfo) return;
@@ -47,12 +58,44 @@ function Setting() {
                 setdepart(temp);
             }
         });
-        axios.post('role/list').then((resp) => {
-            console.log(userinfo);
 
-            if (resp.data.status === 'OK') setrole(resp.data.data);
+        axios.post('role/list').then((resp) => {
+            if (resp.data.status === 'OK') {
+                let avail_roles = [];
+                let current_roles = [];
+
+                for (const role of resp.data.data) {
+                    if (userinfo.roles.includes(role.name)) {
+                        current_roles.push(role);
+                    } else {
+                        avail_roles.push(role);
+                    }
+                }
+
+                setrole(current_roles);
+                setavailrole(avail_roles);
+
+                console.log(current_roles, avail_roles);
+            }
         });
     }, [userinfo]);
+
+    const deal_role = (id_, action) => {
+        axios
+            .post(`user/${id}/role/update`, {
+                role: id_,
+                action: action,
+            })
+            .then((resp) => {
+                if (resp.data.status === 'OK') success('Successfully set new role for this user.');
+                else error(resp.data.err);
+                settrigger(trigger + 1);
+            })
+            .catch((err) => {
+                error(err.response.data.err);
+                settrigger(trigger + 1);
+            });
+    };
 
     if (userinfo === null) {
         return 'Loading...';
@@ -75,15 +118,61 @@ function Setting() {
                     </div>
                     <div>
                         <h2>Profile information :</h2>
-                        <CustomInput default_value={userinfo.name} type="text" placeholder="Username"></CustomInput>
-                        <CustomInput default_value={userinfo.email} type="text" placeholder="Email"></CustomInput>
-                        <CustomInput default_value={userinfo.address} type="text" placeholder="address"></CustomInput>
-                        <CustomInput default_value={userinfo.phone} type="text" placeholder="phone"></CustomInput>
+                        <CustomInput
+                            custom_ref={nameref}
+                            default_value={userinfo.name}
+                            type="text"
+                            placeholder="Username"
+                        ></CustomInput>
+                        <CustomInput
+                            custom_ref={emailref}
+                            default_value={userinfo.email}
+                            type="text"
+                            placeholder="Email"
+                        ></CustomInput>
+                        <CustomInput
+                            custom_ref={addressref}
+                            default_value={userinfo.address}
+                            type="text"
+                            placeholder="address"
+                        ></CustomInput>
+                        <CustomInput
+                            custom_ref={phoneref}
+                            default_value={userinfo.phone}
+                            type="text"
+                            placeholder="phone"
+                        ></CustomInput>
                         <DatePicker
-                            default_day={userinfo.birthday ? new Date(userinfo.birthday) : new Date()}
+                            default_day={birthday}
                             label="Birthday"
+                            onChange={(e) => {
+                                setbirthday(new Date(e.$d));
+                            }}
                         ></DatePicker>
-                        <LoadingButton text="Update"></LoadingButton>
+                        <LoadingButton
+                            text="Update"
+                            onClick={() => {
+                                const username = nameref.current.value.trim();
+                                const email = emailref.current.value.trim();
+                                const address = addressref.current.value.trim();
+                                const phone = phoneref.current.value.trim();
+
+                                axios
+                                    .post(`user/update/${id}`, {
+                                        name: username,
+                                        email: email,
+                                        phone: phone,
+                                        address: address,
+                                    })
+                                    .then((resp) => {
+                                        if (resp.data.status === 'OK') success('Successfully updated profile.');
+                                        else error(resp.data.err);
+                                    })
+                                    .catch((err) => {
+                                        error(err.response.data.err);
+                                    });
+                            }}
+                        ></LoadingButton>
                     </div>
                     <div>
                         <h2>Credentials :</h2>
@@ -91,7 +180,7 @@ function Setting() {
                         <CustomInput custom_ref={cpassref} placeholder="Cofirm password."></CustomInput>
                         <LoadingButton
                             text="Update"
-                            onClick={() => {
+                            onClick={async () => {
                                 const password = passref.current.value.trim();
                                 const cpassword = cpassref.current.value.trim();
 
@@ -103,6 +192,12 @@ function Setting() {
                                     error("Passwords don't match");
                                     return;
                                 }
+
+                                const resp = await axios.post(`user/update/${id}`, {
+                                    passwd: password,
+                                });
+
+                                if (resp.data.status === 'OK') success('Successfully updated user password.');
                             }}
                         ></LoadingButton>
                     </div>
@@ -110,24 +205,41 @@ function Setting() {
                         <h2>Department :</h2>
                         <DropDown
                             value={depart}
-                            onChange={(e) => {
-                                console.log(e);
+                            onChange={({ code }) => {
+                                setnewdepart(code);
                             }}
                         ></DropDown>
-                        <LoadingButton text="Update"></LoadingButton>
+                        <LoadingButton
+                            text="Update"
+                            onClick={async () => {
+                                if (newdepart === null) {
+                                    error('Please choose a new department if you wish to change.');
+                                    return;
+                                }
+
+                                axios
+                                    .post(`user/update/${id}`, {
+                                        did: newdepart,
+                                    })
+                                    .then((resp) => {
+                                        if (resp.data.status === 'OK') success('Successfully updated department');
+                                    });
+                            }}
+                        ></LoadingButton>
                     </div>
                     <div>
                         <h2>Roles :</h2>
-                        <h3>Current roles :</h3>
+                        <h3>Assigned roles :</h3>
                         <div className={styles.roles}>
-                            {availrole.map((e) => {
+                            {role.map((e) => {
                                 return (
-                                    <div>
+                                    <div key={e.id}>
                                         <label>{e.name}</label>
                                         <FontAwesomeIcon
                                             icon={faX}
                                             onClick={() => {
                                                 // Remove an existing role
+                                                deal_role(e.id, false);
                                             }}
                                         />
                                     </div>
@@ -136,13 +248,14 @@ function Setting() {
                         </div>
                         <h3>Available roles:</h3>
                         <div className={styles.roles}>
-                            {role.map((e) => {
+                            {availrole.map((e) => {
                                 return (
-                                    <div>
+                                    <div key={e.id}>
                                         <label>{e.name}</label>
                                         <FontAwesomeIcon
                                             onClick={() => {
                                                 // Add new role
+                                                deal_role(e.id, true);
                                             }}
                                             icon={faPlus}
                                         />

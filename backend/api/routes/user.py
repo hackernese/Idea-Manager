@@ -217,6 +217,14 @@ def get_user_info(user_id):
 
 def change_user_info(user, data):
 
+    role_list = set(
+        [urole.role.name for urole in request.session.user.userrole_ref.all()])
+    # Checking if this is an administrator or manager
+
+    is_manager = "manager" in role_list
+    is_admin = "administrator" in role_list
+    is_privilege = is_manager or is_admin
+
     if not user:
         return bad_request("User with this id doesn't exist")
     if "name" in data:
@@ -231,54 +239,58 @@ def change_user_info(user, data):
     if "email" in data:
         # Updating the email only
         email = data['email'].strip()
-        check = db.session.query(User.email).filter(
-            User.email == email).first()
 
-        if check:
-            return jsonify({
-                'status': "FAIL",
-                'err': "This email has already been used"
-            })
+        if email != user.email:
 
-        code = token_urlsafe(100)
-        user.email_token = code
-        user.new_email = email
+            check = db.session.query(User.email).filter(
+                User.email == email).first()
 
-        # Creating a message which send to the user email later
+            if check:
+                return jsonify({
+                    'status': "FAIL",
+                    'err': "This email has already been used"
+                })
 
-        msg = Message('Verify your email',
-                      sender=app.config.get("MAIL_USERNAME"),
-                      recipients=[email])
-        msg.html = render_template(
-            'email_verify.html', username=user.username, url=user.craft_verify_url(code))
-        try:
-            mail.send(msg)
-        except smtplib.SMTPRecipientsRefused:
-            pass
+            code = token_urlsafe(100)
+            user.email_token = code
+            user.new_email = email
+
+            # Creating a message which send to the user email later
+
+            msg = Message('Verify your email',
+                          sender=app.config.get("MAIL_USERNAME"),
+                          recipients=[email])
+            msg.html = render_template(
+                'email_verify.html', username=user.username, url=user.craft_verify_url(code))
+            try:
+                mail.send(msg)
+            except smtplib.SMTPRecipientsRefused:
+                pass
 
     if "phone" in data:
         # Updating the phone number only
-        try:
+        if data['phone'] != '':
+            try:
 
-            number = phonenumbers.parse(data['phone'])
-            if not phonenumbers.is_possible_number(number):
+                number = phonenumbers.parse(data['phone'])
+                if not phonenumbers.is_possible_number(number):
+                    db.session.rollback()
+                    return jsonify({
+                        'status': "FAIL",
+                        'err': "Invalid phone number"
+                    })
+
+                user.phone = data['phone'].strip()
+                db.session.flush()
+            except phonenumbers.phonenumberutil.NumberParseException:
                 db.session.rollback()
                 return jsonify({
                     'status': "FAIL",
-                    'err': "Invalid phone number"
+                    'err': "Missing or invalid region code."
                 })
-
-            user.phone = data['phone'].strip()
-            db.session.flush()
-        except phonenumbers.phonenumberutil.NumberParseException:
-            db.session.rollback()
-            return jsonify({
-                'status': "FAIL",
-                'err': "Missing or invalid region code."
-            })
-        except IntegrityError:
-            db.session.rollback()
-            return created_request('This phone number has already been used')
+            except IntegrityError:
+                db.session.rollback()
+                return created_request('This phone number has already been used')
 
     if "birthday" in data:
         # Updating the birthday only
@@ -319,15 +331,19 @@ def change_user_info(user, data):
     if "passwd" in data:
         # Updating the password only
 
-        if "cpass" not in data:
-            # if there is no confirm password
-            return bad_request('Missing confirm password.')
+        print(is_privilege)
 
-        if not user.check_password(data['cpass']):
-            return jsonify({
-                'status': "FAIL",
-                'err': "INVALID_PASS"
-            })
+        if not is_privilege:
+
+            if "cpass" not in data:
+                # if there is no confirm password
+                return bad_request('Missing confirm password.')
+
+            if not user.check_password(data['cpass']):
+                return jsonify({
+                    'status': "FAIL",
+                    'err': "INVALID_PASS"
+                })
 
         try:
             user.set_new_password(data['passwd'].strip())
@@ -354,6 +370,17 @@ def change_user_info(user, data):
         except IntegrityError:
             db.session.rollback()
             return bad_request('Invalid language')
+
+    if "did" in data:
+
+        try:
+            user.department_id = int(data['did'])
+            db.session.flush()
+        except IntegrityError:
+            return jsonify({
+                'status': "FAIL",
+                'err': "Invalid department id"
+            })
 
     db.session.commit()
 
@@ -468,39 +495,39 @@ def update_self_info():
     })
 
 
-@app.route('/api/user/<user_id>/role/update', methods=['POST'])
-@login_required(allow_personal_user=True)
-def update_user_role(user_id):
+# @app.route('/api/user/<user_id>/role/update', methods=['POST'])
+# @login_required(allow_personal_user=True)
+# def update_user_role(user_id):
 
-    if not user_id.isdigit():
-        return bad_request('Invalid user id')
+#     if not user_id.isdigit():
+#         return bad_request('Invalid user id')
 
-    data = request.get_json()
+#     data = request.get_json()
 
-    if "new_role" not in data:
-        return bad_request('Missing argument')
+#     if "new_role" not in data:
+#         return bad_request('Missing argument')
 
-    role_list = set(data['new_role'])
+#     role_list = set(data['new_role'])
 
-    ret = db.session.query(UserRoles).filter(UserRoles.userid == int(user_id)).filter(UserRoles.roleid.in_(
-        role_list
-    )).all()
+#     ret = db.session.query(UserRoles).filter(UserRoles.userid == int(user_id)).filter(UserRoles.roleid.in_(
+#         role_list
+#     )).all()
 
-    for record in ret:
-        role_list.remove(record.roleid)
+#     for record in ret:
+#         role_list.remove(record.roleid)
 
-    try:
-        db.session.add_all([
-            UserRoles(userid=int(user_id), roleid=new_role) for new_role in role_list
-        ])
-        db.session.commit()
-    except IntegrityError:
-        db.session.rollback()
-        return bad_request('Invalid role id detected')
+#     try:
+#         db.session.add_all([
+#             UserRoles(userid=int(user_id), roleid=new_role) for new_role in role_list
+#         ])
+#         db.session.commit()
+#     except IntegrityError:
+#         db.session.rollback()
+#         return bad_request('Invalid role id detected')
 
-    return jsonify({
-        'status': "OK"
-    })
+#     return jsonify({
+#         'status': "OK"
+#     })
 
 
 @app.route('/api/user/<user_id>/export', methods=["GET", 'POST'])
