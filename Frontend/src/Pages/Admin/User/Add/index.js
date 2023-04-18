@@ -175,6 +175,9 @@ function AddNewUser() {
                                         } else {
                                             error(resp.data.err);
                                         }
+                                    })
+                                    .catch((err) => {
+                                        error(err.response.data.err);
                                     });
                             }}
                         >

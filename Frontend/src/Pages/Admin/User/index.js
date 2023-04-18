@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faFilePen } from '@fortawesome/free-solid-svg-icons';
 import LoadingCircle from '../../../Components/LoadingCircle';
 import { useTranslation } from 'react-i18next';
+import { success, error } from '../../../lib/toast';
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +20,7 @@ function User() {
     const [page, setpage] = useState(0);
 
     useEffect(() => {
+        console.log(1);
         axios
             .post('user/list', {
                 page: 0,
@@ -27,6 +29,8 @@ function User() {
                 setUser(resp.data);
             });
     }, []);
+
+    console.log(user);
 
     if (outlet) {
         return outlet;
@@ -62,10 +66,15 @@ function User() {
                                                 icon={faTrashCan}
                                                 onClick={() => {
                                                     axios.delete(`user/delete/${e.id}`).then((resp) => {
-                                                        console.log(resp.data);
-                                                        axios.post('user/list').then((resp) => {
-                                                            setUser(resp.data.data);
-                                                        });
+                                                        if (resp.data.status === 'OK') {
+                                                            success('Successfully deleted user.');
+                                                            let _ = Array.from(user);
+                                                            _.splice(
+                                                                user.indexOf(user.find((event) => event.id == e.id)),
+                                                                1,
+                                                            );
+                                                            setUser(_);
+                                                        }
                                                     });
                                                 }}
                                             />
