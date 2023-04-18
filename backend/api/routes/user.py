@@ -209,7 +209,8 @@ def get_user_info(user_id):
             'theme': user.theme,
             'language': user.language,
             'gender': user.gender,
-            'birthday': user.birthday
+            'birthday': user.birthday,
+            'roles': list([urole.role.name for urole in user.userrole_ref.all()])
         }
     })
 

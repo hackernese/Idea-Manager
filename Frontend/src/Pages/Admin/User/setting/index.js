@@ -7,20 +7,24 @@ import DropDown from '../../../../Components/DropDown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faX, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import axios from 'axios';
+import { error } from '../../../../lib/toast';
 
 function Setting() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [depart, setdepart] = useState([]);
     const [role, setrole] = useState([]);
+    const [availrole, setavailrole] = useState([]);
     const [userinfo, setuserinfo] = useState(null);
+    const [trigger, settrigger] = useState(0);
+    const passref = createRef();
+    const cpassref = createRef();
 
     useEffect(() => {
         axios.get(`user/get/${id}`).then((resp) => {
             setuserinfo(resp.data.data);
-            console.log(resp.data.data);
         });
     }, []);
 
@@ -83,9 +87,24 @@ function Setting() {
                     </div>
                     <div>
                         <h2>Credentials :</h2>
-                        <CustomInput type="text" placeholder="Password"></CustomInput>
-                        <CustomInput type="text" placeholder="Cofirm password."></CustomInput>
-                        <LoadingButton text="Update"></LoadingButton>
+                        <CustomInput custom_ref={passref} placeholder="Password"></CustomInput>
+                        <CustomInput custom_ref={cpassref} placeholder="Cofirm password."></CustomInput>
+                        <LoadingButton
+                            text="Update"
+                            onClick={() => {
+                                const password = passref.current.value.trim();
+                                const cpassword = cpassref.current.value.trim();
+
+                                if (!password) {
+                                    return;
+                                }
+
+                                if (password != cpassword) {
+                                    error("Passwords don't match");
+                                    return;
+                                }
+                            }}
+                        ></LoadingButton>
                     </div>
                     <div>
                         <h2>Department :</h2>
@@ -101,7 +120,7 @@ function Setting() {
                         <h2>Roles :</h2>
                         <h3>Current roles :</h3>
                         <div className={styles.roles}>
-                            {role.map((e) => {
+                            {availrole.map((e) => {
                                 return (
                                     <div>
                                         <label>{e.name}</label>
