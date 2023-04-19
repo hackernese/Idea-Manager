@@ -331,6 +331,7 @@ def get_idea_info(idea_id):
 @ login_required()
 def like_idea(idea_id):
     idea = Idea.query.get(idea_id)
+
     if idea:
         # check if user has reacted this idea or has not?
         reacted = request.session.user.reaction_ref.filter_by(
@@ -479,15 +480,21 @@ def list_all_comment(idea_id):
             })
 
 
-@ app.route('/api/comment/<comment_id>/delete', methods=['DELETE'])
-@ login_required()
+@app.route('/api/comment/<comment_id>/delete', methods=['DELETE'])
+@login_required()
 def delete_comment(comment_id):
     comment = Comments.query.get(comment_id)
+    user = request.session.user
+    roles = set([i.role.name for i in user.userrole_ref.all()])
+    is_admin = "administrator" in roles
+    is_manager = "manager" in roles
+    is_privilege = is_admin or is_manager
+
     if comment:
         # get current user id
-        user_id = request.session.user.id
+        user_id = user.id
         # check authorization of user
-        if user_id == comment.user_id:
+        if user_id == comment.user_id or is_privilege:
             try:
                 # delete database
                 db.session.delete(comment)

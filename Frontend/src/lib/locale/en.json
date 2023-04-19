@@ -46,7 +46,6 @@
         "add": {
             "make": "Make a new account"
         },
-
         "edit": {
             "title": "Edit user",
             "subtitle": "Profile information",
@@ -77,6 +76,18 @@
             "logout": "Logout",
             "setting": "Setting"
         }
+    },
+    "general": {
+        "eor": "End olf results"
+    },
+    "ideas": {
+        "title": "Title",
+        "brief": "Brief",
+        "content": "Content",
+        "views": "Views",
+        "submission": "Submission",
+        "cat": "Category",
+        "head": "Idea Info"
     },
     "setting": {
         "sidebar": {

@@ -31,6 +31,8 @@ function AddNewIdea() {
 
     const grab_category = () => {
         axios.post('category/list').then((resp) => {
+            console.log(resp.data);
+
             let temp = resp.data.msg.map((e, index) => {
                 return {
                     v: e.name,

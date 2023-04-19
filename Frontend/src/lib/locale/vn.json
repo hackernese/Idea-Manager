@@ -77,6 +77,18 @@
             "setting": "Cài đặt"
         }
     },
+    "general": {
+        "eor": "Kết thúc kết quả"
+    },
+    "ideas": {
+        "title": "Tiêu đề",
+        "brief": "Tóm tắt",
+        "content": "Nội dung",
+        "views": "Lượt xem",
+        "submission": "Gửi ý tưởng",
+        "cat": "Thể loại",
+        "head": "Thông tin ý tưởng"
+    },
     "setting": {
         "sidebar": {
             "profile": "Hồ sơ cá nhân",

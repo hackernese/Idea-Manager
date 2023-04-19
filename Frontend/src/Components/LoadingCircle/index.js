@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import styles from './style.module.scss';
 import { InView } from 'react-intersection-observer';
+import { useTranslation } from 'react-i18next';
 
 const cx = classNames.bind(styles);
 
@@ -10,6 +11,7 @@ function LoadingCircle({ tag = 'section', onIntersect = () => {} }) {
     // unless someone else specify another tag
 
     const [endret, setendret] = useState(false);
+    const { t } = useTranslation();
     const TagName = tag;
 
     return (
@@ -22,7 +24,7 @@ function LoadingCircle({ tag = 'section', onIntersect = () => {} }) {
                     }}
                 ></InView>
             )}
-            {endret && <label>End of results.</label>}
+            {endret && <label>{t('general.eor')}.</label>}
         </TagName>
     );
 }

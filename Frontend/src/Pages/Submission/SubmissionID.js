@@ -109,7 +109,7 @@ function SubmissionID() {
                     filter: filter,
                 })
                 .then((resp) => {
-                    console.log();
+                    console.log(resp);
 
                     if (resp.data.status === 'OK') {
                         setidea(resp.data.msg.data);
