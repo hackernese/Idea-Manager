@@ -248,6 +248,9 @@ def download_csv_info(submission_id):
         ideas = submission.reference.all()
         for (id_, i) in enumerate(ideas):
 
+            if not i.doc_file:
+                continue
+
             data = {
                 'Vol.': id_,
                 'ID': i.id,

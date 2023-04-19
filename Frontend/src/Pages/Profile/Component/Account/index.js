@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './password.module.scss';
-import { createRef, useContext, useLayoutEffect, useState } from 'react';
+import { createRef, useContext, useEffect, useLayoutEffect, useState } from 'react';
 import { settingContext } from '../..';
 import CustomInput from '../../../../Components/CustomInput';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,7 @@ import LoadingButton from '../../../../Components/LoadingButton';
 import { loginContext } from '../../../../App';
 import axios from 'axios';
 import Popup from '../../../../Components/Popup';
+import { useSearchParams } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,7 @@ function Password() {
     const authContext = useContext(loginContext);
     const context = useContext(settingContext);
     const { t } = useTranslation();
+    const [param, setparam] = useSearchParams();
 
     const email_input_ref = createRef();
     const email_btn_ref = createRef();
@@ -34,6 +36,20 @@ function Password() {
     const getfile = createRef();
 
     useLayoutEffect(() => context.settext('setting.account.title'), []);
+
+    useEffect(() => {
+        const err = param.get('err');
+
+        if (err == '1') {
+            success(t('mailverify.success'));
+            param.delete('err');
+            setparam(param);
+        } else {
+            error(err);
+            param.delete('err');
+            setparam(param);
+        }
+    }, []);
 
     return (
         <AnimatedOutlet>

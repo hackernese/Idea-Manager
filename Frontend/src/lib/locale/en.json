@@ -22,7 +22,8 @@
         "edit": "Edit",
         "confirm": "Confirm",
         "notfound": "No submissions found.",
-        "edit_title": "Edit the Submission"
+        "edit_title": "Edit the Submission",
+        "addtitle" : "Add new submission"
     },
     "category": {
         "list": "List of category",

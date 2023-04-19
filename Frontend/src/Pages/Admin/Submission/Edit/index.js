@@ -24,7 +24,8 @@ function EditSubmission() {
 
     useEffect(() => {
         axios.get(`submission/get/${id}`).then((resp) => {
-            console.log(resp.data);
+            setDeadline1(new Date(resp.data.deadline1));
+            setDeadline2(new Date(resp.data.deadline2));
             setEditSub(resp.data);
         });
     }, []);

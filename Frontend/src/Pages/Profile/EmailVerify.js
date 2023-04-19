@@ -21,16 +21,14 @@ function EmailVerify() {
                 })
                 .then(async (resp) => {
                     if (resp.data.status === 'FAIL') {
-                        if (resp.data.err === 'INVALID_CODE') error(t('mailverify.invalid'));
-                        else if (resp.data.err === 'EXIST_ERR') error(t('mailverify.exist'));
-                    } else {
-                        context.trigger_whoami();
-                        // Trigger a request back to whoami to get update information
-                        success(t('mailverify.success'));
+                        if (resp.data.err === 'INVALID_CODE')
+                            window.location.assign(`/setting/account?err=${t('mailverify.invalid')}`);
+                        else if (resp.data.err === 'EXIST_ERR')
+                            window.location.assign(`/setting/account?err=${t('mailverify.exist')}`);
                     }
-                    navigate('/setting/account');
+                    window.location.assign(`/setting/account?err=1`);
                 })
-                .catch(() => error(t('mailverify.fail')));
+                .catch(() => window.location.assign(`/setting/account?err=${t('mailverify.fail')}`));
     }, []);
 
     if (!token) return <Navigate to="/setting/account"></Navigate>;

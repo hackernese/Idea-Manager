@@ -336,9 +336,12 @@ def change_user_info(user, data):
     if "passwd" in data:
         # Updating the password only
 
-        print(is_privilege)
+        # print(is_privilege)
 
-        if not is_privilege:
+        if not is_privilege or user.id == request.session.user.id:
+
+            # If someone who isn't privileged try to change password, there should be a current password for tat
+            # If a person trying to change their own password, there should be current as well
 
             if "cpass" not in data:
                 # if there is no confirm password
@@ -560,8 +563,6 @@ def export_user_config(user_id):
         return bad_request('User doesn\'t exist')
 
     return jsonify({
-        "username": f"{user.username}",
-        "email": f"{user.email}",
         "phone": user.phone,
         "theme": f"{user.theme}",
         "language": f"{user.language}",
@@ -598,6 +599,7 @@ def import_user_config(user_id):
         for (key, value) in json_content.items():
             # Some of this can be null, so i have to write a if clause first
             # before executing
+            print(key, value)
             (setattr(user, key, TimeParser.parse(value.strip())
              if key == "birthday" else value) if value else None)
         db.session.commit()

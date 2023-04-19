@@ -22,7 +22,8 @@
         "edit": "Chỉnh sửa",
         "confirm": "Chấp nhận",
         "notfound": "Danh sách đơn bị trống.",
-        "edit_title": "Chỉnh sửa đơn"
+        "edit_title": "Chỉnh sửa đơn",
+        "addtitle" : "Tạo đơn mới"
     },
     "category": {
         "list": "Danh sách các danh mục",

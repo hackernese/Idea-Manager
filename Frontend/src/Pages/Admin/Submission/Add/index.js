@@ -42,13 +42,13 @@ function AddNewSubmission() {
                     >
                         <FontAwesomeIcon icon={faChevronLeft} />
                     </div>
-                    <h1>Add new submission</h1>
+                    <h1>{t('submission_admin.addtitle')}</h1>
                 </div>
                 <label>{t('submission_admin.name')}</label>
                 <CustomInput type="text" custom_ref={nameRef} placeholder="Submission name"></CustomInput>
-                <label>Deadline 1</label>
+                <label>{t('submission_admin.deadline_1')}</label>
                 <DatePicker onChange={handleDeadline1} default_day={deadline1}></DatePicker>
-                <label>Deadline 2</label>
+                <label>{t('submission_admin.deadline_2')}</label>
                 <DatePicker onChange={handleDeadline2} default_day={deadline2}></DatePicker>
                 <div className={styles.wrapbutton}>
                     <button
