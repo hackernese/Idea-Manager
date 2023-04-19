@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Idea Notification</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #f5f5f5;
+        padding: 0;
+        margin: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .logo {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        padding-bottom: 20px;
+      }
+      .logo img {
+        max-width: 20%;
+        height: auto;
+      }
+      h1 {
+        font-size: 28px;
+        font-weight: bold;
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+      p {
+        margin-top: 0;
+        margin-bottom: 20px;
+      }
+      .button {
+        display: block;
+        width: 100%;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+
+        background: #36d1dc; /* fallback for old browsers */
+        background: -webkit-linear-gradient(
+          to right,
+          #5b86e5,
+          #36d1dc
+        ); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(
+          to right,
+          #5b86e5,
+          #36d1dc
+        ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+      a {
+        color: white !important;
+      }
+      .button:hover {
+        cursor: pointer;
+        transform: scale(1.06);
+        box-shadow: 0 0 5px black;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/8727/8727794.png"
+          alt="IDea manager Logo"
+        />
+      </div>
+      <h1>New Idea Notification</h1>
+      <p>Hi coordinators,</p>
+      <p>
+        A new idea has been submitted by <strong>{{user}}</strong>. Please
+        review the details of the idea and take appropriate action.
+      </p>
+      <p>Details of the idea:</p>
+      <ul>
+        <li><strong>Title:</strong> {{title}}</li>
+        <li><strong>Context:</strong> {{context}}</li>
+        <li><strong>Date Submitted:</strong> {{date}}</li>
+      </ul>
+      <p>
+        Click the button below to log in to the Idea Manager and review the
+        idea:
+      </p>
+      <a target="_blank" href="{{ idea_manager_url }}"
+    </div>
+  </body>
+</html>

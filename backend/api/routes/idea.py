@@ -2,7 +2,7 @@ import os
 from app import app
 from . import login_required, send_mail
 from db import Submission, db, Idea, User, Reaction, Comments, Views, Role, UserRoles
-from flask import jsonify, request, send_file
+from flask import jsonify, request, send_file, render_template
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
@@ -118,7 +118,7 @@ def add_idea(submission_id):
             # do func send_mail
             if email:
                 send_mail("New Idea Was Uploaded!",
-                          f"{user.username} Has Created New Idea!", email)
+                          render_template("new_idea.html", user=user.username, title=title, context=content, date=datetime.now()), email, is_html=True)
 
             return jsonify({
                 'status': 'OK',

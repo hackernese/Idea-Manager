@@ -105,13 +105,16 @@ def login_required(role_allow: str | list = "*", allow_personal_user=False) -> c
     return wrapper
 
 
-def send_mail(title, body, mails):
+def send_mail(title, body, mails, is_html=False):
 
     def send():
 
         msg = Message(title, sender=app.config.get(
             "MAIL_USERNAME"), recipients=mails)
-        msg.body = body
+        if is_html:
+            msg.html = body
+        else:
+            msg.body = body
 
         with app.app_context():
 
