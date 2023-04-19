@@ -211,18 +211,21 @@ function SubmissionID() {
                             value={[
                                 {
                                     v: 'Filter',
-                                    s: true,
+                                    s: filter === undefined || filter === null ? true : false,
                                 },
                                 {
                                     v: 'Most popular',
+                                    s: filter === 0 ? true : false,
                                     ret: 0,
                                 },
                                 {
                                     v: 'Least popular',
+                                    s: filter === 1 ? true : false,
                                     ret: 1,
                                 },
                                 {
                                     v: 'Most viewed',
+                                    s: filter === 2 ? true : false,
                                     ret: 2,
                                 },
                             ]}

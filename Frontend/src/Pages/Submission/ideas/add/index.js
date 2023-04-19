@@ -191,6 +191,7 @@ function AddNewIdea() {
                                 }
 
                                 success('Successfully created new idea.');
+                                navigate(`/submission/${id}`);
                             }}
                             text="Create"
                         ></LoadingButton>
