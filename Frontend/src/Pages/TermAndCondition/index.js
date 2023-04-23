@@ -2,6 +2,7 @@ import style from './style.module.scss';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(style);
 
@@ -18,13 +19,20 @@ const cx = classNames.bind(style);
 //
 
 function TermAndCondition() {
+    const navigate = useNavigate();
+
     return (
         <div className={cx('tandc')}>
             <div>
                 <div className={cx('container', 'd-flex', 'f-wrap')}>
                     <div className={cx('col-12', 'title', 'text-center', 'd-flex', 'f-wrap')}>
-                        <div className={cx('col-2','icon')}>
-                            <FontAwesomeIcon icon={faChevronLeft} />
+                        <div className={cx('col-2', 'icon')}>
+                            <FontAwesomeIcon
+                                onClick={() => {
+                                    navigate(-1);
+                                }}
+                                icon={faChevronLeft}
+                            />
                         </div>
                         <div className={cx('col-8')}>
                             <h2>Term of Service</h2>
