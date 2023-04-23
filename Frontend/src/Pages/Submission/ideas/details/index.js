@@ -200,6 +200,7 @@ function IdeaDetails() {
                                                 if (resp.data.status === 'OK') {
                                                     settrigger(trigger + 1);
                                                     success(resp.data.msg);
+                                                    commentref.current.value = '';
                                                 }
                                             });
                                     }}
