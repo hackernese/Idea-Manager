@@ -7,6 +7,7 @@ from . import login_required
 from flask import jsonify, request, send_file
 from sqlalchemy.exc import IntegrityError
 from setting import basedir
+from . import bad_request
 from dateutil import parser as TimeParser
 import csv
 
@@ -176,9 +177,11 @@ def update_submission_info(submission_id):
 @app.route('/api/submission/download_zip/<submission_id>', methods=['POST', 'GET'])
 @login_required(role_allow=['manager'])
 def download_zip(submission_id):
+
     submission = Submission.query.get(submission_id)
     file_paths = []
     if submission:
+
         # get all Ideas from sub
         ideas = submission.reference.all()
         if ideas:
@@ -189,10 +192,7 @@ def download_zip(submission_id):
 
             # check is any files in Ideas belong to this Submission
             if file_paths == []:
-                return jsonify({
-                    'status': 'FAIL',
-                    'err': 'No File Found from Submission'
-                })
+                return bad_request("No documents found from this submission.")
             else:
                 # Create a name for the ZIP file
 
@@ -202,7 +202,7 @@ def download_zip(submission_id):
                 if os.path.isfile(zip_file_name):
                     os.remove(zip_file_name)
 
-               # Create a new ZIP file and write the files to it
+                # Create a new ZIP file and write the files to it
                 with zipfile.ZipFile(zip_file_name, 'w') as zip:
                     for (index, file_path) in enumerate(file_paths):
                         zip.write(
@@ -211,15 +211,9 @@ def download_zip(submission_id):
                 # Send the ZIP file as a response to the client
                 return send_file(zip_file_name, as_attachment=True)
         else:
-            return jsonify({
-                'status': 'FAIL',
-                'err': 'No Idea Found from Submission'
-            })
+            return bad_request("No Idea found from submission")
     else:
-        return jsonify({
-            'status': 'FAIL',
-            'err': 'No Submission Found'
-        })
+        return bad_request("No Submission Found")
 
 
 @app.route('/api/submission/download/csv/<submission_id>', methods=["POST", "GET"])
@@ -248,15 +242,12 @@ def download_csv_info(submission_id):
         ideas = submission.reference.all()
         for (id_, i) in enumerate(ideas):
 
-            if not i.doc_file:
-                continue
-
             data = {
                 'Vol.': id_,
                 'ID': i.id,
                 "Title": str(i.title),
                 'Content': str(i.content),
-                'Filename': os.path.basename(i.doc_file),
+                'Filename': os.path.basename(i.doc_file) if i.doc_file else 'None',
                 'Author': str(i.user.username),
                 'like': i.react_ref.filter_by(react=True).count(),
                 'dislike': i.react_ref.filter_by(react=False).count(),

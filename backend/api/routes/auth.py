@@ -114,8 +114,6 @@ def get_login():
         ]
     })
 
-    breakpoint()
-
 
 @app.route('/api/auth/logout', methods=["POST"])
 @login_required()

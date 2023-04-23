@@ -122,8 +122,6 @@ function App() {
             .post('auth/whoami')
             .then((resp) => {
                 if (resp.data.status === 'OK') {
-                    console.log(resp.data);
-
                     userinfo_initialize(resp.data.data);
                     setuserinfo(resp.data.data);
 

@@ -191,6 +191,7 @@ describe("CRUD operations on users", () => {
       expect(resp.body.status).to.eq("OK");
     });
   });
+  // Test case 3 : Listing all current user
   it("Listing users to check for new user.", () => {
     cy.request({
       method: "POST",
@@ -209,6 +210,7 @@ describe("CRUD operations on users", () => {
       expect(temp).to.be.exist;
     });
   });
+  // Test case 4 : Update a specific user information
   it("Update user information.", () => {
     cy.request({
       method: "POST",
@@ -224,6 +226,7 @@ describe("CRUD operations on users", () => {
       expect(resp.body.status).to.eq("OK");
     });
   });
+  // Test case 5 : Get a specific user information
   it("Get user information.", () => {
     cy.request({
       method: "POST",
@@ -236,6 +239,7 @@ describe("CRUD operations on users", () => {
       expect(resp.body.data.address).to.eq("Testing address here");
     });
   });
+  // Test case 6 : Delete a specific user
   it("Delete user.", () => {
     cy.request({
       method: "DELETE",
@@ -248,6 +252,7 @@ describe("CRUD operations on users", () => {
       expect(resp.body.status).to.eq("OK");
     });
   });
+  // Run something afterward
   after(() => {
     cy.request({
       method: "POST",

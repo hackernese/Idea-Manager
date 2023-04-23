@@ -10,6 +10,7 @@ import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import NotFoundLabel from '../../Components/NotFound';
+import { error } from '../../lib/toast';
 
 const cx = classNames.bind(styles);
 
@@ -74,23 +75,28 @@ function Submission() {
                                                             url: `submission/download_zip/${e.id}`,
                                                             method: 'GET',
                                                             responseType: 'blob',
-                                                        }).then((resp) => {
-                                                            console.log(resp);
+                                                        })
+                                                            .then((resp) => {
+                                                                // Virtual link to the object in memory
+                                                                const href = URL.createObjectURL(resp.data);
+                                                                const link = document.createElement('a');
+                                                                link.href = href;
+                                                                link.setAttribute('download', `Submission-${e.id}.zip`);
 
-                                                            // Virtual link to the object in memory
-                                                            const href = URL.createObjectURL(resp.data);
-                                                            const link = document.createElement('a');
-                                                            link.href = href;
-                                                            link.setAttribute('download', `Submission-${e.id}.zip`);
+                                                                // Silently append to the body then click it
+                                                                document.body.appendChild(link);
+                                                                link.click();
 
-                                                            // Silently append to the body then click it
-                                                            document.body.appendChild(link);
-                                                            link.click();
-
-                                                            // AFter clicking it, remove it since it's no longer needed
-                                                            document.body.removeChild(link);
-                                                            URL.revokeObjectURL(href);
-                                                        });
+                                                                // AFter clicking it, remove it since it's no longer needed
+                                                                document.body.removeChild(link);
+                                                                URL.revokeObjectURL(href);
+                                                            })
+                                                            .catch(async (err) => {
+                                                                const tmp_err = JSON.parse(
+                                                                    await err.response.data.text(),
+                                                                );
+                                                                error(tmp_err.err);
+                                                            });
                                                     }}
                                                 />
                                                 <FontAwesomeIcon
@@ -101,21 +107,26 @@ function Submission() {
                                                             url: `submission/download/csv/${e.id}`,
                                                             method: 'GET',
                                                             responseType: 'blob',
-                                                        }).then((resp) => {
-                                                            // Virtual link to the object in memory
-                                                            const href = URL.createObjectURL(resp.data);
-                                                            const link = document.createElement('a');
-                                                            link.href = href;
-                                                            link.setAttribute('download', `Submission-${e.id}.csv`);
+                                                        })
+                                                            .then((resp) => {
+                                                                // Virtual link to the object in memory
+                                                                const href = URL.createObjectURL(resp.data);
+                                                                const link = document.createElement('a');
+                                                                link.href = href;
+                                                                link.setAttribute('download', `Submission-${e.id}.csv`);
 
-                                                            // Silently append to the body then click it
-                                                            document.body.appendChild(link);
-                                                            link.click();
+                                                                // Silently append to the body then click it
+                                                                document.body.appendChild(link);
+                                                                link.click();
 
-                                                            // AFter clicking it, remove it since it's no longer needed
-                                                            document.body.removeChild(link);
-                                                            URL.revokeObjectURL(href);
-                                                        });
+                                                                // AFter clicking it, remove it since it's no longer needed
+                                                                document.body.removeChild(link);
+                                                                URL.revokeObjectURL(href);
+                                                            })
+                                                            .catch((err) => {
+                                                                console.elog('WTF IS THIS');
+                                                                console.log(JSON.parse(err.response.data.text()));
+                                                            });
                                                     }}
                                                 />
                                             </>
