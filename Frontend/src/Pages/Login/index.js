@@ -30,7 +30,7 @@ function getos() {
         { s: 'Open BSD', r: /OpenBSD/ },
         { s: 'Sun OS', r: /SunOS/ },
         { s: 'Chrome OS', r: /CrOS/ },
-        { s: 'Linux', r: /(Linux|X11(?!.*CrOS))/ },
+        { s: 'Linux', r: /(Linux|X11)/ },
         { s: 'iOS', r: /(iPhone|iPad|iPod)/ },
         { s: 'Mac OS X', r: /Mac OS X/ },
         { s: 'Mac OS', r: /(Mac OS|MacPPC|MacIntel|Mac_PowerPC|Macintosh)/ },
@@ -38,10 +38,10 @@ function getos() {
         { s: 'UNIX', r: /UNIX/ },
         { s: 'BeOS', r: /BeOS/ },
         { s: 'OS/2', r: /OS\/2/ },
-        {
-            s: 'Search Bot',
-            r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/,
-        },
+        // {
+        //     s: 'Search Bot',
+        //     r: /(nuhk|Googlebot|Yammybot|Openbot|Slurp|MSNBot|Ask Jeeves\/Teoma|ia_archiver)/,
+        // },
     ];
     for (var id in DetectionString) {
         const _ = DetectionString[id];

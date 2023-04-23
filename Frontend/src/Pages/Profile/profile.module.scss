@@ -2,42 +2,55 @@
 .container-fluid {
 	width: 100%;
 }
+
 .col-1 {
 	width: 8.33%;
 }
+
 .col-2 {
 	width: 16.66%;
 }
+
 .col-3 {
 	width: 25%;
 }
+
 .col-4 {
 	width: 33.33%;
 }
+
 .col-5 {
 	width: 41.66%;
 }
+
 .col-6 {
 	width: 50%;
 }
+
 .col-7 {
 	width: 58.33%;
 }
+
 .col-8 {
 	width: 66.66%;
 }
+
 .col-9 {
 	width: 75%;
 }
+
 .col-10 {
 	width: 83.33%;
 }
+
 .col-11 {
 	width: 91.66%;
 }
+
 .col-12 {
 	width: 100%;
 }
+
 [class*="col-"] {
 	padding: 0 12px;
 }
@@ -53,9 +66,11 @@
 .text-center {
 	text-align: center;
 }
+
 .text-left {
 	text-align: left;
 }
+
 .text-right {
 	text-align: right;
 }
@@ -63,9 +78,11 @@
 .j-center {
 	justify-content: center;
 }
+
 .j-right {
 	justify-content: flex-end;
 }
+
 .w-100 {
 	width: 100%;
 }
@@ -74,6 +91,7 @@
 .container {
 	padding: 30px;
 }
+
 .title {
 	font-weight: bold;
 }
@@ -94,6 +112,7 @@
 		cursor: pointer;
 		background-color: var(--blurborder);
 	}
+
 	transition: all 0.2s ease-out;
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;
@@ -116,6 +135,7 @@
 @import "../../Components/globalMixins.scss";
 
 .setting {
+
 	h1,
 	p {
 		color: var(--textcolor);
@@ -124,6 +144,7 @@
 	ul a {
 		color: var(--textcolor);
 		@include transition;
+
 		&:active {
 			transform: scale(0.9);
 			-webkit-transform: scale(0.9);
@@ -131,6 +152,7 @@
 			-ms-transform: scale(0.9);
 			-o-transform: scale(0.9);
 		}
+
 		&:hover {
 			color: var(--backgroundcolor);
 		}
@@ -141,10 +163,11 @@
 		color: var(--backgroundcolor);
 	}
 
-	> div:nth-child(2) {
-		> div:nth-child(1) {
+	>div:nth-child(2) {
+		>div:nth-child(1) {
 			@include dropdown_animation;
 			padding: 1em;
+
 			h1 {
 				padding: 0.2em;
 				padding-top: 0;
@@ -164,7 +187,7 @@
 	}
 
 	.setting {
-		> div:nth-child(1) {
+		>div:nth-child(1) {
 			@include dropup_animation;
 			position: absolute;
 			width: 100%;
@@ -218,7 +241,8 @@
 				-o-border-radius: 0px;
 			}
 		}
-		> div:nth-child(2) {
+
+		>div:nth-child(2) {
 			overflow: auto;
 			overflow-x: hidden;
 			width: 100%;
@@ -228,6 +252,7 @@
 			height: calc(100% - 3em);
 		}
 	}
+
 	.title {
 		font-weight: bold;
 	}
@@ -246,6 +271,7 @@
 		margin: 1rem 0;
 		font-size: 1.5rem;
 		color: #fff;
+
 		&:hover {
 			cursor: pointer;
 			background-color: crimson;
