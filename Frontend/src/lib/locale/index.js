@@ -13,7 +13,7 @@ i18n.use(initReactI18next).init({
         },
     },
     lng: 'en', // if you're using a language detector, do not define the lng option
-    fallbackLng: 'en',
+    fallbackLng: 'vn',
 });
 
 export default useTranslation;
