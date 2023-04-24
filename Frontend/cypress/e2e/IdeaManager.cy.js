@@ -668,6 +668,7 @@ describe("CRUD operations on category", () => {
 describe("CRUD operations on submission", () => {
   var id_;
   var authToken = undefined;
+
   beforeEach(() => {
     if (!authToken)
       cy.request({
