@@ -184,6 +184,10 @@ def list_all_ideas(submission_id):
                 .group_by(Idea.id) \
                 .order_by(desc('react_count'))
 
+            # SELECT *, idea.id as idea_id__1, sum(reaction.react) AS react_count
+            # FROM idea LEFT OUTER JOIN reaction ON idea.id = reaction.idea_id
+            # WHERE ? = idea.sub_id GROUP BY idea.id ORDER BY react_count DESC
+
         elif filter == 1:
             # LEaset popular
             query = submission.reference \
@@ -200,6 +204,8 @@ def list_all_ideas(submission_id):
                 .order_by(desc('view_count'))
 
         ideas = query.offset(page*5).limit(5).all()
+
+        # [(<Idea 1>, 1, None), (<Idea 2>, 1, None), ...]
 
         if ideas:
             result = []
